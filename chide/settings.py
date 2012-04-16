@@ -84,7 +84,7 @@ STATICFILES_DIRS = (
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
-    os.path.join(SITE_ROOT, 'static')
+    os.path.join(SITE_ROOT, 'static'),
 )
 
 # List of finder classes that know how to find static files in
@@ -138,8 +138,8 @@ TEMPLATE_DIRS = (
 # DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
 # STATICFILES_STORAGE = DEFAULT_FILE_STORAGE
 
-STATIC_URL = 'http://chide.it.s3-website-us-east-1.amazonaws.com/'
-ADMIN_MEDIA_PREFIX = STATIC_URL + 'admin/'
+# STATIC_URL = 'http://chide.it.s3-website-us-east-1.amazonaws.com/'
+# ADMIN_MEDIA_PREFIX = STATIC_URL + 'admin/'
 
 INSTALLED_APPS = (
     'django.contrib.auth',

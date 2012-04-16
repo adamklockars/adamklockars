@@ -6,6 +6,7 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
     url(r'^$', 'chide.views.home', name='home'),
+    url(r'^bootstrap', 'chide.views.bootstrap', name='bootstrap'),
     (r'^polls/', include('polls.urls')),
     (r'^admin/', include(admin.site.urls)),
 )
