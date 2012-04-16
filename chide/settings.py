@@ -65,7 +65,8 @@ STATIC_ROOT = ''
 
 # URL prefix for static files.
 # Example: "http://media.lawrence.com/static/"
-STATIC_URL = 'http://chide.it.s3-website-us-east-1.amazonaws.com/'
+# STATIC_URL = 'http://chide.it.s3-website-us-east-1.amazonaws.com/'
+STATIC_URL = '/static/'
 
 # URL prefix for admin static files -- CSS, JavaScript and images.
 # Make sure to use a trailing slash.
@@ -96,8 +97,8 @@ STATICFILES_FINDERS = (
 
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = '0-aij$&amp;ggvbwlyl+kniy%bp(vap^gte7_2vwm$yjh#ae-d)=p*'
-ACCESS_KEY = 'AKIAI5QQ4MVAVFYTWWJQ'
-PASS_KEY = 'womv8wkyzex1GTnWAmTFD0zt7LagQcHfC7cuuain'
+# ACCESS_KEY = 'AKIAI5QQ4MVAVFYTWWJQ'
+# PASS_KEY = 'womv8wkyzex1GTnWAmTFD0zt7LagQcHfC7cuuain'
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
@@ -129,13 +130,13 @@ TEMPLATE_DIRS = (
     os.path.join(SITE_ROOT, 'templates')
 )
 
-AWS_ACCESS_KEY_ID = 'AKIAI5QQ4MVAVFYTWWJQ'
-AWS_SECRET_ACCESS_KEY = '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'
-AWS_STORAGE_BUCKET_NAME = 'chide.it'
-AWS_PRELOAD_METADATA = True
+# AWS_ACCESS_KEY_ID = 'AKIAI5QQ4MVAVFYTWWJQ'
+# AWS_SECRET_ACCESS_KEY = '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'
+# AWS_STORAGE_BUCKET_NAME = 'chide.it'
+# AWS_PRELOAD_METADATA = True
 
-DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
-STATICFILES_STORAGE = DEFAULT_FILE_STORAGE
+# DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
+# STATICFILES_STORAGE = DEFAULT_FILE_STORAGE
 
 STATIC_URL = 'http://chide.it.s3-website-us-east-1.amazonaws.com/'
 ADMIN_MEDIA_PREFIX = STATIC_URL + 'admin/'
@@ -154,7 +155,7 @@ INSTALLED_APPS = (
     'kombu.transport.django',
     'djcelery',
     'polls',
-    'storages'
+    # 'storages'
 )
 
 # A sample logging configuration. The only tangible logging
