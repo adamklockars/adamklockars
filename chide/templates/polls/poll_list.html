@@ -24,6 +24,17 @@
     <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
     <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
     <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+    <SCRIPT LANGUAGE="javascript">
+<!--
+function OnChange(dropdown)
+{
+    var baseURL  = dropdown.value
+    top.location.href = baseURL;
+    
+    return true;
+}
+//-->
+</SCRIPT>
   </head>
 
   <body>
@@ -51,14 +62,13 @@
         <fieldset>
           <legend>Select Question</legend>
           <div class="control-group">
-            <label class="control-label" for="select01">Select</label>
             <div class="controls">
-              <select name="SelectURL" onchange="document.location.href=document.nav.SelectURL.options[document.nav.SelectURL.selectedIndex].value">
+                <select name=select1 onchange='OnChange(this.form.select1);'>
                 <option value="#" selected>Select a Question:</option>
                 {% for object in object_list %}
                 <option value="http://www.adamklockars.com/polls/{{ object.id }}/">{{ object.question }}</option>
                 {% endfor %}
-              </select>
+              </select><noscript><button type="submit" class="btn btn-primary">Select</button></noscript>
             </div>
           </div>
         </fieldset>
