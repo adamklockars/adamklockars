@@ -6,7 +6,7 @@ DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
-    # ('Your Name', 'your_email@example.com'),
+    ('Adam Klockars', 'adamklockars@gmail.com'),
 )
 
 MANAGERS = ADMINS
@@ -65,13 +65,25 @@ STATIC_ROOT = ''
 
 # URL prefix for static files.
 # Example: "http://media.lawrence.com/static/"
-STATIC_URL = '/static/'
+STATIC_URL = 'http://chide.it.s3-website-us-east-1.amazonaws.com/'
+
+# URL prefix for admin static files -- CSS, JavaScript and images.
+# Make sure to use a trailing slash.
+# Examples: "http://foo.com/static/admin/", "/static/admin/".
+ADMIN_MEDIA_PREFIX = '/static/admin/'
+
+TEMPLATE_CONTEXT_PROCESSORS = (
+    'django.contrib.messages.context_processors.messages',
+    'django.contrib.auth.context_processors.auth',
+    'django.core.context_processors.static',
+)
 
 # Additional locations of static files
 STATICFILES_DIRS = (
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
+    os.path.join(SITE_ROOT, 'static')
 )
 
 # List of finder classes that know how to find static files in
@@ -84,6 +96,8 @@ STATICFILES_FINDERS = (
 
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = '0-aij$&amp;ggvbwlyl+kniy%bp(vap^gte7_2vwm$yjh#ae-d)=p*'
+ACCESS_KEY = 'AKIAI5QQ4MVAVFYTWWJQ'
+PASS_KEY = 'womv8wkyzex1GTnWAmTFD0zt7LagQcHfC7cuuain'
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
@@ -112,8 +126,19 @@ TEMPLATE_DIRS = (
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
     # "/home/adamklockars/chide/chide/templates", # Change this to your own directory.
-    os.path.join(SITE_ROOT, './templates')
+    os.path.join(SITE_ROOT, 'templates')
 )
+
+AWS_ACCESS_KEY_ID = 'AKIAI5QQ4MVAVFYTWWJQ'
+AWS_SECRET_ACCESS_KEY = 'womv8wkyzex1GTnWAmTFD0zt7LagQcHfC7cuuain'
+AWS_STORAGE_BUCKET_NAME = 'chide.it'
+AWS_PRELOAD_METADATA = True
+
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
+STATICFILES_STORAGE = DEFAULT_FILE_STORAGE
+
+STATIC_URL = 'http://chide.it.s3-website-us-east-1.amazonaws.com/'
+ADMIN_MEDIA_PREFIX = STATIC_URL + 'admin/'
 
 INSTALLED_APPS = (
     'django.contrib.auth',
@@ -128,7 +153,8 @@ INSTALLED_APPS = (
     # 'django.contrib.admindocs',
     'kombu.transport.django',
     'djcelery',
-    'polls'
+    'polls',
+    'storages'
 )
 
 # A sample logging configuration. The only tangible logging
