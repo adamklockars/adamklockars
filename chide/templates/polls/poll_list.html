@@ -47,22 +47,19 @@
       <div class="hero-unit">
 {% if object_list %}
 <div class="span8">
-      <form action="/polls/{{ object.id }}/vote/" method="post" class="form-horizontal">
-        {% csrf_token %}
+      <form class="form-horizontal">
         <fieldset>
           <legend>Select Question</legend>
           <div class="control-group">
             <label class="control-label" for="select01">Select</label>
             <div class="controls">
-              <select id="select01">
+              <select name="SelectURL" onchange="document.location.href=document.nav.SelectURL.options[document.nav.SelectURL.selectedIndex].value">
+                <option value="#" selected>Select a Question:</option>
                 {% for object in object_list %}
-                <option value="{{ object.id }}">{{ object.question }}</option>
+                <option value="http://www.adamklockars.com/polls/{{ object.id }}/">{{ object.question }}</option>
                 {% endfor %}
               </select>
             </div>
-          </div>
-          <div class="form-actions">
-            <button type="submit" class="btn btn-primary">Select</button>
           </div>
         </fieldset>
       </form>
