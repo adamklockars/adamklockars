@@ -73,10 +73,10 @@ p {
 .body a:visited {text-decoration: none; color: #E6E6E6;}
 .body a:active {text-decoration: none; color: #E6E6E6;}
 .body a:hover {text-decoration: none; color: #3399ff;}
-.contact a:link {text-decoration: none ; color: #848484;}
-.contact a:visited {text-decoration: none; color: #848484;}
-.contact a:active {text-decoration: none; color: #848484;}
-.contact a:hover {text-decoration: none; color: #3399ff;}
+.contact_header a:link {text-decoration: none ; color: #848484;}
+.contact_header a:visited {text-decoration: none; color: #848484;}
+.contact_header a:active {text-decoration: none; color: #848484;}
+.contact_header a:hover {text-decoration: none; color: #3399ff;}
 @media print {
 #about {
   width: 890px;
@@ -404,8 +404,8 @@ pre {
 .clock_header {
   display: inline-block;
   float: right;
-  margin-top: -10px;
-  margin-right: -5px;
+  margin-top: -14px;
+  margin-right: -10px;
 }
 #clock {
                 float: right;
