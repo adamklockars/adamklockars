@@ -404,6 +404,8 @@ pre {
 .clock_header {
   display: inline-block;
   float: right;
+  margin-top: -10px;
+  margin-right: -5px;
 }
 #clock {
                 float: right;
@@ -425,17 +427,17 @@ pre {
         	}
         
         #sec {
-        	background: url({{STATIC_URL}}images/sechand.png);
+        	background: url(../images/sechand.png);
         	z-index: 3;
            	}
            
         #min {
-        	background: url({{STATIC_URL}}images/minhand.png);
+        	background: url(../images/minhand.png);
         	z-index: 2;
            	}
            
         #hour {
-        	background: url({{STATIC_URL}}images/hourhand.png);
+        	background: url(../images/hourhand.png);
         	z-index: 1;
            	}
 }
