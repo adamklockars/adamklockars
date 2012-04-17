@@ -22,20 +22,27 @@ body {
   float:left;
 }
 .header_left {
-  display: inline;
-  width: 130px;
+  display: inline-block;
+  width: 150px;
 }
 .header_left .profile_well {
   display: block;
 }
 .header_left h2 {
   display: block; 
-  width: 130px;
+  width: 150px;
 }
-.contact {
+.header .contact_header {
+  display: inline-block;
+  vertical-align: top;
+  margin-left: 0px;
+}
+.header .contact_header #contact{
   display: inline;
-  width: 300px;
-  margin-left: 20px;
+  float: right;
+  line-height: 18px;
+  list-style-type: none;
+  width: 280px;
 }
 }
 h1 {
@@ -201,13 +208,6 @@ p {
 }
 }
 @media screen {
-#contact {
-  display: inline;
-  width: 280px;
-  float: right;
-  list-style-type: none;
-  line-height: 18px;
-}
 #contact li {
   width: 280px;
   overflow: hidden;
@@ -383,6 +383,7 @@ pre {
 .header {
   width: 100%;
   display: block;
+  verticle-align: top;
 }
 .profile_well {
   display: block;
@@ -400,7 +401,8 @@ pre {
   	-moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
   box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
 }
-.clock {
+.clock_header {
+  display: inline-block;
   float: right;
 }
 #clock {
@@ -409,7 +411,8 @@ pre {
         	width: 120px;
         	height: 120px;
         	margin: 4px auto 0 auto;
-        	background: url({{STATIC_URL}}images/clockface.jpg);
+        	background-image: url(../images/clockface.jpg);
+                background-size: 120px 120px;
         	list-style: none;
         	}
         
