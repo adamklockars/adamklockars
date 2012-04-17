@@ -410,20 +410,21 @@ pre {
 #clock {
                 float: right;
         	position: relative;
-        	width: 120px;
-        	height: 120px;
+        	width: 200px;
+        	height: 200px;
         	margin: 4px auto 0 auto;
-        	background-image: url(../images/clockface.png);
-                background-size: 120px 120px;
+        	background: url(../images/clockface.png);
+                background-size: 200px 200px;
         	list-style: none;
+                z-index: 0;
         	}
         
         #sec, #min, #hour {
         	position: absolute;
-        	width: 6px;
-        	height: 120px;
+        	width: 10px;
+        	height: 200px;
         	top: 0px;
-        	left: 57px;
+        	left: 95px;
         	}
         
         #sec {
@@ -438,6 +439,6 @@ pre {
            
         #hour {
         	background: url(../images/hourhand.png);
-        	z-index: 1;
+        	z-index: 1000;
            	}
 }

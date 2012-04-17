@@ -4,46 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
 <link href="{{STATIC_URL}}css/resume.css" rel="stylesheet">
 <link rel="shortcut icon" href="{{STATIC_URL}}/ico/favicon.ico">
-<script type="text/javascript" href="http://css-tricks.com/examples/CSS3Clock/jquery-1.2.6.min.js"></script>
-<style type="text/css">
-        * {
-        	margin: 0;
-        	padding: 0;
-        }
-        
-        #clock {
-        	position: relative;
-        	width: 120px;
-        	height: 120px;
-        	margin: 4px auto 0 auto;
-        	background-image: url({{STATIC_URL}}images/clockface.png);
-                background-size: 120px 120px;
-        	list-style: none;
-        	}
-        
-        #sec, #min, #hour {
-        	position: absolute;
-        	width: 6px;
-        	height: 120px;
-        	top: 0px;
-        	left: 57px;
-        	}
-        
-        #sec {
-        	background: url({{STATIC_URL}}images/sechand.png);
-        	z-index: 3;
-           	}
-           
-        #min {
-        	background: url({{STATIC_URL}}images/minhand.png);
-        	z-index: 2;
-           	}
-           
-        #hour {
-        	background: url({{STATIC_URL}}images/hourhand.png);
-        	z-index: 1;
-           	}
-    </style>
+<script type="text/javascript" src="{{STATIC_URL}}/js/jquery-1.2.6.min.js"></script>
 <script type="text/javascript">
         $(document).ready(function() {
               setInterval( function() {
