@@ -72,7 +72,7 @@ body {
   width: 550px;
   height: 50px;
   display: block;
-  margin-top: 126;
+  margin-top: 115px;
   margin-left: -5px;
 }
 }
@@ -411,6 +411,20 @@ pre {
 }
 
 @media screen {
+@media(min-width: 1200px) {
+.container {
+  width: 1168px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.container_main {
+  width: 1168px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-top: 60px;
+}
+}
+@media(max-width: 1200px) {
 .container {
   width: 920px;
   margin-left: auto;
@@ -421,6 +435,7 @@ pre {
   margin-left: auto;
   margin-right: auto;
   padding-top: 60px;
+}
 }
 .header {
   width: 100%;
