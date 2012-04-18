@@ -2,9 +2,13 @@
 <head>
 <title>Adam Klockars</title>
 <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+<link href="{{STATIC_URL}}css/bootstrap.css" rel="stylesheet">
+<link href="{{STATIC_URL}}css/bootstrap-responsive.css" rel="stylesheet">
+<link href="{{STATIC_URL}}css/docs.css" rel="stylesheet">
+<link href="{{STATIC_URL}}css/prettify.css" rel="stylesheet">
 <link href="{{STATIC_URL}}css/resume.css" rel="stylesheet">
-<link rel="shortcut icon" href="{{STATIC_URL}}/ico/favicon.ico">
-<script type="text/javascript" src="{{STATIC_URL}}/js/jquery-1.2.6.min.js"></script>
+<link rel="shortcut icon" href="{{STATIC_URL}}ico/favicon.ico">
+<script type="text/javascript" src="{{STATIC_URL}}js/jquery-1.2.6.min.js"></script>
 <script type="text/javascript">
         $(document).ready(function() {
               setInterval( function() {
@@ -28,8 +32,43 @@
               }, 1000 );
         }); 
 </script>
+<script type="text/javascript">
+  function jumpScroll( x, y) {
+    window.scroll(x, y); // horizontal and vertical scroll targets
+  }
+</script>
 </head>
 <body>
+<!-- Navbar
+    ================================================== -->
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="http://www.adamklockars.com">Adam Klockars</a>
+          <div class="nav-collapse">
+            <ul class="nav">
+              <li class="active">
+                <a href="http://www.adamklockars.com">Resume</a>
+              </li>
+              <li class="">
+                <a href="">Projects</a>
+              </li>
+              <li class="">
+                <a href="">Blog</a>
+              </li>
+              <li class="divider-vertical"></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container_main">
 <span class="body">
 <div class="container">
 <div class="header">
@@ -41,11 +80,31 @@
   <h2><a href="http://ece.uwaterloo.ca/Undergrad/Q/">Computer Engineer</a></h2>
   </div>
   <div class="contact_header">
+  <div style="display:inline;">
   <ul id="contact">
     <li><span>Phone</span> <strong><a href="callto://+16136180950">613-618-0950</a></strong></li>
     <li><span>Email</span> <strong><a href="mailto:adamklockars@gmail.com?Subject=Job%20Opportunity">adamklockars@gmail.com</a></strong></li>
     <li><span>Address</span> <strong2><a href="http://maps.google.ca/maps?hl=en&q=550+westmount+rd.+west+kitchener+ontario+canada&gs_upl=&bav=on.2,or.r_gc.r_pw.r_cp.r_qf.,cf.osb&biw=1676&bih=839&ix=seb&ion=1&um=1&ie=UTF-8&hq=&hnear=0x882bf4381895236d:0x1c55c21aa57405ce,550+Westmount+Rd+W,+Kitchener,+ON+N2M+2G2&gl=ca&ei=ztQ0T_XgLarm0QHWyIXBAg&sa=X&oi=geocode_result&ct=title&resnum=1&ved=0CB8Q8gEwAA">550 Westmount Rd. W, Apt. 303, Kitchener, ON, N2M 5G5</a></strong2></li>
   </ul>
+  </div>
+<div class="social">
+<!-- Facebook button -->
+<a href="http://www.facebook.com/Tatum33">
+<img src="{{STATIC_URL}}images/facebook.png"/>
+</a>
+ <!-- Twitter button -->
+<a href="http://www.twitter.com/adamklockars">
+<img src="{{STATIC_URL}}images/twitter.png"/>
+</a>
+<!-- LinkedIn button -->
+<a href="http://ca.linkedin.com/pub/adam-klockars/27/497/a56">
+<img src="{{STATIC_URL}}images/LinkedIn.png"/>
+</a>
+<!-- Youtube button -->
+<a href="http://www.youtube.com/adamklockars">
+<img src="{{STATIC_URL}}images/youtube.png"/>
+</a>
+</div>
   </div>
   <div class="clock_header">
     <ul id="clock">	
@@ -55,14 +114,28 @@
     </ul>
   </div>
 </div>
+<!-- Masthead
+================================================== -->
+<header class="jumbotron subhead" id="overview">
+  <div class="subnav">
+    <ul class="nav nav-pills">
+      <li><a href="javascript:jumpScroll(0, 238)">Objective</a></li>
+      <li><a href="javascript:jumpScroll(0, 260)">Education</a></li>
+      <li><a href="javascript:jumpScroll(0, 582)">Experience</a></li>
+      <li><a href="javascript:jumpScroll(0, 1504)">Skills</a></li>
+      <li><a href="javascript:jumpScroll(0, 1759)">Volunteer</a></li>
+      <li><a href="javascript:jumpScroll(0, 1884)">Interests</a></li>
+    </ul>
+  </div>
+</header>
 <div id="about">
-<div class="section">
+<div class="section" id="objective">
     <h5>Objective</h5>
      <div class="item">
     <p>To obtain work experience that will provide growth and development opportunities in both my professional and personal life, as well as cultivate work associations that will aid in the advancement of my career.</p>
   </div>
   </div>
-<div class="section">
+<div class="section" id="education">
   <h5>Education</h5>
   <div class="item">
     <h3><a href="http://www.uwaterloo.ca/">University of Waterloo</a></h3>
@@ -88,7 +161,7 @@
     </div>
   </div>
 </div>
-<div class="section">
+<div class="section" id="experience">
   <h5>Experience</h5>
   <div class="item">
     <h3><a href="http://www.cisco.com/">Cisco Systems</a></h3>
@@ -150,7 +223,7 @@
     </div>
   </div>
 </div>
-<div class="section">
+<div class="section" id="skills">
   <h5>Skills</h5>
   <div class="item">
     <div class="description2">
@@ -171,7 +244,7 @@
   	</div>  
   </div>
 </div>
-<div class="section">
+<div class="section" id="volunteer">
 <h5>Volunteer Experience</h5>
 <div class="item">
   <h3><a href="http://hometeamsonline.com/teams/default.asp?s=hockey&t=c&u=KLMHA">Kirkland Lake Minor Hockey Association</a></h3>
@@ -185,7 +258,7 @@
     </div>
   </div>
 </div>
-<div class="section">
+<div class="section" id="interests">
 <h5>Activities &amp; Interests</h5>
 <div class="item">
   <h3><a href="http://www.deezyr.com">Deezyr - Product Recommendation Engine</a></h3>
@@ -208,9 +281,53 @@
   </div>
 </div>
 </div>
-<div id="footer">
 </div>
-</div>
+<!-- Footer
+      ================================================== -->
+      <footer class="footer">
+        <p class="pull-right"><a href="#">Back to top</a></p>
+        <p></p>
+      </footer>
+
+    </div><!-- /container -->
+
+
+
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+    <script src="{{STATIC_URL}}js/jquery.js"></script>
+    <script src="{{STATIC_URL}}js/prettify.js"></script>
+    <script src="{{STATIC_URL}}js/bootstrap-transition.js"></script>
+    <script src="{{STATIC_URL}}js/bootstrap-alert.js"></script>
+    <script src="{{STATIC_URL}}js/bootstrap-modal.js"></script>
+    <script src="{{STATIC_URL}}js/bootstrap-dropdown.js"></script>
+    <script src="{{STATIC_URL}}js/bootstrap-scrollspy.js"></script>
+    <script src="{{STATIC_URL}}js/bootstrap-tab.js"></script>
+    <script src="{{STATIC_URL}}js/bootstrap-tooltip.js"></script>
+    <script src="{{STATIC_URL}}js/bootstrap-popover.js"></script>
+    <script src="{{STATIC_URL}}js/bootstrap-button.js"></script>
+    <script src="{{STATIC_URL}}js/bootstrap-collapse.js"></script>
+    <script src="{{STATIC_URL}}js/bootstrap-carousel.js"></script>
+    <script src="{{STATIC_URL}}js/bootstrap-typeahead.js"></script>
+    <script src="{{STATIC_URL}}js/application.js"></script>
+
+    <!-- Analytics
+    ================================================== -->
+    <script>
+      var _gauges = _gauges || [];
+      (function() {
+        var t   = document.createElement('script');
+        t.type  = 'text/javascript';
+        t.async = true;
+        t.id    = 'gauges-tracker';
+        t.setAttribute('data-site-id', '4f0dc9fef5a1f55508000013');
+        t.src = '//secure.gaug.es/track.js';
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(t, s);
+      })();
+    </script>
 </div>
 </span>
 </body>

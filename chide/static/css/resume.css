@@ -20,6 +20,8 @@ body {
   font: 14px/20px Georgia, "Times New Roman", Times, serif;
   color: #848484;
   float:left;
+  padding-top: 0px;
+  margin-top: 0px;
 }
 .header_left {
   display: inline-block;
@@ -38,11 +40,40 @@ body {
   margin-left: 0px;
 }
 .header .contact_header #contact{
-  display: inline;
-  float: right;
+  display: block;
   line-height: 18px;
   list-style-type: none;
   width: 280px;
+  margin: 0;
+}
+.navbar-fixed-top .brand {
+  margin-left: 0px;
+  margin-right: 10px;
+}
+.subnav {
+  background-color: #848484; /* Old browsers */
+  background-repeat: repeat-x; /* Repeat the gradient */
+  background-image: -moz-linear-gradient(top, #f5f5f5 0%, #848484 100%); /* FF3.6+ */
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f5f5f5), color-stop(100%,#848484)); /* Chrome,Safari4+ */
+  background-image: -webkit-linear-gradient(top, #f5f5f5 0%,#848484 100%); /* Chrome 10+,Safari 5.1+ */
+  background-image: -ms-linear-gradient(top, #f5f5f5 0%,#848484 100%); /* IE10+ */
+  background-image: -o-linear-gradient(top, #f5f5f5 0%,#848484 100%); /* Opera 11.10+ */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f5f5f5', endColorstr='#848484',GradientType=0 ); /* IE6-9 */
+  background-image: linear-gradient(top, #f5f5f5 0%,#848484 100%); /* W3C */
+  border: 0px solid #e5e5e5;
+  -webkit-border-radius: 4px;
+     -moz-border-radius: 4px;
+          border-radius: 4px;
+}
+.subnav .nav > li > a {
+  border-right: 1px solid black;
+}
+.header .contact_header .social{
+  width: 550px;
+  height: 50px;
+  display: block;
+  margin-top: 126;
+  margin-left: -5px;
 }
 }
 h1 {
@@ -68,6 +99,7 @@ h3 {
 }
 p {
   margin-bottom: 20px;
+  font: 14px/20px Georgia, "Times New Roman", Times, serif; 
 }
 .body a:link {text-decoration: none ; color: #E6E6E6;}
 .body a:visited {text-decoration: none; color: #E6E6E6;}
@@ -77,6 +109,10 @@ p {
 .contact_header a:visited {text-decoration: none; color: #848484;}
 .contact_header a:active {text-decoration: none; color: #848484;}
 .contact_header a:hover {text-decoration: none; color: #3399ff;}
+.nav-pills a:link {text-decoration: none ; color: black;}
+.nav-pills a:visited {text-decoration: none; color: black;}
+.nav-pills a:active {text-decoration: none; color: black;}
+.nav-pills a:hover {text-decoration: none; color: black;}
 @media print {
 #about {
   width: 890px;
@@ -88,7 +124,7 @@ p {
 @media screen {
 #about {
   width: 920px;
-  padding: 40px 0;
+  padding: 0;
   margin: 0 auto;
   overflow: hidden;
 }
@@ -380,10 +416,17 @@ pre {
   margin-left: auto;
   margin-right: auto;
 }
+.container_main {
+  width: 920px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-top: 60px;
+}
 .header {
   width: 100%;
   display: block;
   verticle-align: top;
+  margin-bottom: 15px;
 }
 .profile_well {
   display: block;
@@ -410,21 +453,21 @@ pre {
 #clock {
                 float: right;
         	position: relative;
-        	width: 200px;
-        	height: 200px;
+        	width: 120px;
+        	height: 120px;
         	margin: 4px auto 0 auto;
         	background: url(../images/clockface.png);
-                background-size: 200px 200px;
+                background-size: 120px 120px;
         	list-style: none;
                 z-index: 0;
         	}
         
         #sec, #min, #hour {
         	position: absolute;
-        	width: 10px;
-        	height: 200px;
+        	width: 6px;
+        	height: 120px;
         	top: 0px;
-        	left: 95px;
+        	left: 57px;
         	}
         
         #sec {
@@ -439,6 +482,6 @@ pre {
            
         #hour {
         	background: url(../images/hourhand.png);
-        	z-index: 1000;
+        	z-index: 1;
            	}
 }
