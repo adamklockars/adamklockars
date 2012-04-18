@@ -410,33 +410,33 @@ pre {
   font: 14px/20px Georgia, "Times New Roman", Times, serif;
 }
 
+@media screen and (min-width: 1200px) {
+.container {
+  width: 1168px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.container_main {
+  width: 1168px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-top: 60px;
+}
+}
+@media screen and (max-width: 1200px) {
+.container {
+  width: 920px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.container_main {
+  width: 920px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-top: 60px;
+}
+}
 @media screen {
-@media(min-width: 1200px) {
-.container {
-  width: 1168px;
-  margin-left: auto;
-  margin-right: auto;
-}
-.container_main {
-  width: 1168px;
-  margin-left: auto;
-  margin-right: auto;
-  padding-top: 60px;
-}
-}
-@media(max-width: 1200px) {
-.container {
-  width: 920px;
-  margin-left: auto;
-  margin-right: auto;
-}
-.container_main {
-  width: 920px;
-  margin-left: auto;
-  margin-right: auto;
-  padding-top: 60px;
-}
-}
 .header {
   width: 100%;
   display: block;
