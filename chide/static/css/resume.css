@@ -121,7 +121,15 @@ p {
   overflow: hidden;
 }
 }
-@media screen {
+@media screen and (min-width: 1200px) {
+#about {
+  width: 1168px;
+  padding: 0;
+  margin: 0 auto;
+  overflow: hidden;
+}
+}
+@media screen and (max-width: 1200px) {
 #about {
   width: 920px;
   padding: 0;
@@ -129,7 +137,6 @@ p {
   overflow: hidden;
 }
 }
-
 #about h1 {
   margin-bottom: 4px;
   margin-top: 2px;
@@ -280,7 +287,16 @@ p {
   float: left;
 }
 }
-@media screen {
+@media screen and (min-width: 1200px) {
+.section {
+  width: 1168px;
+  margin: 0 auto;
+  padding: 10px 0 0 0;
+  overflow: hidden;
+  float: left;
+}
+}
+@media screen and (max-width: 1200px) {
 .section {
   width: 920px;
   margin: 0 auto;
@@ -341,7 +357,34 @@ p {
   margin-top: 0px;
 }
 }
-@media screen {
+@media screen and (min-width: 1200px) {
+.section .item {
+  width: 1048px;
+  padding-left: 0px;
+  float: right;
+  padding-top: 0;
+  margin-bottom: 0px;
+  position: relative;
+  padding-bottom: 5px;
+}
+.section .description {
+  width: 978px;
+  padding-left: 18px;
+  font: "Times New Roman";
+  margin-bottom: 15px;
+  overflow: hidden;
+  margin-top: 10px;
+}
+.section .description2 {
+  width: 730px;
+  padding-left: 18px;
+  font: "Times New Roman";
+  margin-bottom: 15px;
+  overflow: hidden;
+  margin-top: 0px;
+}
+}
+@media screen and (max-width: 1200px) {
 .section .item {
   width: 800px;
   padding-left: 0px;

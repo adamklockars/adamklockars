@@ -33,8 +33,29 @@
         }); 
 </script>
 <script type="text/javascript">
-  function jumpScroll( x, y) {
-    window.scroll(x, y); // horizontal and vertical scroll targets
+var winW = 630, winH = 460;
+if (document.body && document.body.offsetWidth) {
+ winW = document.body.offsetWidth;
+ winH = document.body.offsetHeight;
+}
+if (document.compatMode=='CSS1Compat' &&
+    document.documentElement &&
+    document.documentElement.offsetWidth ) {
+ winW = document.documentElement.offsetWidth;
+ winH = document.documentElement.offsetHeight;
+}
+if (window.innerWidth && window.innerHeight) {
+ winW = window.innerWidth;
+ winH = window.innerHeight;
+}
+  var scrollLarge=new Array(238, 275, 579, 1374, 1631, 1994);
+  var scrollSmall=new Array(238, 275, 597, 1519, 1774, 1994);
+  function jumpScroll(y) {
+    if (winW > 1200) {
+      window.scroll(0, scrollLarge[y]); // horizontal and vertical scroll targets
+    } else {
+      window.scroll(0, scrollSmall[y]); // horizontal and vertical scroll targets 
+    }
   }
 </script>
 </head>
@@ -120,12 +141,12 @@
 <header class="jumbotron subhead" id="overview">
   <div class="subnav">
     <ul class="nav nav-pills">
-      <li><a href="javascript:jumpScroll(0, 238)">Objective</a></li>
-      <li><a href="javascript:jumpScroll(0, 275)">Education</a></li>
-      <li><a href="javascript:jumpScroll(0, 597)">Experience</a></li>
-      <li><a href="javascript:jumpScroll(0, 1519)">Skills</a></li>
-      <li><a href="javascript:jumpScroll(0, 1774)">Volunteer</a></li>
-      <li><a href="javascript:jumpScroll(0, 1884)">Interests</a></li>
+      <li><a href="javascript:jumpScroll(0)">Objective</a></li>
+      <li><a href="javascript:jumpScroll(1)">Education</a></li>
+      <li><a href="javascript:jumpScroll(2)">Experience</a></li>
+      <li><a href="javascript:jumpScroll(3)">Skills</a></li>
+      <li><a href="javascript:jumpScroll(4)">Volunteer</a></li>
+      <li><a href="javascript:jumpScroll(5)">Interests</a></li>
     </ul>
   </div>
 </header>
