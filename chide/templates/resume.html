@@ -33,6 +33,17 @@
         }); 
 </script>
 <script type="text/javascript">
+  if (navigator.appVersion.match(/Safari/) != null) {
+    var scrollLarge=new Array(238, 275, 579, 1392, 1665, 1789);
+    var scrollSmall=new Array(238, 275, 597, 1518, 1792, 1919);
+  } else if (navigator.appVersion.match(/Chrome/) != null) {
+    var scrollLarge=new Array(238, 275, 579, 1392, 1665, 1789);
+    var scrollSmall=new Array(238, 275, 597, 1518, 1792, 1919);
+  } else {
+    var scrollLarge=new Array(238, 275, 579, 1374, 1631, 1757);
+    var scrollSmall=new Array(238, 275, 597, 1519, 1774, 1900);
+  }
+  function jumpScroll(y) {
 var winW = 630, winH = 460;
 if (document.body && document.body.offsetWidth) {
  winW = document.body.offsetWidth;
@@ -48,17 +59,6 @@ if (window.innerWidth && window.innerHeight) {
  winW = window.innerWidth;
  winH = window.innerHeight;
 }
-  if (navigator.appVersion.match(/Safari/) != null) {
-    var scrollLarge=new Array(238, 275, 579, 1392, 1665, 1789);
-    var scrollSmall=new Array(238, 275, 597, 1518, 1792, 1919);
-  } else if (navigator.appVersion.match(/Chrome/) != null) {
-    var scrollLarge=new Array(238, 275, 579, 1392, 1665, 1789);
-    var scrollSmall=new Array(238, 275, 597, 1518, 1792, 1919);
-  } else {
-    var scrollLarge=new Array(238, 275, 579, 1374, 1631, 1757);
-    var scrollSmall=new Array(238, 275, 597, 1519, 1774, 1900);
-  }
-  function jumpScroll(y) {
     if (winW > 1200) {
       window.scroll(0, scrollLarge[y]); // horizontal and vertical scroll targets
     } else {
