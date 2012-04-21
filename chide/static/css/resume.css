@@ -467,6 +467,9 @@ pre {
 .container_main_2 {
   padding-top: 97px;
 }
+.navbar-fixed-top .brand {
+  margin-left: 0px;
+}
 }
 @media screen and (max-width: 1200px) {
 .container {
@@ -482,6 +485,10 @@ pre {
 }
 .container_main_2 {
   padding-top: 97px;
+}
+.navbar-fixed-top .brand {
+  margin-left: 0px;
+  margin-right: 10px;
 }
 }
 @media screen {
