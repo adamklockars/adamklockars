@@ -465,6 +465,9 @@ pre {
   margin-right: auto;
   padding-top: 60px;
 }
+.container_main_2 {
+  padding-top: 97px;
+}
 }
 @media screen and (max-width: 1200px) {
 .container {
@@ -477,6 +480,9 @@ pre {
   margin-left: auto;
   margin-right: auto;
   padding-top: 60px;
+}
+.container_main_2 {
+  padding-top: 97px;
 }
 }
 @media screen {

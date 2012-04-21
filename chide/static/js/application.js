@@ -46,6 +46,7 @@
     // fix sub nav on scroll
     var $win = $(window)
       , $nav = $('.subnav')
+      , $nav2 = $('.container_main')
       , navTop = $('.subnav').length && $('.subnav').offset().top - 40
       , isFixed = 0
 
@@ -58,9 +59,11 @@
       if (scrollTop >= navTop && !isFixed) {
         isFixed = 1
         $nav.addClass('subnav-fixed')
+        $nav2.addClass('container_main_2')
       } else if (scrollTop <= navTop && isFixed) {
         isFixed = 0
         $nav.removeClass('subnav-fixed')
+        $nav2.removeClass('container_main_2')
       }
     }
 
