@@ -477,6 +477,11 @@ pre {
   margin-left: auto;
   margin-right: auto;
 }
+.navbar-fixed-top .container {
+  width: 920px;
+  margin-left: auto;
+  margin-right: auto;
+}
 .container_main {
   width: 920px;
   margin-left: auto;
