@@ -479,6 +479,9 @@ pre {
   margin-left: auto;
   margin-right: auto;
 }
+.subnav-fixed .nav {
+  width: 920px;
+}
 .container_main {
   width: 920px;
   margin-left: auto;
@@ -490,7 +493,6 @@ pre {
 }
 .navbar-fixed-top .brand {
   margin-left: 0px;
-  margin-right: 10px;
 }
 }
 @media screen {
