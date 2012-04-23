@@ -201,8 +201,8 @@ hr.soften {
     margin: 0 auto;
     padding: 0 1px;
   }
-  .subnav .nav > li:first-child > a,
-  .subnav .nav > li:first-child > a:hover {
+  .subnav-fixed .nav > li:first-child > a,
+  .subnav-fixed .nav > li:first-child > a:hover {
     -webkit-border-radius: 0;
        -moz-border-radius: 0;
             border-radius: 0;
