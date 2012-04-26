@@ -1,0 +1,94 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>TIC TAC TOE</title>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+<link href="{{STATIC_URL}}css/bootstrap.css" rel="stylesheet">
+<link href="{{STATIC_URL}}css/bootstrap-responsive.css" rel="stylesheet">
+<link href="{{STATIC_URL}}css/docs.css" rel="stylesheet">
+<link href="{{STATIC_URL}}css/prettify.css" rel="stylesheet">
+<link href="{{STATIC_URL}}css/resume.css" rel="stylesheet">
+<link rel="shortcut icon" href="{{STATIC_URL}}ico/favicon.ico">
+<script src="{{STATIC_URL}}js/jquery.js"></script>
+<style>
+<style>
+body {
+  padding-top: 44px;
+  display: inline;
+  text-align: center;
+}
+.container_main > .content {
+  background-color: black;
+  padding: 25px;
+  margin-left: 0px;
+  margin-right: 0px;
+  margin-top: 60px;
+   -webkit-border-radius: 10px 10px 10px 10px;
+      -moz-border-radius: 10px 10px 10px 10px;
+           border-radius: 10px 10px 10px 10px;
+   -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.15);
+      -moz-box-shadow: 0 1px 2px rgba(0,0,0,.15);
+           box-shadow: 0 1px 2px rgba(0,0,0,.15);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#333333), to(#222222));
+}
+.login-form {
+  margin-left: 0px;
+  text-align: left;
+}
+h2 {
+  color: #A2B5CD;
+  text-align: center;
+}
+h3 {
+  color: #A2B5CD;
+}
+h4 {
+  color: #A2B5CD;
+}
+legend {
+  margin-right: -50px;
+  font-weight: bold;
+  color: #404040;
+}
+</style>
+</head>
+<body>
+<div class="container_main">
+  <div class="content" id="player_select">
+    <div class="row">
+      <div class="login-form">
+        <form action="/tictactoe/start/" method="post">
+          {% csrf_token %}
+          <input type="radio" name="mode" id="computer" value="computer" />
+          <label for="computer">ONE PLAYER</label>
+          <BR>
+          <input type="radio" name="mode" id="human" value="human" />
+          <label for="human">TWO PLAYER</label>
+          <BR>
+          <input class="btn" type="submit" value="START">
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+    <script src="{{STATIC_URL}}js/prettify.js"></script>
+    <script src="{{STATIC_URL}}js/bootstrap-transition.js"></script>
+    <script src="{{STATIC_URL}}js/bootstrap-alert.js"></script>
+    <script src="{{STATIC_URL}}js/bootstrap-modal.js"></script>
+    <script src="{{STATIC_URL}}js/bootstrap-dropdown.js"></script>
+    <script src="{{STATIC_URL}}js/bootstrap-scrollspy.js"></script>
+    <script src="{{STATIC_URL}}js/bootstrap-tab.js"></script>
+    <script src="{{STATIC_URL}}js/bootstrap-tooltip.js"></script>
+    <script src="{{STATIC_URL}}js/bootstrap-popover.js"></script>
+    <script src="{{STATIC_URL}}js/bootstrap-button.js"></script>
+    <script src="{{STATIC_URL}}js/bootstrap-collapse.js"></script>
+    <script src="{{STATIC_URL}}js/bootstrap-carousel.js"></script>
+    <script src="{{STATIC_URL}}js/bootstrap-typeahead.js"></script>
+    <script src="{{STATIC_URL}}js/application.js"></script>
+</body>
+</html>

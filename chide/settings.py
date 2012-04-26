@@ -156,6 +156,7 @@ INSTALLED_APPS = (
     'djcelery',
     'polls',
     # 'storages'
+    'tictactoe',
 )
 
 # A sample logging configuration. The only tangible logging

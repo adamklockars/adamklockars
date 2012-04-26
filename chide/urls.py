@@ -9,4 +9,5 @@ urlpatterns = patterns('',
     url(r'^bootstrap', 'chide.views.bootstrap', name='bootstrap'),
     (r'^polls/', include('polls.urls')),
     (r'^admin/', include(admin.site.urls)),
+    (r'^tictactoe/', include('tictactoe.urls')),
 )
