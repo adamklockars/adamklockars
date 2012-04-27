@@ -8,12 +8,12 @@ class TictactoeAdmin(admin.ModelAdmin):
         ('Player2',            {'fields': ['player2']}),
         ('Piece2',             {'fields': ['piece2']}),
         ('Winnner',            {'fields': ['winner']}),
-        ('Address',            {'fields': ['address']}),
+        # ('Address',            {'fields': ['address']}),
         ('Board',              {'fields': ['board'], 'classes': ['collapse']}),
         ('Last Move',          {'fields': ['last_move']}),
     ]
-    list_display = ('player1', 'piece1', 'player2', 'piece2', 'winner', 'address')
-    list_filter = ['address']
+    list_display = ('player1', 'piece1', 'player2', 'piece2', 'winner')
+    list_filter = ['player1']
 
 admin.site.register(Game, TictactoeAdmin)
 

@@ -10,5 +10,5 @@ urlpatterns = patterns('',
     (r'^$', 'tictactoe.views.init'),
     (r'^start/$', 'tictactoe.views.start'),
     (r'^start_comp/$', 'tictactoe.views.start_comp'),
-    (r'^play/$', 'tictactoe.views.game'),
+    (r'^play/(?P<game_id>\d+)/$', 'tictactoe.views.game'),
 )

@@ -7,7 +7,7 @@ class Game(models.Model):
     player2 = models.CharField(max_length=15)
     piece2 = models.CharField(max_length=1)
     winner = models.CharField(max_length=1)
-    address = models.IPAddressField()
+    # address = models.IPAddressField()
     board = models.CharField(max_length=100, default=str(pickle.dumps([''] * 9)))
     last_move = models.CharField(max_length=1)
 
