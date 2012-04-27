@@ -2,11 +2,14 @@ from django.db import models
 import pickle
 
 class Game(models.Model):
-    mode = models.CharField(max_length=8, null=True, blank=True)
-    winner = models.CharField(max_length=1, null=True, blank=True)
-    address = models.IPAddressField(blank=True, null=True)
+    player1 = models.CharField(max_length=15)
+    piece1 = models.CharField(max_length=1)
+    player2 = models.CharField(max_length=15)
+    piece2 = models.CharField(max_length=1)
+    winner = models.CharField(max_length=1)
+    address = models.IPAddressField()
     board = models.CharField(max_length=100, default=str(pickle.dumps([''] * 9)))
-    last_move = models.CharField(max_length=1, null=True, blank=True)
+    last_move = models.CharField(max_length=1)
 
     def __unicode__(self):
         board = pickle.loads(str(self.board))

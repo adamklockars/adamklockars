@@ -9,6 +9,18 @@
 <link href="{{STATIC_URL}}css/resume.css" rel="stylesheet">
 <link rel="shortcut icon" href="{{STATIC_URL}}ico/favicon.ico">
 <script src="{{STATIC_URL}}js/jquery.js"></script>
+<script type="text/javascript">
+  function toggle_visibility(id) {
+    var a = document.getElementById('player_select');
+    var b = document.getElementById(id);
+    if(a.style.display != 'none')
+      a.style.display = 'none';
+      b.style.display = 'block';
+    else
+      a.style.display = 'block';
+      b.style.display = 'none';
+  }
+</script>
 <style>
 <style>
 body {
@@ -56,13 +68,47 @@ legend {
   <div class="content" id="player_select">
     <div class="row">
       <div class="login-form">
+        <a class="btn" href="#" onclick="toggle_visibility('computer_form');">ONE PLAYER</a>
+        <BR>
+        <a class="btn" href="#" onclick="toggle_visibility('player_form');">TWO PLAYER</a>
+      </div>
+    </div>
+  </div>
+  <div class="content" id="computer_form" style="display:none;">
+    <div class="row">
+      <div class="login-form">
+        <form action="/tictactoe/start_comp/" method="post">
+          {% csrf_token %}
+          <label>Player Name</label>
+          <input type="text" name="player1" id="player1" class="span3" placeholder="Username">
+          <BR>
+          <label>Piece Select</label>
+          <input type="radio" name="piece1" id="piece1" value="X" />
+          <label for="piece1">X</label>
+          <input type="radio" name="piece2" id="piece2" value="O" />
+          <label for="piece2">O</label>
+          <BR>
+          <input class="btn" type="submit" value="START">
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="content" id="player_form" style="display:none;">
+    <div class="row">
+      <div class="login-form">
         <form action="/tictactoe/start/" method="post">
           {% csrf_token %}
-          <input type="radio" name="mode" id="computer" value="computer" />
-          <label for="computer">ONE PLAYER</label>
+          <label>Player1 Name</label>
+          <input type="text" name="player1" id="player1" class="span3" placeholder="Username">
           <BR>
-          <input type="radio" name="mode" id="human" value="human" />
-          <label for="human">TWO PLAYER</label>
+          <label>Player1 Piece Select</label>
+          <input type="radio" name="piece1" id="piece1" value="X" />
+          <label for="piece1">X</label>
+          <input type="radio" name="piece2" id="piece2" value="O" />
+          <label for="piece2">O</label>
+          <BR>
+          <label>Player2 Name</label>
+          <input type="text" name="player2" id="player2" class="span3" placeholder="Username">
           <BR>
           <input class="btn" type="submit" value="START">
         </form>
