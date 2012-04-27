@@ -10,7 +10,7 @@ def init(request):
 
 def start(request):
     g = Game.objects.create()
-    g.address.add(request.META.get('HTTP_X_FORWARDED_FOR', '') or request.META.get('REMOTE_ADDR'))
+    g.address.add(request.META['HTTP_X_FORWARDED_FOR'] or request.META.get['REMOTE_ADDR'])
     g.player1.add(request.POST['player1'])
     g.piece1.add(request.POST['piece1'])
     g.player2.add(request.POST['player2'])

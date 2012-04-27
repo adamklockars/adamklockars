@@ -9,18 +9,6 @@
 <link href="{{STATIC_URL}}css/resume.css" rel="stylesheet">
 <link rel="shortcut icon" href="{{STATIC_URL}}ico/favicon.ico">
 <script src="{{STATIC_URL}}js/jquery.js"></script>
-<script type="text/javascript">
-  function toggle_visibility(id) {
-    var a = document.getElementById('player_select');
-    var b = document.getElementById(id);
-    if(a.style.display != 'none')
-      a.style.display = 'none';
-      b.style.display = 'block';
-    else
-      a.style.display = 'block';
-      b.style.display = 'none';
-  }
-</script>
 <style>
 <style>
 body {
@@ -64,13 +52,19 @@ legend {
 </style>
 </head>
 <body>
+<script type="text/javascript">
+  function toggle_visibility(id1, id2) {
+      document.getElementById(id1).style.display = "none";
+      document.getElementById(id2).style.display = "block";
+  }
+</script>
 <div class="container_main">
   <div class="content" id="player_select">
     <div class="row">
       <div class="login-form">
-        <a class="btn" href="#" onclick="toggle_visibility('computer_form');">ONE PLAYER</a>
+        <a class="btn" href="#" onclick="toggle_visibility('player_select', 'computer_form');">ONE PLAYER</a>
         <BR>
-        <a class="btn" href="#" onclick="toggle_visibility('player_form');">TWO PLAYER</a>
+        <a class="btn" href="#" onclick="toggle_visibility('player_select', 'player_form');">TWO PLAYER</a>
       </div>
     </div>
   </div>
@@ -88,7 +82,10 @@ legend {
           <input type="radio" name="piece2" id="piece2" value="O" />
           <label for="piece2">O</label>
           <BR>
-          <input class="btn" type="submit" value="START">
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Start</button>
+            <a class="btn" href="#" onclick="toggle_visibility('computer_form', 'player_select');">Cancel</a>
+          </div>
         </form>
       </div>
     </div>
@@ -110,7 +107,10 @@ legend {
           <label>Player2 Name</label>
           <input type="text" name="player2" id="player2" class="span3" placeholder="Username">
           <BR>
-          <input class="btn" type="submit" value="START">
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Start</button>
+            <a class="btn" href="#" onclick="toggle_visibility('player_form', 'player_select');">Cancel</a>
+          </div>
         </form>
       </div>
     </div>
