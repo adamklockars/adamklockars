@@ -10,7 +10,6 @@
 <link rel="shortcut icon" href="{{STATIC_URL}}ico/favicon.ico">
 <script src="{{STATIC_URL}}js/jquery.js"></script>
 <style>
-<style>
 body {
   padding-top: 44px;
   display: inline;
@@ -43,25 +42,25 @@ h4 {
   }
 </script>
 <div class="container_main">
- <div class="well" style="background-color:#BDBDBD;">
-  <div class="content" id="player_select">
+  <div class="well" style="background-color:#BDBDBD;">
+    <div class="content" id="player_select">
       <div class="login-form">
         <a class="btn" style="width:70px;margin:auto;" href="#" onclick="toggle_visibility('player_select', 'computer_form');">ONE PLAYER</a>
         <BR>
         <a class="btn" style="width:70px; "href="#" onclick="toggle_visibility('player_select', 'player_form');">TWO PLAYER</a>
       </div>
-  </div>
-  <div class="content" id="computer_form" style="display:none;">
+    </div>
+    <div class="content" id="computer_form" style="display:none;">
       <div class="login-form">
         <form action="/tictactoe/start_comp/" method="post">
           {% csrf_token %}
           <label>Player Name</label>
-          <input type="text" name="player1" id="player1" class="span3" placeholder="Username" style="height:30px;>
+          <input type="text" name="player1" id="player1" class="span3" placeholder="Username" style="height:30px;">
           <BR>
           <div class="control-group">
             <label class="control-label" for="piece1">Piece Select</label>
             <div class="controls">
-              <select id="piece1">
+              <select id="piece1" name="piece1">
                 <option value="X">X</option>
                 <option value="O">O</option>
               </select>
@@ -74,26 +73,25 @@ h4 {
           </div>
         </form>
       </div>
-  <div class="content" id="player_form" style="display:none;">
+    </div>
+    <div class="content" id="player_form" style="display:none;">
       <div class="login-form">
         <form action="/tictactoe/start/" method="post">
           {% csrf_token %}
           <label>Player 1 Name</label>
-          <input type="text" name="player1" id="player1" class="span3" placeholder="Username" style="height:30px;>
+          <input type="text" name="player1" id="player1" class="span3" placeholder="Username" style="height:30px;">
+          <BR>
+          <label>Player2 Name</label>
+          <input type="text" name="player2" id="player2" class="span3" placeholder="Username" style="height:30px;">
           <BR>
           <div class="control-group">
             <label class="control-label" for="piece1">Player 1 Piece Select</label>
             <div class="controls">
-              <select id="piece1">
+              <select id="piece1" name="piece1">
                 <option value="X">X</option>
                 <option value="O">O</option>
               </select>
             </div>
-          </div>
-          <BR>
-          <div>
-          <label>Player2 Name</label>
-          <input type="text" name="player2" id="player2" class="span3" placeholder="Username" style="height:30px;>
           </div>
           <BR>
           <div>
@@ -102,8 +100,8 @@ h4 {
           </div>
         </form>
       </div>
+    </div>
   </div>
- </div>
 </div>
 
 
