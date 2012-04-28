@@ -16,24 +16,6 @@ body {
   display: inline;
   text-align: center;
 }
-.container_main > .content {
-  background-color: black;
-  padding: 25px;
-  margin-left: 0px;
-  margin-right: 0px;
-  margin-top: 60px;
-   -webkit-border-radius: 10px 10px 10px 10px;
-      -moz-border-radius: 10px 10px 10px 10px;
-           border-radius: 10px 10px 10px 10px;
-   -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.15);
-      -moz-box-shadow: 0 1px 2px rgba(0,0,0,.15);
-           box-shadow: 0 1px 2px rgba(0,0,0,.15);
-  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#333333), to(#222222));
-}
-.login-form {
-  margin-left: 0px;
-  text-align: left;
-}
 h2 {
   color: #A2B5CD;
   text-align: center;
@@ -44,10 +26,12 @@ h3 {
 h4 {
   color: #A2B5CD;
 }
-legend {
-  margin-right: -50px;
-  font-weight: bold;
-  color: #404040;
+.container_main {
+    margin: 50px auto auto;
+    padding: 10px;
+    width: 600px;
+    height: 600px;
+    text-align: center;
 }
 </style>
 </head>
@@ -59,62 +43,68 @@ legend {
   }
 </script>
 <div class="container_main">
+ <div class="well" style="background-color:#BDBDBD;">
   <div class="content" id="player_select">
-    <div class="row">
       <div class="login-form">
-        <a class="btn" href="#" onclick="toggle_visibility('player_select', 'computer_form');">ONE PLAYER</a>
+        <a class="btn" style="width:70px;margin:auto;" href="#" onclick="toggle_visibility('player_select', 'computer_form');">ONE PLAYER</a>
         <BR>
-        <a class="btn" href="#" onclick="toggle_visibility('player_select', 'player_form');">TWO PLAYER</a>
+        <a class="btn" style="width:70px; "href="#" onclick="toggle_visibility('player_select', 'player_form');">TWO PLAYER</a>
       </div>
-    </div>
   </div>
   <div class="content" id="computer_form" style="display:none;">
-    <div class="row">
       <div class="login-form">
         <form action="/tictactoe/start_comp/" method="post">
           {% csrf_token %}
           <label>Player Name</label>
-          <input type="text" name="player1" id="player1" class="span3" placeholder="Username">
+          <input type="text" name="player1" id="player1" class="span3" placeholder="Username" style="height:30px;>
           <BR>
-          <label>Piece Select</label>
-          <input type="radio" name="piece1" id="piece1" value="X" />
-          <label for="piece1">X</label>
-          <input type="radio" name="piece2" id="piece2" value="O" />
-          <label for="piece2">O</label>
+          <div class="control-group">
+            <label class="control-label" for="piece1">Piece Select</label>
+            <div class="controls">
+              <select id="piece1">
+                <option value="X">X</option>
+                <option value="O">O</option>
+              </select>
+            </div>
+          </div>
           <BR>
-          <div class="form-actions">
+          <div>
             <button type="submit" class="btn btn-primary">Start</button>
-            <a class="btn" href="#" onclick="toggle_visibility('computer_form', 'player_select');">Cancel</a>
+            <button class="btn" href="#" onclick="toggle_visibility('computer_form', 'player_select');">Cancel</button>
           </div>
         </form>
       </div>
-    </div>
   </div>
   <div class="content" id="player_form" style="display:none;">
-    <div class="row">
       <div class="login-form">
         <form action="/tictactoe/start/" method="post">
           {% csrf_token %}
-          <label>Player1 Name</label>
-          <input type="text" name="player1" id="player1" class="span3" placeholder="Username">
+          <label>Player 1 Name</label>
+          <input type="text" name="player1" id="player1" class="span3" placeholder="Username" style="height:30px;>
           <BR>
-          <label>Player1 Piece Select</label>
-          <input type="radio" name="piece1" id="piece1" value="X" />
-          <label for="piece1">X</label>
-          <input type="radio" name="piece2" id="piece2" value="O" />
-          <label for="piece2">O</label>
+          <div class="control-group">
+            <label class="control-label" for="piece1">Player 1 Piece Select</label>
+            <div class="controls">
+              <select id="piece1">
+                <option value="X">X</option>
+                <option value="O">O</option>
+              </select>
+            </div>
+          </div>
           <BR>
+          <div>
           <label>Player2 Name</label>
-          <input type="text" name="player2" id="player2" class="span3" placeholder="Username">
+          <input type="text" name="player2" id="player2" class="span3" placeholder="Username" style="height:30px;>
+          </div>
           <BR>
-          <div class="form-actions">
+          <div>
             <button type="submit" class="btn btn-primary">Start</button>
-            <a class="btn" href="#" onclick="toggle_visibility('player_form', 'player_select');">Cancel</a>
+            <button class="btn" href="#" onclick="toggle_visibility('player_form', 'player_select');">Cancel</button>
           </div>
         </form>
       </div>
-    </div>
   </div>
+ </div>
 </div>
 
 

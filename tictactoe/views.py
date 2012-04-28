@@ -16,8 +16,10 @@ def start(request):
     g.player2=request.POST['player2']
     if request.POST['piece1'] == 'X':
         g.piece2='O'
+        g.last_move='O'
     else:
         g.piece2='X'
+        g.last_move='X'
     g.save()
     return HttpResponseRedirect(reverse('tictactoe.views.game', args=(g.id,)))
 
@@ -29,11 +31,47 @@ def start_comp(request):
     g.player2='Computer'
     if request.POST['piece1'] == 'X':
         g.piece2='O'
+        g.last_move='O'
     else:
         g.piece2='X'
+        g.last_move='X'
     g.save()
     return HttpResponseRedirect(reverse('tictactoe.views.game', args=(g.id,)))
 
 def game(request, game_id):
+    print "Enter game function"
     g = get_object_or_404(Game, pk=game_id)
-    return render_to_response('tictactoe/game.html', {'game': g}, context_instance=RequestContext(request))
+
+    piece_turn = 'X' if g.last_move == 'O' else 'O'
+    player_turn = g.player1 if g.piece2 == g.last_move else g.player2
+
+    board = g.get_board()
+    winner = g.get_winner()
+    if winner == g.piece1:
+         winner = g.player1
+    elif winner == g.piece2:
+         winner = g.player2
+
+    context = { 'game_id': game_id,
+                'board': board,
+                'player1': g.player1,
+                'piece1': g.piece1,
+                'player2': g.player2,
+                'piece2': g.piece2,
+                'piece_turn': piece_turn,
+                'player_turn': player_turn,
+                'winner': winner,
+                'endofgame': False if winner == None else True
+              }
+    return render_to_response('tictactoe/game.html', context, context_instance=RequestContext(request))
+
+def move(request, game_id):
+    print "Hello User, you're lookin' fine!"
+    g = get_object_or_404(Game, pk=game_id)
+    move = int(request.POST['move'])
+    player = 'X' if g.last_move == 'O' else 'O'
+    g.make_move(player, move)
+
+    winner = g.get_winner()
+
+    return render_to_response('tictactoe/init.html', context_instance=RequestContext(request))
