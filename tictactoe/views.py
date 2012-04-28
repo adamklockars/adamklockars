@@ -36,4 +36,4 @@ def start_comp(request):
 
 def game(request, game_id):
     g = get_object_or_404(Game, pk=game_id)
-    return render_to_response('tictactoe/game.html', {'game': g})
+    return render_to_response('tictactoe/game.html', {'game': g}, context_instance=RequestContext(request))
