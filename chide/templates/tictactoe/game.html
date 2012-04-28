@@ -47,7 +47,8 @@ function create_move(move) {
         var player_turn = "{{ player_turn }}";
         var piece_turn = "{{ piece_turn }}";
         var current_player = "{{ current_player }}";
-        var open_moves = "{{ open_moves }}";
+        var game_id = "{{ game_id }}";
+        var board = "{{ board }}";
         var create_url = "{% url tictactoe.views.move game_id %}";
     </script>
     <div class="container">
@@ -66,7 +67,7 @@ function create_move(move) {
          {% endfor %}
          </div>
        {% else %}
-         <div class="well" style="background-color:green;width:270px;height:60px;margin:50px auto 50px auto;">
+         <div class="well" style="background-color:green;width:150px;height:60px;margin:50px auto 50px auto;">
          {% if winner == "" %}
             <h3 style="color:yellow;">TIE</h3>
          {% else %}
