@@ -57,9 +57,9 @@ function create_move(move) {
        {% if winner == None %}
          <div>{{ player_turn }} ({{ piece_turn }})'s turn</div>
          <div class="well" style="background-color:#6E6E6E;margin:auto;width:307px;">
-         {% for row in board %}
+         {% for set in board %}
             <div class="square" id="square{{ forloop.counter0 }}" onclick="create_move('{{ forloop.counter0 }}')">
-               <div style="margin-top: 40px;">{{ row }}</div>
+               <div style="margin-top: 40px;">{{ set }}</div>
             </div>
             {% if forloop.counter|divisibleby:3 %}
             <br style="clear:both;"/>
