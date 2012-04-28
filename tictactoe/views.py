@@ -49,8 +49,11 @@ def game(request, game_id):
     winner = g.get_winner()
     if winner == g.piece1:
          winner = g.player1
+         g.winner = g.piece1
     elif winner == g.piece2:
          winner = g.player2
+         g.winner = g.piece2
+    g.save()
 
     context = { 'game_id': game_id,
                 'board': board,
