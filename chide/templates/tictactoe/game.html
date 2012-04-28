@@ -67,11 +67,13 @@ function create_move(move) {
          {% endfor %}
          </div>
        {% else %}
-         <div class="well" style="background-color:green;width:150px;height:60px;margin:50px auto 50px auto;">
+         <div class="well" style="background-color:green;width:200px;height:100px;margin:50px auto 50px auto;">
          {% if winner == "" %}
             <h3 style="color:yellow;">TIE</h3>
+            <BR>
          {% else %}
-            <h3 style="color:red;">{{ winner }} WINS</h3>
+            <h3 style="color:red;">{{ winner }}</h3>
+            <h3 style="color:red;">WINS</h3>
          {% endif %}
             <a class="btn btn-primary" href="http://www.adamklockars.com/tictactoe">PLAY AGAIN</a>
          </div>

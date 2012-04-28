@@ -27,7 +27,8 @@ class Game(models.Model):
             self.board = pickle.dumps(board)
             self.save()
             board = self.get_board()
-            if self.player2 == 'Computer' and self.get_open_moves():
+            var = self.get_winner()
+            if self.player2 == 'Computer' and self.get_open_moves() and var == None:
                 move = random.randrange(0,8)
                 while board[move] != '':
                     move = random.randrange(0,8)
