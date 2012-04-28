@@ -39,7 +39,6 @@ def start_comp(request):
     return HttpResponseRedirect(reverse('tictactoe.views.game', args=(g.id,)))
 
 def game(request, game_id):
-    print "Enter game function"
     g = get_object_or_404(Game, pk=game_id)
 
     piece_turn = 'X' if g.last_move == 'O' else 'O'
@@ -68,7 +67,6 @@ def game(request, game_id):
     return render_to_response('tictactoe/game.html', context, context_instance=RequestContext(request))
 
 def move(request, game_id):
-    print "Hello User, you're lookin' fine!"
     g = get_object_or_404(Game, pk=game_id)
     move = int(request.POST['move'])
     player = 'X' if g.last_move == 'O' else 'O'

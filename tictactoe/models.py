@@ -1,4 +1,5 @@
 from django.db import models
+import random
 import pickle
 
 class Game(models.Model):
@@ -20,9 +21,19 @@ class Game(models.Model):
 
     def make_move(self, player, move):
         board = self.get_board()
-        board[move] = player
+        if board[move] == '':
+            board[move] = player
+            self.last_move = player
+            self.board = pickle.dumps(board)
+            self.save()
+            board = self.get_board()
+            if self.player2 == 'Computer' and self.get_open_moves():
+                move = random.randrange(0,8)
+                while board[move] != '':
+                    move = random.randrange(0,8)
+                board[move] = self.piece2
+                self.last_move = self.piece2
         self.board = pickle.dumps(board)
-        self.last_move = player
         self.save()
 
     def get_open_moves(self):
@@ -30,7 +41,7 @@ class Game(models.Model):
         return [position for position in range(9) if board[position] == '']
 
     def set_equal(self, list):
-            return not list or list == [list[0]] * len(list)
+        return not list or list == [list[0]] * len(list)
 
     def get_winner(self):
         board = self.get_board()

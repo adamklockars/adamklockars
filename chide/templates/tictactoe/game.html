@@ -6,6 +6,7 @@
 <link href="{{STATIC_URL}}css/bootstrap-responsive.css" rel="stylesheet">
 <link href="{{STATIC_URL}}css/docs.css" rel="stylesheet">
 <link href="{{STATIC_URL}}css/prettify.css" rel="stylesheet">
+<link href="{{STATIC_URL}}css/resume.css" rel="stylesheet">
 <link rel="shortcut icon" href="{{STATIC_URL}}ico/favicon.ico">
 <script type="text/javascript" src="{{STATIC_URL}}js/jquery.js"></script>
 <script type="text/javascript" src="{{STATIC_URL}}js/tictactoe.js"></script>
@@ -14,15 +15,6 @@ function create_move(move) {
     $.post(create_url, {'move': move, 'csrfmiddlewaretoken': '{{ csrf_token }}'},
         function(data) {
     });
-    if (player2 == 'Computer') {
-        var random_number=Math.floor(Math.random()*9).toString();
-        while (random_number.indexOf(open_moves) != -1) {
-             random_number=Math.floor(Math.random()*9).toString();
-        } 
-         $.post(create_url, {'move': random_number, 'csrfmiddlewaretoken': '{{ csrf_token }}'},
-             function(data) {
-         });
-    }
     document.location.reload();
 }
 </script>
@@ -55,8 +47,7 @@ function create_move(move) {
         var player_turn = "{{ player_turn }}";
         var piece_turn = "{{ piece_turn }}";
         var current_player = "{{ current_player }}";
-        var game_id = "{{ game_id }}";
-        Var open_moves = "{{ open_moves }}";
+        var open_moves = "{{ open_moves }}";
         var create_url = "{% url tictactoe.views.move game_id %}";
     </script>
     <div class="container">
