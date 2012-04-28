@@ -25,21 +25,21 @@ class Game(models.Model):
         self.last_move = player
         self.save()
 
-    def get_valid_moves(self):
+    def get_open_moves(self):
         board = self.get_board()
         return [position for position in range(9) if board[position] == '']
 
-    def all_equal(self, list):
+    def set_equal(self, list):
             return not list or list == [list[0]] * len(list)
 
     def get_winner(self):
         board = self.get_board()
         winning_sets = [[0,1,2], [3,4,5], [6,7,8], [0,3,6], [1,4,7], [2,5,8], [0,4,8], [2,4,6]]
         for set in winning_sets:
-            if board[set[0]] != '' and self.all_equal([board[i] for i in set]):
+            if board[set[0]] != '' and self.set_equal([board[i] for i in set]):
                 return board[set[0]]
 
-        if not self.get_valid_moves():
+        if not self.get_open_moves():
             return ''
 
         return None

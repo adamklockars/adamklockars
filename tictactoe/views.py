@@ -45,6 +45,7 @@ def game(request, game_id):
     piece_turn = 'X' if g.last_move == 'O' else 'O'
     player_turn = g.player1 if g.piece2 == g.last_move else g.player2
 
+    open_moves = g.get_open_moves()
     board = g.get_board()
     winner = g.get_winner()
     if winner == g.piece1:
@@ -61,6 +62,7 @@ def game(request, game_id):
                 'piece_turn': piece_turn,
                 'player_turn': player_turn,
                 'winner': winner,
+                'open_moves': open_moves,
                 'endofgame': False if winner == None else True
               }
     return render_to_response('tictactoe/game.html', context, context_instance=RequestContext(request))

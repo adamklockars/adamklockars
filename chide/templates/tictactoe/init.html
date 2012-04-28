@@ -55,7 +55,7 @@ h4 {
         <form action="/tictactoe/start_comp/" method="post">
           {% csrf_token %}
           <label>Player Name</label>
-          <input type="text" name="player1" id="player1" class="span3" placeholder="Username" style="height:30px;">
+          <input type="text" name="player1" id="player1" class="span3" placeholder="Username" maxlength="15" style="height:30px;">
           <BR>
           <div class="control-group">
             <label class="control-label" for="piece1">Piece Select</label>
@@ -79,10 +79,10 @@ h4 {
         <form action="/tictactoe/start/" method="post">
           {% csrf_token %}
           <label>Player 1 Name</label>
-          <input type="text" name="player1" id="player1" class="span3" placeholder="Username" style="height:30px;">
+          <input type="text" name="player1" id="player1" class="span3" placeholder="Username" maxlength="15" style="height:30px;">
           <BR>
           <label>Player2 Name</label>
-          <input type="text" name="player2" id="player2" class="span3" placeholder="Username" style="height:30px;">
+          <input type="text" name="player2" id="player2" class="span3" placeholder="Username" maxlength="15" style="height:30px;">
           <BR>
           <div class="control-group">
             <label class="control-label" for="piece1">Player 1 Piece Select</label>

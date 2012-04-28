@@ -6,7 +6,6 @@
 <link href="{{STATIC_URL}}css/bootstrap-responsive.css" rel="stylesheet">
 <link href="{{STATIC_URL}}css/docs.css" rel="stylesheet">
 <link href="{{STATIC_URL}}css/prettify.css" rel="stylesheet">
-<link href="{{STATIC_URL}}css/resume.css" rel="stylesheet">
 <link rel="shortcut icon" href="{{STATIC_URL}}ico/favicon.ico">
 <script type="text/javascript" src="{{STATIC_URL}}js/jquery.js"></script>
 <script type="text/javascript" src="{{STATIC_URL}}js/tictactoe.js"></script>
@@ -15,23 +14,31 @@ function create_move(move) {
     $.post(create_url, {'move': move, 'csrfmiddlewaretoken': '{{ csrf_token }}'},
         function(data) {
     });
+    if (player2 == 'Computer') {
+        var random_number=Math.floor(Math.random()*9).toString();
+        while (random_number.indexOf(open_moves) != -1) {
+             random_number=Math.floor(Math.random()*9).toString();
+        } 
+         $.post(create_url, {'move': random_number, 'csrfmiddlewaretoken': '{{ csrf_token }}'},
+             function(data) {
+         });
+    }
     document.location.reload();
 }
 </script>
 
 <style>
-.cell {
+.square {
     border: solid 1px #000;
     width: 100px;
     height: 100px;
     float: left;
     text-align: center;
     font-size: 70px;
-}
-.clear {
-    clear: both;
+    z-index: 1000;
 }
 .container {
+    color:black;
     margin: 50px auto auto;
     width: 600px;
     height: 600px;
@@ -48,7 +55,8 @@ function create_move(move) {
         var player_turn = "{{ player_turn }}";
         var piece_turn = "{{ piece_turn }}";
         var current_player = "{{ current_player }}";
-        var game_id = {{ game_id }};
+        var game_id = "{{ game_id }}";
+        Var open_moves = "{{ open_moves }}";
         var create_url = "{% url tictactoe.views.move game_id %}";
     </script>
     <div class="container">
@@ -56,10 +64,10 @@ function create_move(move) {
        <h1>{{ player1 }} VS {{ player2 }}</h1>
        {% if winner == None %}
          <div>{{ player_turn }} ({{ piece_turn }})'s turn</div>
-         <div class="well" style="background-color:#6E6E6E;margin:auto;">
+         <div class="well" style="background-color:#6E6E6E;margin:auto;width:307px;">
          {% for row in board %}
-            <div class="cell" id="cell{{ forloop.counter0 }}" onclick="create_move('{{ forloop.counter0 }}')">
-               {{ row }}
+            <div class="square" id="square{{ forloop.counter0 }}" onclick="create_move('{{ forloop.counter0 }}')">
+               <div style="margin-top: 40px;">{{ row }}</div>
             </div>
             {% if forloop.counter|divisibleby:3 %}
             <br style="clear:both;"/>
@@ -67,7 +75,7 @@ function create_move(move) {
          {% endfor %}
          </div>
        {% else %}
-         <div class="well" style="background-color:green;width:100px;height:60px;margin:50px auto 50px auto;">
+         <div class="well" style="background-color:green;width:270px;height:60px;margin:50px auto 50px auto;">
          {% if winner == "" %}
             <h3 style="color:yellow;">TIE</h3>
          {% else %}
