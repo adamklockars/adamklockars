@@ -12,10 +12,9 @@
 <script type="text/javascript" src="{{STATIC_URL}}js/tictactoe.js"></script>
 <script type="text/javascript">
 function create_move(move) {
-    $.post(create_url, {'move': move, 'csrfmiddlewaretoken': '{{ csrf_token }}'},
-        function(data) {
+    $.post(create_url, {'move': move, 'csrfmiddlewaretoken': '{{ csrf_token }}'}, function(result) {
+        $("#main").html(result);
     });
-    document.location.reload();
 }
 </script>
 
@@ -51,7 +50,7 @@ function create_move(move) {
         var board = "{{ board }}";
         var create_url = "{% url tictactoe.views.move game_id %}";
     </script>
-    <div class="container">
+    <div class="container" id="main">
        <div class="well" style="background-color:#BDBDBD;">
        <h1>{{ player1 }} VS {{ player2 }}</h1>
        {% if winner == None %}

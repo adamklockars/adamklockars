@@ -77,4 +77,4 @@ def move(request, game_id):
 
     winner = g.get_winner()
 
-    return render_to_response('tictactoe/init.html', context_instance=RequestContext(request))
+    return HttpResponseRedirect(reverse('tictactoe.views.game', args=(g.id,)))
