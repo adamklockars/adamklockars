@@ -13,7 +13,7 @@
 <script type="text/javascript">
 function create_move(move) {
     $.post(create_url, {'move': move, 'csrfmiddlewaretoken': '{{ csrf_token }}'}, function(result) {
-        $("#main").html(result);
+        $('div.container').html(result);
     });
 }
 </script>
@@ -29,10 +29,13 @@ function create_move(move) {
     z-index: 1000;
 }
 .container {
+    position: fixed;
     color:black;
-    margin: 50px auto auto;
+    top: 50px;
+    left: 50%;
     width: 600px;
     height: 600px;
+    margin-left: -300px;
     text-align: center;
 }
 </style>
