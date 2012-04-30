@@ -157,6 +157,7 @@ INSTALLED_APPS = (
     'polls',
     # 'storages'
     'tictactoe',
+    'gunicorn',
 )
 
 # A sample logging configuration. The only tangible logging

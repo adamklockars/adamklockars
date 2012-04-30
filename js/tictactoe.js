@@ -1,8 +1,8 @@
 /* Main Game Handling class */
 var TicTacToe = {
-    last_turn: {{object.last_turn}},  // Keeps a record of who's turn it is
-    board: {{object.board}},  // Keeps a record of the TicTacToe Board
-    win: {{object.get_winner()}}, // records who won if the game is over
+    last_turn: "{{object.last_turn}}",  // Keeps a record of who's turn it is
+    board: "{{object.board}}",  // Keeps a record of the TicTacToe Board
+    win: "{{object.get_winner()}}", // records who won if the game is over
     
     startGame: function() {
       // Draw the board
