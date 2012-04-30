@@ -48,10 +48,16 @@ def game(request, game_id):
     board = g.get_board()
     winner = g.get_winner()
     if winner == g.piece1:
-         winner = g.player1
+         if g.player1 == '':
+             winner = g.piece1
+         else:
+             winner = g.player1
          g.winner = g.piece1
     elif winner == g.piece2:
-         winner = g.player2
+         if g.player2 == '':
+             winner = g.piece2
+         else:
+             winner = g.player2
          g.winner = g.piece2
     g.save()
 
