@@ -1,0 +1,392 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Adam Klockars</title>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+<link href="{{STATIC_URL}}css/bootstrap.css" rel="stylesheet">
+<link href="{{STATIC_URL}}css/bootstrap-responsive.css" rel="stylesheet">
+<link href="{{STATIC_URL}}css/docs.css" rel="stylesheet">
+<link href="{{STATIC_URL}}css/prettify.css" rel="stylesheet">
+<link href="{{STATIC_URL}}css/resume.css" rel="stylesheet">
+<link rel="shortcut icon" href="{{STATIC_URL}}ico/favicon.ico">
+<script type="text/javascript" src="{{STATIC_URL}}js/jquery-1.2.6.min.js"></script>
+<script type="text/javascript">
+        $(document).ready(function() {
+              setInterval( function() {
+              var seconds = new Date().getSeconds();
+              var sdegree = seconds * 6;
+              var srotate = "rotate(" + sdegree + "deg)";
+              $("#sec").css({"-moz-transform" : srotate, "-webkit-transform" : srotate});
+              }, 1000 );
+              setInterval( function() {
+              var hours = new Date().getHours();
+              var mins = new Date().getMinutes();
+              var hdegree = hours * 30 + (mins / 2);
+              var hrotate = "rotate(" + hdegree + "deg)";
+              $("#hour").css({"-moz-transform" : hrotate, "-webkit-transform" : hrotate});
+              }, 1000 );
+              setInterval( function() {
+              var mins = new Date().getMinutes();
+              var mdegree = mins * 6;
+              var mrotate = "rotate(" + mdegree + "deg)";
+              $("#min").css({"-moz-transform" : mrotate, "-webkit-transform" : mrotate});
+              }, 1000 );
+        }); 
+</script>
+<script type="text/javascript">
+  if (navigator.appVersion.match(/Safari/) != null) {
+    var scrollLarge=new Array(253, 328, 632, 1445, 1700, 1825);
+    var scrollSmall=new Array(253, 328, 650, 1571, 1845, 1970);
+  } else if (navigator.appVersion.match(/Chrome/) != null) {
+    var scrollLarge=new Array(253, 328, 632, 1445, 1700, 1825);
+    var scrollSmall=new Array(253, 328, 650, 1571, 1845, 1970);
+  } else {
+    var scrollLarge=new Array(253, 328, 632, 1427, 1684, 1810);
+    var scrollSmall=new Array(253, 328, 650, 1572, 1827, 1953);
+  }
+  function jumpScroll(y) {
+var winW = 630, winH = 460;
+if (document.body && document.body.offsetWidth) {
+ winW = document.body.offsetWidth;
+ winH = document.body.offsetHeight;
+}
+if (document.compatMode=='CSS1Compat' &&
+    document.documentElement &&
+    document.documentElement.offsetWidth ) {
+ winW = document.documentElement.offsetWidth;
+ winH = document.documentElement.offsetHeight;
+}
+if (window.innerWidth && window.innerHeight) {
+ winW = window.innerWidth;
+ winH = window.innerHeight;
+}
+    if (winW > 1200) {
+      window.scroll(0, scrollLarge[y]); // horizontal and vertical scroll targets
+    } else {
+      window.scroll(0, scrollSmall[y]); // horizontal and vertical scroll targets 
+    }
+  }
+</script>
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-31014858-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+</head>
+<body>
+<!-- Navbar
+    ================================================== -->
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="http://www.adamklockars.com">Adam Klockars</a>
+          <div class="nav-collapse">
+            <ul class="nav">
+              <li class="active">
+                <a href="http://www.adamklockars.com">Résumé</a>
+              </li>
+              <li class="">
+                <a href="">Projects</a>
+              </li>
+              <li class="">
+                <a href="">Blog</a>
+              </li>
+              <li class="divider-vertical"></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container_main">
+<span class="body">
+<div class="container">
+<div class="header">
+  <div class="header_left">
+  <div class="profile_well">
+    <img src="https://fbcdn-profile-a.akamaihd.net/hprofile-ak-snc4/273225_122612804_7746559_n.jpg" alt="" class="pic" style="width:100%;"/>
+  </div>
+  <BR>
+  <h2><a href="http://ece.uwaterloo.ca/Undergrad/Q/">Computer Engineer</a></h2>
+  </div>
+  <div class="contact_header">
+  <div style="display:inline;">
+  <ul id="contact">
+    <li><span>Phone</span> <strong><a href="callto://+16136180950">613-618-0950</a></strong></li>
+    <li><span>Email</span> <strong><a href="mailto:adamklockars@gmail.com?Subject=Job%20Opportunity">adamklockars@gmail.com</a></strong></li>
+    <li><span>Address</span> <strong2><a href="http://maps.google.ca/maps?hl=en&q=550+westmount+rd.+west+kitchener+ontario+canada&gs_upl=&bav=on.2,or.r_gc.r_pw.r_cp.r_qf.,cf.osb&biw=1676&bih=839&ix=seb&ion=1&um=1&ie=UTF-8&hq=&hnear=0x882bf4381895236d:0x1c55c21aa57405ce,550+Westmount+Rd+W,+Kitchener,+ON+N2M+2G2&gl=ca&ei=ztQ0T_XgLarm0QHWyIXBAg&sa=X&oi=geocode_result&ct=title&resnum=1&ved=0CB8Q8gEwAA">550 Westmount Rd. W, Apt. 303, Kitchener, ON, N2M 5G5</a></strong2></li>
+  </ul>
+  </div>
+<div class="social">
+<!-- Facebook button -->
+<a href="http://www.facebook.com/Tatum33">
+<img src="{{STATIC_URL}}images/facebook.png"/>
+</a>
+ <!-- Twitter button -->
+<a href="http://www.twitter.com/adamklockars">
+<img src="{{STATIC_URL}}images/twitter.png"/>
+</a>
+<!-- LinkedIn button -->
+<a href="http://ca.linkedin.com/pub/adam-klockars/27/497/a56">
+<img src="{{STATIC_URL}}images/LinkedIn.png"/>
+</a>
+<!-- Youtube button -->
+<a href="http://www.youtube.com/adamklockars">
+<img src="{{STATIC_URL}}images/youtube.png"/>
+</a>
+</div>
+  </div>
+  <div class="clock_header">
+    <ul id="clock">	
+   	<li id="sec"></li>
+   	<li id="hour"></li>
+	<li id="min"></li>
+    </ul>
+  </div>
+</div>
+<div class="container">
+<!-- Masthead
+================================================== -->
+<header class="jumbotron subhead" id="overview">
+  <div class="subnav">
+    <ul class="nav nav-pills">
+      <li><a href="javascript:jumpScroll(0)">Objective</a></li>
+      <li><a href="javascript:jumpScroll(1)">Education</a></li>
+      <li><a href="javascript:jumpScroll(2)">Experience</a></li>
+      <li><a href="javascript:jumpScroll(3)">Skills</a></li>
+      <li><a href="javascript:jumpScroll(4)">Volunteer</a></li>
+      <li><a href="javascript:jumpScroll(5)">Interests</a></li>
+    </ul>
+  </div>
+</header>
+</div>
+<div id="about">
+<div class="section" id="objective">
+    <h5>Objective</h5>
+     <div class="item">
+    <p>To obtain work experience that will provide growth and development opportunities in both my professional and personal life, as well as cultivate work associations that will aid in the advancement of my career.</p>
+  </div>
+  </div>
+<div class="section" id="education">
+  <h5>Education</h5>
+  <div class="item">
+    <h3><a href="http://www.uwaterloo.ca/">University of Waterloo</a></h3>
+    <h4>Waterloo, ON, Canada</h4>
+    <h4>Bachelor of Applied Science, Honours, Computer Engineering</h4>
+    <div class="date">September 2006 - April 2012</div>
+    <div class="description">
+      <ul id="description">
+        <li>Management Sciences Option</li>
+    	<li>Relevant Courses:<i> Managerial and Engineering Economics, Intro to Computing(C#), Algorithms &amp; Data Structures(C++), Programming Languages and Translators, Digital Circuits &amp; Systems, Digital Computers, Microprocessor Systems &amp; Interface, Real-time Operating Systems, Digital Hardware Systems(VHDL), Distributed and Network Computing, Database Systems</i></li>
+  	  </ul>
+    </div>
+  </div>
+  <div class="item">
+    <h3><a href="http://en.wikipedia.org/wiki/Kirkland_Lake">Kirkland Lake Collegiate and Vocational Institute</a></h3>
+    <h4>Kirkland Lake, ON, Canada</h4>
+    <h4>Ontario Secondary School Diploma</h4>
+    <div class="date">September 2002 - June 2006</div>
+    <div class="description">
+      <ul id="description">
+    	<li>Relevant Courses:<i> Computer Engineering, Data Management</i></li>
+  	  </ul>
+    </div>
+  </div>
+</div>
+<div class="section" id="experience">
+  <h5>Experience</h5>
+  <div class="item">
+    <h3><a href="http://www.chide.it/">Chide.it</a></h3>
+    <h4>Ottawa, ON, Canada</h4>
+    <h4>Web Application Developer</h4>
+    <div class="date">May 2012 - Present</div>
+    <div class="description">
+      <ul id="description">
+        <li>Communicate with customers when required, in order to convey the status of projects and enhancements</li>
+        <li>Assist account managers when required, to communicate with customers and resolve outstanding software issues</li>
+        <li>Develop and/or implement enhancements, features and bug fixes on Fluidsurveys, ReviewRoom and other products that the company may develop in the future</li>
+        <li>Learn and become proficient in technologies used by Chide.it Inc., including, but not limited to Django/Python, jQuery/Javascript, Adobe Flex, Bash Scripts and MySQL</li>
+          </ul>
+    </div>
+  </div>
+  <div class="item">
+    <h3><a href="http://www.cisco.com/">Cisco Systems</a></h3>
+    <h4>Ottawa, ON, Canada</h4>
+    <h4>ASIC Design Verification Engineer</h4>
+    <div class="date">September 2011 - December 2011</div>
+    <div class="description">
+      <ul id="description">
+    	<li>Monitored and managed block regression testing for code coverage closure</li>
+    	<li>Automated waveform acquisition for the calculation of power usage based on activity factors</li>
+    	<li>Developed and formally verified a re-use bypass module for multiport memory reads and writes, for future ASIC design verification usage</li>
+    	<li>Edited SystemVerilog Assertions to eliminate errors related to incorrect case specifications</li>
+    	<li>Widened my knowledge of the ASIC development timeline to both pre and post silicon verification</li>
+  	  </ul>
+    </div>
+  </div>
+  <div class="item">
+    <h3><a href="http://www.broadcom.com/">Broadcom Corporation</a></h3>
+    <h4>Ottawa, ON, Canada</h4>
+    <h4>ASIC Verification Software Designer</h4>
+    <div class="date">January 2010 - April 2010, September 2010 - December 2010</div>
+    <div class="description">
+      <ul id="description">
+    	<li>Performed ASIC block verification testing and debugging in a lab environment</li>
+    	<li>Contributed to the development of the ASIC block verification methodology through TCL and Python code fixes and updates</li>
+    	<li>Familiarized myself with the technology, tools, techniques, and equipment associated with networking protocols and the Broadband industry</li>
+    	<li>Created testing environment and test cases for the newly added Energy Efficient Ethernet features</li>
+    	<li>Managed testing schedule for Broadcom’s System-On-Chip ethernet switch solution</li>
+  	  </ul>
+    </div>
+  </div>
+  <div class="item">
+    <h3><a href="http://www.gdcanada.com/">General Dynamics Canada</a></h3>
+    <h4>Ottawa, ON, Canada</h4>
+    <h4>Maritime Helicopter Project - Lab Support Team</h4>
+    <div class="date">September 2008 - December 2008, May 2009 - August 2009</div>
+    <div class="description">
+      <ul id="description">
+    	<li>Assisted in the design and creation of a new testing lab for the mission data and management system as well as the maintenance required to keep the lab in an operational state</li>
+    	<li>Managed the lab parts and equipment inventory, and updated the necessary documentation to keep track of the current lab configurations</li>
+    	<li>Designed test station network diagrams to keep track of the hardware configurations of each station located within the two mission data and management system labs</li>
+    	<li>Updated software and firmware versions on test stations using a x-term Unix shell to connect with the single board computers that make up the mission data and management computer</li>
+    	<li>Installed and maintained Solaris 10 and VxWorks 5.5 operating systems on 6U single board computers</li>
+  	  </ul>
+    </div>
+  </div>
+  <div class="item">
+    <h3><a href="http://www.ewa-canada.com/">Electronic Warfare Associates - Canada</a></h3>
+    <h4>Ottawa, ON, Canada</h4>
+    <h4>IT Security Analyst</h4>
+    <div class="date">January 2007 - August 2007, January 2008 - April 2008</div>
+    <div class="description">
+      <ul id="description">
+    	<li>Compiled testing procedures for Interac, VISA, and Mastercard testing requirements to reduce the training time required for new employees</li>
+    	<li>Developed physical attack methods against payment transaction devices to test for weaknesses and help raise the standards implemented for testing</li>
+    	<li>Authored Interac, VISA, and Mastercard test result and observation reports for product certifications</li>
+    	<li>Maintained company's intranet site through frequent updates</li>
+  	  </ul>
+    </div>
+  </div>
+</div>
+<div class="section" id="skills">
+  <h5>Skills</h5>
+  <div class="item">
+    <div class="description2">
+    <ul id="description2">
+    	<li>Variety of experience in C, C++, C#, Objective-C, Perl, TCL, Ruby, Python, Verilog, SystemVerilog, VHDL, and Java</li>
+    	<li>Website development using PHP, CSS, JavaScript, and jQuery  </li>
+    	<li>Solaris 10, Fedora 10, Windows XP and 7, Mac OS X and VxWorks 5.5 OS experience</li>
+    	<li>Experience with Unix shells and knowledge of common functionality and utilities</li>
+    	<li>Previous usage of familiar screen-oriented text editors (vi, pico, emacs, gvim)</li>
+    	<li>Pre and Post Silicon ASIC Verification experience</li>
+    	<li>Interac, VISA, and Mastercard testing experience for the certification of payment transaction devices</li>
+    	<li>Experience with the implementation of cryptographic algorithms used in the secure transfer of data</li>
+    	<li>Extensive report compilation experience acquired during the creation of product certifications reports</li>
+    	<li>Training and hands-on experience with software development and management tools (ClearQuest and ClearCase)</li>
+    	<li>Familiarity with Apache Subversion (svn) and Git revision control systems</li>
+    	<li>Good working knowledge of Microsoft tools suite (Excel, Word, PowerPoint, Visio, Visual Studio, etc.)</li>
+  	</ul>
+  	</div>  
+  </div>
+</div>
+<div class="section" id="volunteer">
+<h5>Volunteer Experience</h5>
+<div class="item">
+  <h3><a href="http://hometeamsonline.com/teams/default.asp?s=hockey&t=c&u=KLMHA">Kirkland Lake Minor Hockey Association</a></h3>
+    <div class="date">October 2001 - March 2006</div>
+    <div class="description">
+      <ul id="description">
+    	<li>Coaching assistant for younger age groups</li>
+    	<li>Organized registration forms to save time for returning hockey families</li>
+    	<li>Given scoreboard and scorekeeper duties for tournament games</li>
+  	  </ul>
+    </div>
+  </div>
+</div>
+<div class="section" id="interests">
+<h5>Activities &amp; Interests</h5>
+<div class="item">
+  <h3><a href="http://www.deezyr.com">Deezyr - Product Recommendation Engine</a></h3>
+    <div class="date">January 2011 - Present</div>
+    <div class="description">
+      <ul id="description">
+    	<li>iOS application development and support</li>
+    	<li>Front-end website design and integration</li>
+    	<li>Product barcode tagging and mapping</li>
+  	  </ul>
+    </div>
+  </div>
+  <div class="item">
+  <h3>Recreational Activities</h3>
+    <div class="description">
+      <ul id="description">
+    	<li>Intramural ice hockey, ball hockey, golf, snowboarding, snowmobiling, fishing, and hunting</li>
+    	<li>Strategic computer and video games; including, but not limited to: RPG, FPS, and CMS</li>
+  	  </ul>
+  </div>
+</div>
+</div>
+</div>
+<!-- Footer
+      ================================================== -->
+      <footer class="footer">
+        <p class="pull-right"><a href="#">Back to top</a></p>
+        <p></p>
+      </footer>
+
+    </div><!-- /container -->
+
+
+
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+    <script src="{{STATIC_URL}}js/jquery.js"></script>
+    <script src="{{STATIC_URL}}js/prettify.js"></script>
+    <script src="{{STATIC_URL}}js/bootstrap-transition.js"></script>
+    <script src="{{STATIC_URL}}js/bootstrap-alert.js"></script>
+    <script src="{{STATIC_URL}}js/bootstrap-modal.js"></script>
+    <script src="{{STATIC_URL}}js/bootstrap-dropdown.js"></script>
+    <script src="{{STATIC_URL}}js/bootstrap-scrollspy.js"></script>
+    <script src="{{STATIC_URL}}js/bootstrap-tab.js"></script>
+    <script src="{{STATIC_URL}}js/bootstrap-tooltip.js"></script>
+    <script src="{{STATIC_URL}}js/bootstrap-popover.js"></script>
+    <script src="{{STATIC_URL}}js/bootstrap-button.js"></script>
+    <script src="{{STATIC_URL}}js/bootstrap-collapse.js"></script>
+    <script src="{{STATIC_URL}}js/bootstrap-carousel.js"></script>
+    <script src="{{STATIC_URL}}js/bootstrap-typeahead.js"></script>
+    <script src="{{STATIC_URL}}js/application.js"></script>
+
+    <!-- Analytics
+    ================================================== -->
+    <script>
+      var _gauges = _gauges || [];
+      (function() {
+        var t   = document.createElement('script');
+        t.type  = 'text/javascript';
+        t.async = true;
+        t.id    = 'gauges-tracker';
+        t.setAttribute('data-site-id', '4f0dc9fef5a1f55508000013');
+        t.src = '//secure.gaug.es/track.js';
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(t, s);
+      })();
+    </script>
+</div>
+</span>
+</body>
+</html>
