@@ -379,6 +379,10 @@ p {
   overflow: hidden;
   margin-top: 0px;
 }
+#robin {
+    width:1168px;
+    height:480px;
+}
 }
 @media screen and (max-width: 1200px) {
 .section .item {
@@ -405,6 +409,10 @@ p {
   margin-bottom: 15px;
   overflow: hidden;
   margin-top: 0px;
+}
+#robin {
+    width:920px;
+    height:480px;
 }
 }
 body.small {
@@ -444,6 +452,9 @@ body.small .section .item {
   text-align: center;
   padding-top: 10px;
   padding-bottom: 10px;
+}
+.footer {
+  margin-top:10px;
 }
 pre {
   font: 14px/20px Georgia, "Times New Roman", Times, serif;
