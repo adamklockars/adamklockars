@@ -150,10 +150,12 @@
     if(e == "header"){
       $("#subbar").removeClass("subnav-fixed");
       $(".section").css({opacity: 0.0, display: "none", padding: "10px 0 0"});
+      $(".canvas3D").css({opacity: 0.0, display: "block"}).animate({opacity: 1.0});
       $("#" + e).css({opacity: 0.0, display: "block"}).animate({opacity: 1.0});
     }
     else {
       $("#header").css({opacity: 0.0, display: "none"});
+      $(".canvas3D").css({opacity: 0.0, display: "none"});
       $("#subbar").addClass("subnav-fixed");
       $(".section").css({opacity: 0.0, display: "none", padding: "20px 0 0"});
       $("#" + e).css({opacity: 0.0, display: "block"}).animate({opacity: 1.0});
