@@ -44,7 +44,7 @@
     }
 
     // fix sub nav on scroll
-    var $win = $(window)
+    /*var $win = $(window)
       , $nav = $('.subnav')
       , $nav2 = $('.container_main')
       , navTop = $('.subnav').length && $('.subnav').offset().top - 40
@@ -65,7 +65,7 @@
         $nav.removeClass('subnav-fixed')
         $nav2.removeClass('container_main_2')
       }
-    }
+    }*/
 
     // tooltip demo
     $('.tooltip-demo.well').tooltip({
