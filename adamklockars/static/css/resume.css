@@ -382,6 +382,7 @@ p {
 #robin {
     width:1168px;
     height:480px;
+    background-color: #848484;
 }
 }
 @media screen and (max-width: 1200px) {
@@ -413,6 +414,7 @@ p {
 #robin {
     width:920px;
     height:480px;
+    background-color: #848484;
 }
 }
 body.small {
