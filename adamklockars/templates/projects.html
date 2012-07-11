@@ -10,6 +10,19 @@
 <link rel="shortcut icon" href="{{STATIC_URL}}ico/favicon.ico">
 <script type="text/javascript" src="{{STATIC_URL}}js/jquery-1.2.6.min.js"></script>
 <script src="http://www.flickrshow.co.uk/static/scripts/flickrshow-7.2.min.js"></script>
+<script type="text/javascript">
+function hasGetUserMedia() {
+  // Note: Opera builds are unprefixed.
+  return !!(navigator.getUserMedia || navigator.webkitGetUserMedia ||
+            navigator.mozGetUserMedia || navigator.msGetUserMedia);
+}
+
+if (hasGetUserMedia()) {
+  // Good to go!
+} else {
+  alert('getUserMedia() is not supported in your browser');
+}
+</script>
 </head>
 <body>
 <!-- Navbar
@@ -43,9 +56,11 @@
 <span class="body">
 <div class="container_main">
 	Image/Camera
-	<input type="file" accept="image/*" capture="camera">
+	<input type="file" accept="image/*;capture=camera">
 	Audio/Microphone
-	<input type="file" accept="audio/*" capture="microphone">
+	<input type="file" accept="audio/*;capture=microphone">
+	Video/Camera
+	<input type="file" accept="video/*;capture=camcorder">
 
 <div class="container">
 <!-- Footer
