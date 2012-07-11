@@ -10,32 +10,151 @@
 <link rel="shortcut icon" href="{{STATIC_URL}}ico/favicon.ico">
 <script type="text/javascript" src="{{STATIC_URL}}js/jquery-1.2.6.min.js"></script>
 <script src="http://www.flickrshow.co.uk/static/scripts/flickrshow-7.2.min.js"></script>
-<script type="text/javascript">
-function hasGetUserMedia() {
-  // Note: Opera builds are unprefixed.
-  return !!(navigator.getUserMedia || navigator.webkitGetUserMedia ||
-            navigator.mozGetUserMedia || navigator.msGetUserMedia);
+<script>
+function onFailSoHard(e) {
+  if (e.code == 1) {
+    alert('User denied access to their camera');
+  } else {
+    alert('getUserMedia() not supported in your browser.');
+  }
+  //e.target.src = 'http://www.html5rocks.com/en/tutorials/video/basics/Chrome_ImF.ogv';
 }
 
-if (hasGetUserMedia()) {
-	navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia;
+(function() {
+var video = document.querySelector('#basic-stream');
+var button = document.querySelector('#capture-button');
+var localMediaStream = null;
 
-	var video = document.querySelector('video');
+button.addEventListener('click', function(e) {
+  if (navigator.getUserMedia) {
+    navigator.getUserMedia('video', function(stream) {
+      video.src = stream;
+      video.controls = true;
+      localMediaStream = stream;
+    }, onFailSoHard);
+  } else if (navigator.webkitGetUserMedia) {
+    navigator.webkitGetUserMedia({video: true}, function(stream) {
+      video.src = window.webkitURL.createObjectURL(stream);
+      video.controls = true;
+      localMediaStream = stream;
+    }, onFailSoHard);
+  } else {
+    onFailSoHard({target: video});
+  }
+}, false);
 
-	if (navigator.getUserMedia) {
-  		navigator.getUserMedia({audio: true, video: true}, function(stream) {
-    		if (navigator.webkitGetUserMedia) {
-      			video.src = window.webkitURL.createObjectURL(stream);
-    		} else {
-      			video.src = stream; // Opera
-    		}
-  		}, onFailSoHard);
-	} else {
-  		video.src = 'somevideo.webm'; // fallback.
-	}
-} else {
-	alert('getUserMedia() is not supported in your browser');
+document.querySelector('#stop-button').addEventListener('click', function(e) {
+  video.pause();
+  localMediaStream.stop(); // Doesn't do anything in Chrome.
+}, false);
+})();
+
+(function() {
+var video = document.querySelector('#screenshot-stream');
+var button = document.querySelector('#screenshot-button');
+var canvas = document.querySelector('#screenshot-canvas');
+var img = document.querySelector('#screenshot');
+var ctx = canvas.getContext('2d');
+var localMediaStream = null;
+
+function sizeCanvas() {
+  // video.onloadedmetadata not firing in Chrome. See crbug.com/110938.
+  setTimeout(function() {
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+    img.height = video.videoHeight;
+    img.width = video.videoWidth;
+  }, 50);
 }
+
+function snapshot() {
+  ctx.drawImage(video, 0, 0);
+  img.src = canvas.toDataURL('image/webp');
+}
+
+button.addEventListener('click', function(e) {
+  if (localMediaStream) {
+    snapshot();
+    return;
+  }
+
+if (navigator.getUserMedia) {
+    navigator.getUserMedia('video', function(stream) {
+      video.src = stream;
+      localMediaStream = stream;
+      sizeCanvas();
+      button.textContent = 'Take Shot';
+    }, onFailSoHard);
+  } else if (navigator.webkitGetUserMedia) {
+    navigator.webkitGetUserMedia({video: true}, function(stream) {
+      video.src = window.webkitURL.createObjectURL(stream);
+      localMediaStream = stream;
+      sizeCanvas();
+      button.textContent = 'Take Shot';
+    }, onFailSoHard);
+  } else {
+    onFailSoHard({target: video});
+  }
+}, false);
+
+video.addEventListener('click', snapshot, false);
+
+document.querySelector('#screenshot-stop-button').addEventListener('click', function(e) {
+  video.pause();
+  localMediaStream.stop(); // Doesn't do anything in Chrome.
+}, false);
+})();
+
+(function() {
+var video = document.querySelector('#cssfilters-stream');
+var button = document.querySelector('#capture-button2');
+var localMediaStream = null;
+
+var idx = 0;
+var filters = [
+  'grayscale',
+  'sepia',
+  'blur',
+  'brightness',
+  'contrast',
+  'hue-rotate', 'hue-rotate2', 'hue-rotate3',
+  'saturate',
+  'invert',
+  ''
+];
+
+function changeFilter(e) {
+  var el = e.target;
+  el.className = '';
+  var effect = filters[idx++ % filters.length];
+  if (effect) {
+    el.classList.add(effect);
+  }
+}
+
+button.addEventListener('click', function(e) {
+  if (navigator.getUserMedia) {
+    navigator.getUserMedia('video, audio', function(stream) {
+      video.src = stream;
+      localMediaStream = stream;
+    }, onFailSoHard);
+  } else if (navigator.webkitGetUserMedia) {
+    navigator.webkitGetUserMedia({video: true}, function(stream) {
+      video.src = window.webkitURL.createObjectURL(stream);
+      localMediaStream = stream;
+    }, onFailSoHard);
+  } else {
+    onFailSoHard({target: video});
+  }
+}, false);
+
+document.querySelector('#stop-button2').addEventListener('click', function(e) {
+  video.pause();
+  localMediaStream.stop(); // Doesn't do anything in Chrome.
+}, false);
+
+video.addEventListener('click', changeFilter, false);
+})();
 </script>
 </head>
 <body>
@@ -75,7 +194,14 @@ if (hasGetUserMedia()) {
 	<input type="file" accept="audio/*;capture=microphone">
 	Video/Camera
 	<input type="file" accept="video/*;capture=camcorder">
+    <br>
+    <br>
+    <h3 id="toc-basic-demo">Basic demo</h3>
 
+<div style="text-align:center;">
+  <video id="basic-stream" class="videostream" autoplay></video>
+  <p><button id="capture-button">Capture video</button> <button id="stop-button">Stop</button></p>
+</div>
 <div class="container">
 <!-- Footer
       ================================================== -->
