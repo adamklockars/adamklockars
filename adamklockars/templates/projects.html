@@ -18,9 +18,23 @@ function hasGetUserMedia() {
 }
 
 if (hasGetUserMedia()) {
-  // Good to go!
+	navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia;
+
+	var video = document.querySelector('video');
+
+	if (navigator.getUserMedia) {
+  		navigator.getUserMedia({audio: true, video: true}, function(stream) {
+    		if (navigator.webkitGetUserMedia) {
+      			video.src = window.webkitURL.createObjectURL(stream);
+    		} else {
+      			video.src = stream; // Opera
+    		}
+  		}, onFailSoHard);
+	} else {
+  		video.src = 'somevideo.webm'; // fallback.
+	}
 } else {
-  alert('getUserMedia() is not supported in your browser');
+	alert('getUserMedia() is not supported in your browser');
 }
 </script>
 </head>
