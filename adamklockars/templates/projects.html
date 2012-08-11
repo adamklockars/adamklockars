@@ -1,15 +1,60 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<title>Adam Klockars</title>
+<title>Adam Klockars' Projects</title>
 <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+<style>
+#draggable { 
+  width: 150px; 
+  height: 150px; 
+  padding: 0.5em; 
+}
+.canvas {
+  width: 100%;
+  height: 800px;
+  border-style: solid;
+  border-color: #2c2c2c;
+  border-width: 5px;
+  background-color: white;
+  overflow: hidden;
+}
+</style>
 <link href="{{STATIC_URL}}css/bootstrap.css" rel="stylesheet">
 <link href="{{STATIC_URL}}css/bootstrap-responsive.css" rel="stylesheet">
 <link href="{{STATIC_URL}}css/docs.css" rel="stylesheet">
 <link href="{{STATIC_URL}}css/prettify.css" rel="stylesheet">
 <link href="{{STATIC_URL}}css/resume.css" rel="stylesheet">
 <link rel="shortcut icon" href="{{STATIC_URL}}ico/favicon.ico">
-<script src="http://www.flickrshow.co.uk/static/scripts/flickrshow-7.2.min.js"></script>
-<script type="text/javascript" src="{{STATIC_URL}}js/jquery-1.7.2.js"></script>
+<script type="text/javascript" src="{{STATIC_URL}}js/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="{{STATIC_URL}}js/jquery-ui-1.8.22.custom.min.js"></script>
+<script>
+$(function() {
+//Grab the elements
+navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia;
+var video = $('video');
+//test for getUserMedia
+if(navigator.getUserMedia) {
+  //setup callbacks
+  navigator.webkitGetUserMedia({video: true, audio: true}, function(stream) {
+    if (navigator.webkitGetUserMedia) {
+      video.src = window.webkitURL.createObjectURL(stream);
+    } else {
+      video.src = stream; // Opera
+    }
+  });
+} else {
+  video.parent().hide();
+}
+});
+</script>
+<script>
+$(function() {
+    $( "#draggable" ).draggable();
+    $('.submit').click(function(){
+      console.log($('input').val());
+      $('.canvas').append('<div id="draggable" class="ui-widget-content"><img src='+$('input').val()+' /></div>');
+    });
+});
+</script>
 </head>
 <body>
 <!-- Navbar
@@ -41,92 +86,64 @@
     </div>
 <span class="body">
 <div class="container_main">
-	Image/Camera
-	<input type="file" accept="image/*;capture=camera">
-	Audio/Microphone
-	<input type="file" accept="audio/*;capture=microphone">
-	Video/Camera
-	<input type="file" accept="video/*;capture=camcorder">
-    <br>
-    <br>
-
-<div style="text-align:center;">
-  <h3>Webcam Streaming</h3>
-  <video id="video_here" autoplay></video>
+  <div class="video_feed" style="text-align:center;">
+    <video id="video_here" autoplay></video>
+  </div>
+  <div class="img_upload">
+    <input type="file" accept="image/*;capture=camera">
+    <button class="submit" type="submit">Add</button>
+  </div>
+  <div class="canvas">
+    <div id="draggable" class="ui-widget-content">
+      <img src="{{STATIC_URL}}images/profile.jpg" width="100%" height="100%"/>
+    </div>
 </div>
-<div class="container">
+  <div class="container">
 <!-- Footer
       ================================================== -->
-      <footer class="footer">
-        <p class="pull-right"><a href="javascript:showContent('header')">Back to Main</a></p>
-        <p></p>
-      </footer>
+    <footer class="footer">
+      <p class="pull-right"><a href="javascript:showContent('header')">Back to Main</a></p>
+      <p></p>
+    </footer>
 
-    </div><!-- /container -->
+  </div><!-- /container -->
 
 
 
-    <!-- Le javascript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
-    <script src="{{STATIC_URL}}js/prettify.js"></script>
-    <script src="{{STATIC_URL}}js/bootstrap-transition.js"></script>
-    <script src="{{STATIC_URL}}js/bootstrap-alert.js"></script>
-    <script src="{{STATIC_URL}}js/bootstrap-modal.js"></script>
-    <script src="{{STATIC_URL}}js/bootstrap-dropdown.js"></script>
-    <script src="{{STATIC_URL}}js/bootstrap-scrollspy.js"></script>
-    <script src="{{STATIC_URL}}js/bootstrap-tab.js"></script>
-    <script src="{{STATIC_URL}}js/bootstrap-tooltip.js"></script>
-    <script src="{{STATIC_URL}}js/bootstrap-popover.js"></script>
-    <script src="{{STATIC_URL}}js/bootstrap-button.js"></script>
-    <script src="{{STATIC_URL}}js/bootstrap-collapse.js"></script>
-    <script src="{{STATIC_URL}}js/bootstrap-carousel.js"></script>
-    <script src="{{STATIC_URL}}js/bootstrap-typeahead.js"></script>
-    <script src="{{STATIC_URL}}js/application.js"></script>
-<script>
-(function() {
-//Grab the elements
-var heading = $('h3');
-var onFailSoHard = function(e) {
-    heading.textContent =
-      "Native web camera streaming is not supported in this browser!";
-};
-navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia;
+  <!-- Le javascript
+  ================================================== -->
+  <!-- Placed at the end of the document so the pages load faster -->
+  <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+  <script src="{{STATIC_URL}}js/prettify.js"></script>
+  <script src="{{STATIC_URL}}js/bootstrap-transition.js"></script>
+  <script src="{{STATIC_URL}}js/bootstrap-alert.js"></script>
+  <script src="{{STATIC_URL}}js/bootstrap-modal.js"></script>
+  <script src="{{STATIC_URL}}js/bootstrap-dropdown.js"></script>
+  <script src="{{STATIC_URL}}js/bootstrap-scrollspy.js"></script>
+  <script src="{{STATIC_URL}}js/bootstrap-tab.js"></script>
+  <script src="{{STATIC_URL}}js/bootstrap-tooltip.js"></script>
+  <script src="{{STATIC_URL}}js/bootstrap-popover.js"></script>
+  <script src="{{STATIC_URL}}js/bootstrap-button.js"></script>
+  <script src="{{STATIC_URL}}js/bootstrap-collapse.js"></script>
+  <script src="{{STATIC_URL}}js/bootstrap-carousel.js"></script>
+  <script src="{{STATIC_URL}}js/bootstrap-typeahead.js"></script>
+  <script src="{{STATIC_URL}}js/application.js"></script>
 
-var video = document.querySelector('video');
-//test for getUserMedia
-if(navigator.getUserMedia) {
-  //setup callbacks
-  navigator.webkitGetUserMedia({video: true, audio: true}, function(stream) {
-    if (navigator.webkitGetUserMedia) {
-      video.src = window.webkitURL.createObjectURL(stream);
-    } else {
-      video.src = stream; // Opera
-    }
-  }, onFailSoHard);
-} else {
-  heading.textContent =
-      "Native web camera streaming is not supported in this browser!";
-}
-})();
-</script>
-
-    <!-- Analytics
-    ================================================== -->
-    <script>
-      var _gauges = _gauges || [];
-      (function() {
-        var t   = document.createElement('script');
-        t.type  = 'text/javascript';
-        t.async = true;
-        t.id    = 'gauges-tracker';
-        t.setAttribute('data-site-id', '4f0dc9fef5a1f55508000013');
-        t.src = '//secure.gaug.es/track.js';
-        var s = document.getElementsByTagName('script')[0];
-        s.parentNode.insertBefore(t, s);
-      })();
-    </script>
+  <!-- Analytics
+  ================================================== -->
+  <script>
+    var _gauges = _gauges || [];
+    (function() {
+      var t   = document.createElement('script');
+      t.type  = 'text/javascript';
+      t.async = true;
+      t.id    = 'gauges-tracker';
+      t.setAttribute('data-site-id', '4f0dc9fef5a1f55508000013');
+      t.src = '//secure.gaug.es/track.js';
+      var s = document.getElementsByTagName('script')[0];
+      s.parentNode.insertBefore(t, s);
+    })();
+  </script>
 </div>
 </span>
 </body>
