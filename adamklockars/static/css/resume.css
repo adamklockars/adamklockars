@@ -455,9 +455,6 @@ body.small .section .item {
   padding-top: 10px;
   padding-bottom: 10px;
 }
-.footer {
-  margin-top:10px;
-}
 pre {
   font: 14px/20px Georgia, "Times New Roman", Times, serif;
 }
@@ -479,6 +476,12 @@ pre {
 }
 .navbar-fixed-top .brand {
   margin-left: 0px;
+}
+.footer {
+  margin-top: 10px;
+  position: fixed;
+  bottom: 0;
+  width: 1168px;
 }
 }
 @media screen and (max-width: 1200px) {
@@ -506,6 +509,12 @@ pre {
 }
 .navbar-fixed-top .brand {
   margin-left: 0px;
+}
+.footer {
+  margin-top: 10px;
+  position: fixed;
+  bottom: 0;
+  width: 920px;
 }
 }
 @media screen {
