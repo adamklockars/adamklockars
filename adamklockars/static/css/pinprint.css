@@ -1,3 +1,13 @@
+body {
+  background: url("../images/pinprint_bg.jpeg") repeat left top #000;
+  display: inline-block;
+  width: 100%;
+  font: 14px/20px Georgia, "Times New Roman", Times, serif;
+  color: #848484;
+  float:left;
+  padding-top: 0px;
+  margin-top: 0px;
+}
 #draggable { 
   width: 150px; 
   height: 150px; 
@@ -9,6 +19,10 @@
   border-style: solid;
   border-color: #2c2c2c;
   border-width: 5px;
-  background-color: white;
+  background: rgb(0, 0, 0);
+  background: rgba(0, 0, 0, 0.6);
   overflow: hidden;
+}
+.container_main {
+  margin-top: 100px;
 }
