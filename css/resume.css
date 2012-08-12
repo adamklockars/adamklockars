@@ -379,6 +379,11 @@ p {
   overflow: hidden;
   margin-top: 0px;
 }
+#robin {
+    width:1168px;
+    height:480px;
+    background-color: #848484;
+}
 }
 @media screen and (max-width: 1200px) {
 .section .item {
@@ -405,6 +410,11 @@ p {
   margin-bottom: 15px;
   overflow: hidden;
   margin-top: 0px;
+}
+#robin {
+    width:920px;
+    height:480px;
+    background-color: #848484;
 }
 }
 body.small {
@@ -467,6 +477,12 @@ pre {
 .navbar-fixed-top .brand {
   margin-left: 0px;
 }
+.footer {
+  margin-top: 10px;
+  position: fixed;
+  bottom: 0;
+  width: 1168px;
+}
 }
 @media screen and (max-width: 1200px) {
 .container {
@@ -494,6 +510,12 @@ pre {
 .navbar-fixed-top .brand {
   margin-left: 0px;
 }
+.footer {
+  margin-top: 10px;
+  position: fixed;
+  bottom: 0;
+  width: 920px;
+}
 }
 @media screen {
 .header {
@@ -511,11 +533,11 @@ pre {
   background-color: #848484;
   border: 1px solid #eee;
   border: 1px solid rgba(0, 0, 0, 0.05);
- 	-webkit-border-radius: 4px;
-  	-moz-border-radius: 4px;
+  -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
   border-radius: 4px;
-  	-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
-  	-moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+    -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
   box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
 }
 .clock_header {
@@ -526,36 +548,36 @@ pre {
 }
 #clock {
                 float: right;
-        	position: relative;
-        	width: 120px;
-        	height: 120px;
-        	margin: 4px auto 0 auto;
-        	background: url(../images/clockface.png);
+          position: relative;
+          width: 120px;
+          height: 120px;
+          margin: 4px auto 0 auto;
+          background: url(../images/clockface.png);
                 background-size: 120px 120px;
-        	list-style: none;
+          list-style: none;
                 z-index: 0;
-        	}
+          }
         
         #sec, #min, #hour {
-        	position: absolute;
-        	width: 6px;
-        	height: 120px;
-        	top: 0px;
-        	left: 57px;
-        	}
+          position: absolute;
+          width: 6px;
+          height: 120px;
+          top: 0px;
+          left: 57px;
+          }
         
         #sec {
-        	background: url(../images/sechand.png);
-        	z-index: 3;
-           	}
+          background: url(../images/sechand.png);
+          z-index: 3;
+            }
            
         #min {
-        	background: url(../images/minhand.png);
-        	z-index: 2;
-           	}
+          background: url(../images/minhand.png);
+          z-index: 2;
+            }
            
         #hour {
-        	background: url(../images/hourhand.png);
-        	z-index: 1;
-           	}
+          background: url(../images/hourhand.png);
+          z-index: 1;
+            }
 }

@@ -12,4 +12,5 @@ urlpatterns = patterns('',
     (r'^polls/', include('polls.urls')),
     (r'^admin/', include(admin.site.urls)),
     (r'^tictactoe/', include('tictactoe.urls')),
+    (r'^pinprint/', include('pinprint.urls'))
 )

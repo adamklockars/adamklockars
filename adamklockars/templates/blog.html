@@ -1,19 +1,83 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<title>Adam Klockars</title>
-<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
-<link href="{{STATIC_URL}}css/bootstrap.css" rel="stylesheet">
-<link href="{{STATIC_URL}}css/bootstrap-responsive.css" rel="stylesheet">
-<link href="{{STATIC_URL}}css/docs.css" rel="stylesheet">
-<link href="{{STATIC_URL}}css/prettify.css" rel="stylesheet">
-<link href="{{STATIC_URL}}css/resume.css" rel="stylesheet">
-<link rel="shortcut icon" href="{{STATIC_URL}}ico/favicon.ico">
-<script type="text/javascript" src="{{STATIC_URL}}js/jquery-1.2.6.min.js"></script>
-<script src="http://www.flickrshow.co.uk/static/scripts/flickrshow-7.2.min.js"></script>
-</head>
-<body>
-<!-- Navbar
-    ================================================== -->
+  <head>
+    <title>Adam Klockars' Blog</title>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+    <link href="{{STATIC_URL}}css/bootstrap.css" rel="stylesheet">
+    <link href="{{STATIC_URL}}css/bootstrap-responsive.css" rel="stylesheet">
+    <link href="{{STATIC_URL}}css/docs.css" rel="stylesheet">
+    <link href="{{STATIC_URL}}css/prettify.css" rel="stylesheet">
+    <link href="{{STATIC_URL}}css/resume.css" rel="stylesheet">
+    <link rel="shortcut icon" href="{{STATIC_URL}}ico/favicon.ico">
+    <script type="text/javascript" src="{{STATIC_URL}}js/jquery-1.2.6.min.js"></script>
+    <script src="http://www.flickrshow.co.uk/static/scripts/flickrshow-7.2.min.js"></script>
+    <script>
+    //function to get random number from 1 to n
+    function randomToN(maxVal,floatVal) {
+      var randVal = Math.random()*maxVal;
+      return typeof floatVal=='undefined'?Math.round(randVal):randVal.toFixed(floatVal);
+    }
+    var robin = new flickrshow('robin', {
+      autoplay:true,
+      interval:5000,
+      license:null,
+      page:randomToN(10),
+      per_page:10,
+      group:'35034360698@N01'
+    });
+    </script>
+    <script type="text/javascript">
+    $(function() {
+      setInterval( function() {
+        var seconds = new Date().getSeconds();
+        var sdegree = seconds * 6;
+        var srotate = "rotate(" + sdegree + "deg)";
+        $("#sec").css({"-moz-transform" : srotate, "-webkit-transform" : srotate});
+      }, 1000 );
+      setInterval( function() {
+        var hours = new Date().getHours();
+        var mins = new Date().getMinutes();
+        var hdegree = hours * 30 + (mins / 2);
+        var hrotate = "rotate(" + hdegree + "deg)";
+        $("#hour").css({"-moz-transform" : hrotate, "-webkit-transform" : hrotate});
+      }, 1000 );
+      setInterval( function() {
+        var mins = new Date().getMinutes();
+        var mdegree = mins * 6;
+        var mrotate = "rotate(" + mdegree + "deg)";
+        $("#min").css({"-moz-transform" : mrotate, "-webkit-transform" : mrotate});
+      }, 1000 );
+    }); 
+    </script>
+    <script type="text/javascript">
+    function showContent(e) {
+      if(e == "header"){
+        $("#subbar").removeClass("subnav-fixed");
+        $(".section").css({opacity: 0.0, display: "none", padding: "10px 0 0"});
+        $("#robin").css({opacity: 0.0, display: "block"}).animate({opacity: 1.0});
+        $("#" + e).css({opacity: 0.0, display: "block"}).animate({opacity: 1.0});
+      } else {
+        $("#header").css({opacity: 0.0, display: "none"});
+        $("#robin").css({opacity: 0.0, display: "none"});
+        $("#subbar").addClass("subnav-fixed");
+        $(".section").css({opacity: 0.0, display: "none", padding: "20px 0 0"});
+        $("#" + e).css({opacity: 0.0, display: "block"}).animate({opacity: 1.0});
+      }
+    }
+    </script>
+    <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-31014858-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+    </script>
+  </head>
+  <body>
+    <!-- Navbar ================================================== -->
     <div class="navbar navbar-fixed-top">
       <div class="navbar-inner">
         <div class="container">
@@ -22,7 +86,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </a>
-          <a class="brand" href="http://www.adamklockars.com">Adam Klockars</a>
+          <a class="brand" href="javascript:showContent('header')">Adam Klockars</a>
           <div class="nav-collapse">
             <ul class="nav">
               <li class="">
@@ -39,57 +103,45 @@
         </div>
       </div>
     </div>
-<span class="body">
+
     <div class="container_main">
+      <span class="body">
+        <div class="container">
+        </div>
+        <!-- Le javascript ================================================== -->
+        <!-- Placed at the end of the document so the pages load faster -->
+        <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+        <script src="{{STATIC_URL}}js/jquery.js"></script>
+        <script src="{{STATIC_URL}}js/prettify.js"></script>
+        <script src="{{STATIC_URL}}js/bootstrap-transition.js"></script>
+        <script src="{{STATIC_URL}}js/bootstrap-alert.js"></script>
+        <script src="{{STATIC_URL}}js/bootstrap-modal.js"></script>
+        <script src="{{STATIC_URL}}js/bootstrap-dropdown.js"></script>
+        <script src="{{STATIC_URL}}js/bootstrap-scrollspy.js"></script>
+        <script src="{{STATIC_URL}}js/bootstrap-tab.js"></script>
+        <script src="{{STATIC_URL}}js/bootstrap-tooltip.js"></script>
+        <script src="{{STATIC_URL}}js/bootstrap-popover.js"></script>
+        <script src="{{STATIC_URL}}js/bootstrap-button.js"></script>
+        <script src="{{STATIC_URL}}js/bootstrap-collapse.js"></script>
+        <script src="{{STATIC_URL}}js/bootstrap-carousel.js"></script>
+        <script src="{{STATIC_URL}}js/bootstrap-typeahead.js"></script>
+        <script src="{{STATIC_URL}}js/application.js"></script>
 
-<div class="container">
-<!-- Footer
-      ================================================== -->
-      <footer class="footer">
-        <p class="pull-right"><a href="javascript:showContent('header')">Back to Main</a></p>
-        <p></p>
-      </footer>
-
-    </div><!-- /container -->
-
-
-
-    <!-- Le javascript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
-    <script src="{{STATIC_URL}}js/jquery.js"></script>
-    <script src="{{STATIC_URL}}js/prettify.js"></script>
-    <script src="{{STATIC_URL}}js/bootstrap-transition.js"></script>
-    <script src="{{STATIC_URL}}js/bootstrap-alert.js"></script>
-    <script src="{{STATIC_URL}}js/bootstrap-modal.js"></script>
-    <script src="{{STATIC_URL}}js/bootstrap-dropdown.js"></script>
-    <script src="{{STATIC_URL}}js/bootstrap-scrollspy.js"></script>
-    <script src="{{STATIC_URL}}js/bootstrap-tab.js"></script>
-    <script src="{{STATIC_URL}}js/bootstrap-tooltip.js"></script>
-    <script src="{{STATIC_URL}}js/bootstrap-popover.js"></script>
-    <script src="{{STATIC_URL}}js/bootstrap-button.js"></script>
-    <script src="{{STATIC_URL}}js/bootstrap-collapse.js"></script>
-    <script src="{{STATIC_URL}}js/bootstrap-carousel.js"></script>
-    <script src="{{STATIC_URL}}js/bootstrap-typeahead.js"></script>
-    <script src="{{STATIC_URL}}js/application.js"></script>
-
-    <!-- Analytics
-    ================================================== -->
-    <script>
-      var _gauges = _gauges || [];
-      (function() {
-        var t   = document.createElement('script');
-        t.type  = 'text/javascript';
-        t.async = true;
-        t.id    = 'gauges-tracker';
-        t.setAttribute('data-site-id', '4f0dc9fef5a1f55508000013');
-        t.src = '//secure.gaug.es/track.js';
-        var s = document.getElementsByTagName('script')[0];
-        s.parentNode.insertBefore(t, s);
-      })();
-    </script>
-</div>
-</span>
-</body>
+        <!-- Analytics ================================================== -->
+        <script>
+          var _gauges = _gauges || [];
+          (function() {
+            var t   = document.createElement('script');
+            t.type  = 'text/javascript';
+            t.async = true;
+            t.id    = 'gauges-tracker';
+            t.setAttribute('data-site-id', '4f0dc9fef5a1f55508000013');
+            t.src = '//secure.gaug.es/track.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(t, s);
+          })();
+        </script>
+      </div>
+    </span>
+  </body>
 </html>
