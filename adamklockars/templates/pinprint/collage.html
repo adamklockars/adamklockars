@@ -10,30 +10,74 @@
     <link rel="shortcut icon" href="{{STATIC_URL}}ico/favicon.ico">
     <script type="text/javascript" src="{{STATIC_URL}}js/jquery-1.7.2.min.js"></script>
     <script type="text/javascript" src="{{STATIC_URL}}js/jquery-ui-1.8.22.custom.min.js"></script>
+    <script src="jquery.ui.touch-punch.js"></script>
     <script>
+    function canvas_change(){
+      if ($(this).hasClass('add_canvas')) {
+        var length = $('ul', '.content').children().length;
+        $('li.active', '.content').removeClass('active');
+        $('.add_canvas').before(
+          $('<li>').addClass('tab').addClass('active').append(
+            $('<a></a>').text('Canvas ' + length)));
+        $('.canvas', '.content').hide();
+        $('.content').append(
+          $('<div>').attr('id', length).addClass('droppable').addClass('canvas'));
+      } else {
+        var index = $(this).index() + 1;
+        index = '#' + index;
+        console.log(index);
+        if (!$(this).hasClass('active')) {
+          $('li', '.content').removeClass('active');
+          $(this).addClass('active');
+          $('.canvas', '.content').hide();
+          $(index, '.content').show();
+        }
+      }
+      //$('li', '.content').on('click', canvas_change());
+      /*$(".droppable").droppable({
+        tolerance: "pointer",
+        activeClass: "clone-active-color",
+        hoverClass: "droppable-hover",
+        drop: function( ev, ui ) {
+          if(!$(ui.draggable).hasClass('cloned')){
+            $(ui.draggable)
+              .clone()
+              .addClass("cloned")
+              .css('position', 'absolute')
+              .appendTo($(this))
+              .css('left', ui.position.left)
+              .css('top', ui.position.top)
+              .draggable(); 
+          }                                    
+        }
+      });*/
+    }
     $(function() {
       $(".draggable").draggable({
         appendTo: 'body',
         cursor: 'auto', 
         helper: 'clone',
+        revert: 'invalid',
         zIndex: 10000
       });
-      $("#droppable").droppable({
+      $(".droppable").droppable({
         tolerance: "pointer",
         activeClass: "clone-active-color",
         hoverClass: "droppable-hover",
         drop: function( ev, ui ) {
-          var dropguy = $('img', ui.draggable).clone();
-          var position = $(this).position();
-          dropguy.addClass("cloned ui-draggable").draggable();
-          $(this).append(dropguy);
-          console.log(position.left);
-          console.log(position.top); 
-          dropguy.css('position', 'relative');
-          dropguy.css('left', ui.position.left-position.left);
-          dropguy.css('top', ui.position.top-position.top);                                      
+          if(!$(ui.draggable).hasClass('cloned')){
+            $(ui.draggable)
+              .clone()
+              .addClass("cloned")
+              .css('position', 'absolute')
+              .appendTo($(this))
+              .css('left', ui.position.left)
+              .css('top', ui.position.top)
+              .draggable(); 
+          }                                    
         }
       });
+      $('li', '.content').on('click', canvas_change());
     });
     </script>
   </head>
@@ -65,70 +109,125 @@
       <div class="container_main">
         <div class="container">
           <div class="library">
-            <ul class="hoverbox">
-              <li>
-                <a href="#" class="draggable"><img src="{{STATIC_URL}}images/img/photo01.jpg" alt="description" /></a>
-              </li>
-              <li>
-                <a href="#" class="draggable"><img src="{{STATIC_URL}}images/img/photo02.jpg" alt="description" /></a>
-              </li>
-              <li>
-                <a href="#" class="draggable"><img src="{{STATIC_URL}}images/img/photo03.jpg" alt="description" /></a>
-              </li>
-              <li>
-                <a href="#" class="draggable"><img src="{{STATIC_URL}}images/img/photo04.jpg" alt="description" /></a>
-              </li>
-              <li>
-                <a href="#" class="draggable"><img src="{{STATIC_URL}}images/img/photo05.jpg" alt="description" /></a>
-              </li>
-              <li>
-                <a href="#" class="draggable"><img src="{{STATIC_URL}}images/img/photo06.jpg" alt="description" /></a>
-              </li>
-              <li>
-                <a href="#" class="draggable"><img src="{{STATIC_URL}}images/img/photo07.jpg" alt="description" /></a>
-              </li>
-              <li>
-                <a href="#" class="draggable"><img src="{{STATIC_URL}}images/img/photo08.jpg" alt="description" /></a>
-              </li>
-              <li>
-                <a href="#" class="draggable"><img src="{{STATIC_URL}}images/img/photo09.jpg" alt="description" /></a>
-              </li>
-              <li>
-                <a href="#" class="draggable"><img src="{{STATIC_URL}}images/img/photo10.jpg" alt="description" /></a>
-              </li>
-              <li>
-                <a href="#" class="draggable"><img src="{{STATIC_URL}}images/img/photo11.jpg" alt="description" /></a>
-              </li>
-              <li>
-                <a href="#" class="draggable"><img src="{{STATIC_URL}}images/img/photo12.jpg" alt="description" /></a>
-              </li>
-              <li>
-                <a href="#" class="draggable"><img src="{{STATIC_URL}}images/img/photo13.jpg" alt="description" /></a>
-              </li>
-              <li>
-                <a href="#" class="draggable"><img src="{{STATIC_URL}}images/img/photo14.jpg" alt="description" /></a>
-              </li>
-              <li>
-                <a href="#" class="draggable"><img src="{{STATIC_URL}}images/img/photo15.jpg" alt="description" /></a>
-              </li>
-              <li>
-                <a href="#" class="draggable"><img src="{{STATIC_URL}}images/img/photo16.jpg" alt="description" /></a>
-              </li>
-              <li>
-                <a href="#" class="draggable"><img src="{{STATIC_URL}}images/img/photo17.jpg" alt="description" /></a>
-              </li>
-              <li>
-                <a href="#" class="draggable"><img src="{{STATIC_URL}}images/img/photo18.jpg" alt="description" /></a>
-              </li>
-              <li>
-                <a href="#" class="draggable"><img src="{{STATIC_URL}}images/img/photo19.jpg" alt="description" /></a>
-              </li>
-              <li>
-                <a href="#" class="draggable"><img src="{{STATIC_URL}}images/img/photo20.jpg" alt="description" /></a>
-              </li>
-            </ul>
+            <div class="Tabs">
+              <ul>
+                <li class="tab active" onclick="" ><a>Flixter</a></li>
+                <li class="tab" onclick=""><a>Pinterest</a></li>
+              </ul>
+            </div> 
+            <div class="pictures">
+              <ul class="hoverbox">
+                <li>
+                  <div class="draggable">
+                    <a href="#"><img src="{{STATIC_URL}}images/img/photo01.jpg" alt="description" /></a>
+                  </div
+                </li>
+                <li>
+                  <div class="draggable">
+                    <a href="#"><img src="{{STATIC_URL}}images/img/photo02.jpg" alt="description" /></a>
+                  </div
+                </li>
+                <li>
+                  <div class="draggable">
+                    <a href="#"><img src="{{STATIC_URL}}images/img/photo03.jpg" alt="description" /></a>
+                  </div
+                </li>
+                <li>
+                  <div class="draggable">
+                    <a href="#"><img src="{{STATIC_URL}}images/img/photo04.jpg" alt="description" /></a>
+                  </div
+                </li>
+                <li>
+                  <div class="draggable">
+                    <a href="#"><img src="{{STATIC_URL}}images/img/photo05.jpg" alt="description" /></a>
+                  </div
+                </li>
+                <li>
+                  <div class="draggable">
+                    <a href="#"><img src="{{STATIC_URL}}images/img/photo06.jpg" alt="description" /></a>
+                  </div
+                </li>
+                <li>
+                  <div class="draggable">
+                    <a href="#"><img src="{{STATIC_URL}}images/img/photo07.jpg" alt="description" /></a>
+                  </div
+                </li>
+                <li>
+                  <div class="draggable">
+                    <a href="#"><img src="{{STATIC_URL}}images/img/photo08.jpg" alt="description" /></a>
+                  </div
+                </li>
+                <li>
+                  <div class="draggable">
+                    <a href="#"><img src="{{STATIC_URL}}images/img/photo09.jpg" alt="description" /></a>
+                  </div
+                </li>
+                <li>
+                  <div class="draggable">
+                    <a href="#"><img src="{{STATIC_URL}}images/img/photo10.jpg" alt="description" /></a>
+                  </div
+                </li>
+                <li>
+                  <div class="draggable">
+                    <a href="#"><img src="{{STATIC_URL}}images/img/photo11.jpg" alt="description" /></a>
+                  </div
+                </li>
+                <li>
+                  <div class="draggable">
+                    <a href="#"><img src="{{STATIC_URL}}images/img/photo12.jpg" alt="description" /></a>
+                  </div
+                </li>
+                <li>
+                  <div class="draggable">
+                    <a href="#"><img src="{{STATIC_URL}}images/img/photo13.jpg" alt="description" /></a>
+                  </div
+                </li>
+                <li>
+                  <div class="draggable">
+                    <a href="#"><img src="{{STATIC_URL}}images/img/photo14.jpg" alt="description" /></a>
+                  </div
+                </li>
+                <li>
+                  <div class="draggable">
+                    <a href="#"><img src="{{STATIC_URL}}images/img/photo15.jpg" alt="description" /></a>
+                  </div
+                </li>
+                <li>
+                  <div class="draggable">
+                    <a href="#"><img src="{{STATIC_URL}}images/img/photo16.jpg" alt="description" /></a>
+                  </div
+                </li>
+                <li>
+                  <div class="draggable">
+                    <a href="#"><img src="{{STATIC_URL}}images/img/photo17.jpg" alt="description" /></a>
+                  </div
+                </li>
+                <li>
+                  <div class="draggable">
+                    <a href="#"><img src="{{STATIC_URL}}images/img/photo18.jpg" alt="description" /></a>
+                  </div
+                </li>
+                <li>
+                  <div class="draggable">
+                    <a href="#"><img src="{{STATIC_URL}}images/img/photo19.jpg" alt="description" /></a>
+                  </div
+                </li>
+                <li>
+                  <div class="draggable">
+                    <a href="#"><img src="{{STATIC_URL}}images/img/photo20.jpg" alt="description" /></a>
+                  </div
+                </li>
+              </ul>
+            </div>
           </div>
-          <div id="droppable" class="canvas">
+          <div class="content">
+            <div class="Tabs">
+              <ul>
+                <li class="tab active"><a>Canvas 1</a></li>
+                <li class="tab add_canvas"><a>+</a></li>
+              </ul>
+            </div> 
+            <div id="1" class="droppable canvas"></div>
           </div>
         </div>
       </div>
