@@ -95,10 +95,10 @@
                .addClass("cloned")
                .css('position', 'absolute')
                //.appendTo($(this))
-               .css('left', ui.position.left)
-               .css('top', ui.position.top)
+               .css('left', ui.offset.left-$(this).offset().left-5)
+               .css('top', ui.offset.top-$(this).offset().top-5)
                //.css('position', 'relative')
-               .draggable({containment:"parent"})
+               .draggable()
             );  
           }                                    
         }
