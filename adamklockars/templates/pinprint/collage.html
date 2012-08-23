@@ -11,33 +11,51 @@
     <script type="text/javascript" src="{{STATIC_URL}}js/jquery-1.7.2.min.js"></script>
     <script type="text/javascript" src="{{STATIC_URL}}js/jquery-ui-1.8.22.custom.min.js"></script>
     <script src="jquery.ui.touch-punch.js"></script>
-    <script>
+    <script type="text/javascript">
+    //this.canvas_count = 1;
     function canvas_change(){
-      console.log($(this));
       if ($(this).hasClass('add_canvas')) {
         var length = $('ul', '.content').children().length;
-        $('li.active', '.content').removeClass('active');
-        $('.add_canvas').before(
-          $('<li>').addClass('tab').addClass('active').append(
-            $('<a></a>').text('Canvas ' + length)));
-        $('.canvas', '.content').hide();
-        $('.content').append(
-          $('<div>').attr('id', length).addClass('droppable').addClass('canvas'));
+        if (length <= 11) {
+          //this.canvas_count += 1;
+          $('li.active', '.content').removeClass('active');
+          $('.add_canvas').before(
+            $('<li>').addClass('tab').addClass('active'));
+          $('li.active', '.content').append(
+              $('<a></a>').text('Canvas ' +  parseInt($('li.active', '.content').index()+1).toString()));
+          $('.canvas', '.content').removeClass('active');
+          $('.canvas', '.content').hide();
+          $('.content').append(
+            $('<div>').addClass('droppable').addClass('canvas').addClass('active'));
+          $('div.active', '.content').attr('id', $('div.active', '.content').index())
+        }
+      } else if($(this).hasClass('delete_canvas')) {
+        $('li.active', '.content').remove();
+        $('.canvas.active', '.content').remove();
+        $('li:first', '.content').addClass('active');
+        $('.canvas:first', '.content').show();
+        $('li:not(.add_canvas, .delete_canvas) a', '.content').each(function(i,e){
+          $(e).text('Canvas ' + (parseInt(i) + 1).toString());
+        });
+        $('.canvas', '.content').each(function(i,e){
+          $(e).attr('id', (parseInt(i) + 1).toString());
+        });
       } else {
         var index = $(this).index() + 1;
         index = '#' + index;
-        console.log(index);
         if (!$(this).hasClass('active')) {
           $('li', '.content').removeClass('active');
           $(this).addClass('active');
+          $('.canvas', '.content').removeClass('active');
           $('.canvas', '.content').hide();
           $(index, '.content').show();
+          $(index, '.content').addClass('active');
         }
       }
       $('li', '.content').unbind();
       $('li', '.content').on('click', canvas_change);
       $(".droppable").unbind();
-      $(".droppable").droppable({
+      /*$(".droppable").droppable({
         tolerance: "pointer",
         activeClass: "clone-active-color",
         hoverClass: "droppable-hover",
@@ -46,14 +64,16 @@
             $(ui.draggable)
               .clone()
               .addClass("cloned")
-              .css('position', 'absolute')
+              //.css('position', 'absolute')
               .appendTo($(this))
               .css('left', ui.position.left)
               .css('top', ui.position.top)
-              .draggable(); 
+              .css('position', 'relative')
+              .draggable();
+              //.resizable(); 
           }                                    
         }
-      });
+      });*/
     }
     $(function() {
       $(".draggable").draggable({
@@ -69,14 +89,17 @@
         hoverClass: "droppable-hover",
         drop: function( ev, ui ) {
           if(!$(ui.draggable).hasClass('cloned')){
-            $(ui.draggable)
-              .clone()
-              .addClass("cloned")
-              .css('position', 'absolute')
-              .appendTo($(this))
-              .css('left', ui.position.left)
-              .css('top', ui.position.top)
-              .draggable(); 
+            $(this).append(
+              $(ui.draggable)
+               .clone()
+               .addClass("cloned")
+               .css('position', 'absolute')
+               //.appendTo($(this))
+               .css('left', ui.position.left)
+               .css('top', ui.position.top)
+               //.css('position', 'relative')
+               .draggable({containment:"parent"})
+            );  
           }                                    
         }
       });
@@ -114,7 +137,7 @@
           <div class="library">
             <div class="Tabs">
               <ul>
-                <li class="tab active" onclick="" ><a>Flixter</a></li>
+                <li class="tab active" onclick="" ><a>Flickr</a></li>
                 <li class="tab" onclick=""><a>Pinterest</a></li>
               </ul>
             </div> 
@@ -228,9 +251,10 @@
               <ul>
                 <li class="tab active"><a>Canvas 1</a></li>
                 <li class="tab add_canvas"><a>+</a></li>
+                <li class="tab delete_canvas"><a>-</a></li>
               </ul>
             </div> 
-            <div id="1" class="droppable canvas"></div>
+            <div id="1" class="droppable canvas active"></div>
           </div>
         </div>
       </div>

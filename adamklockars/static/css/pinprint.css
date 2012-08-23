@@ -13,7 +13,8 @@ body {
 #draggable { 
   width: 150px; 
   height: 150px; 
-  padding: 0.5em; 
+  padding: 0.5em;
+  cursor: move; 
 }
 .content {
   width: 840px;
@@ -23,7 +24,7 @@ body {
   width: 100%;
   height: 540px;
   border-style: solid;
-  border-color: #2c2c2c;
+  border-color: #222222;
   border-width: 5px;
   background: rgb(0, 0, 0);
   background: rgba(0, 0, 0, 0.6);
@@ -38,7 +39,7 @@ body {
   height: 500px;
   float: left;
   border-style: solid;
-  border-color: #2c2c2c;
+  border-color: #222222;
   border-width: 5px;
   background: rgb(0, 0, 0);
   background: rgba(0, 0, 0, 0.6);
@@ -72,12 +73,11 @@ body {
 }
 .hoverbox
 {
-  cursor: default;
   list-style: none;
 }
 .hoverbox a
 {
-  cursor: default;
+  cursor: move;
 }
 .hoverbox a .preview
 {
@@ -175,6 +175,7 @@ border-top-left-radius: 4px;
 -moz-border-radius-topright: 4px;
 border-top-right-radius: 4px;
 text-decoration: none;
+cursor: pointer;
 }
 
 .Tabs ul li a:hover {
