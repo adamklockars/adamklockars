@@ -8,8 +8,8 @@
     <link href="{{STATIC_URL}}css/prettify.css" rel="stylesheet">
     <link href="{{STATIC_URL}}css/pinprint.css" rel="stylesheet">
     <link rel="shortcut icon" href="{{STATIC_URL}}ico/favicon.ico">
-    <script type="text/javascript" src="{{STATIC_URL}}js/jquery-1.7.2.min.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}js/jquery-ui-1.8.22.custom.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.8.23/jquery-ui.min.js"></script>
     <script src="jquery.ui.touch-punch.js"></script>
     <script type="text/javascript">
     //this.canvas_count = 1;
@@ -17,7 +17,6 @@
       if ($(this).hasClass('add_canvas')) {
         var length = $('ul', '.content').children().length;
         if (length <= 11) {
-          //this.canvas_count += 1;
           $('li.active', '.content').removeClass('active');
           $('.add_canvas').before(
             $('<li>').addClass('tab').addClass('active'));
@@ -55,25 +54,6 @@
       $('li', '.content').unbind();
       $('li', '.content').on('click', canvas_change);
       $(".droppable").unbind();
-      /*$(".droppable").droppable({
-        tolerance: "pointer",
-        activeClass: "clone-active-color",
-        hoverClass: "droppable-hover",
-        drop: function( ev, ui ) {
-          if(!$(ui.draggable).hasClass('cloned')){
-            $(ui.draggable)
-              .clone()
-              .addClass("cloned")
-              //.css('position', 'absolute')
-              .appendTo($(this))
-              .css('left', ui.position.left)
-              .css('top', ui.position.top)
-              .css('position', 'relative')
-              .draggable();
-              //.resizable(); 
-          }                                    
-        }
-      });*/
     }
     $(function() {
       $(".draggable").draggable({
@@ -94,12 +74,13 @@
                .clone()
                .addClass("cloned")
                .css('position', 'absolute')
-               //.appendTo($(this))
                .css('left', ui.offset.left-$(this).offset().left-5)
                .css('top', ui.offset.top-$(this).offset().top-5)
-               //.css('position', 'relative')
                .draggable()
-            );  
+            );
+            //console.log($(ui.draggable));
+            //$('img', $(this)).attr('id', 'resizableimg');
+            //$('#resizableimg').resizable();  
           }                                    
         }
       });
