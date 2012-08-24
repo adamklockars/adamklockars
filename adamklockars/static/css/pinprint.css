@@ -21,7 +21,7 @@ body {
   float: right;
 }
 .canvas {
-  width: 100%;
+  width: 840px;
   height: 540px;
   border-style: solid;
   border-color: #222222;

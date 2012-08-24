@@ -26,7 +26,29 @@
           $('.canvas', '.content').hide();
           $('.content').append(
             $('<div>').addClass('droppable').addClass('canvas').addClass('active'));
-          $('div.active', '.content').attr('id', $('div.active', '.content').index())
+          $('div.active', '.content')
+            .attr('id', $('div.active', '.content').index())
+            .droppable({
+              tolerance: "pointer",
+              activeClass: "clone-active-color",
+              hoverClass: "droppable-hover",
+              drop: function( ev, ui ) {
+                if(!$(ui.draggable).hasClass('cloned')){
+                  $(this).append(
+                    $(ui.draggable)
+                      .clone()
+                      .addClass("cloned")
+                      .css('position', 'absolute')
+                      .css('left', ui.offset.left-$(this).offset().left-5)
+                      .css('top', ui.offset.top-$(this).offset().top-5)
+                      .draggable()
+                  );
+                  //console.log($(ui.draggable));
+                  //$('img', $(this)).attr('id', 'resizableimg');
+                  //$('#resizableimg').resizable();  
+                }                                    
+              }
+            })
         }
       } else if($(this).hasClass('delete_canvas')) {
         $('li.active', '.content').remove();
