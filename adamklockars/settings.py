@@ -95,11 +95,6 @@ STATICFILES_FINDERS = (
 #    'django.contrib.staticfiles.finders.DefaultStorageFinder',
 )
 
-# Make this unique, and don't share it with anybody.
-SECRET_KEY = '0-aij$&amp;ggvbwlyl+kniy%bp(vap^gte7_2vwm$yjh#ae-d)=p*'
-# ACCESS_KEY = 'AKIAI5QQ4MVAVFYTWWJQ'
-# PASS_KEY = 'womv8wkyzex1GTnWAmTFD0zt7LagQcHfC7cuuain'
-
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.Loader',
@@ -129,11 +124,6 @@ TEMPLATE_DIRS = (
     # "/home/adamklockars/adamklockars/adamklockars/templates", # Change this to your own directory.
     os.path.join(SITE_ROOT, 'templates')
 )
-
-# AWS_ACCESS_KEY_ID = 'AKIAI5QQ4MVAVFYTWWJQ'
-# AWS_SECRET_ACCESS_KEY = 'womv8wkyzex1GTnWAmTFD0zt7LagQcHfC7cuuain'
-# AWS_STORAGE_BUCKET_NAME = 'adamklockars'
-# AWS_PRELOAD_METADATA = True
 
 # DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
 # STATICFILES_STORAGE = DEFAULT_FILE_STORAGE
