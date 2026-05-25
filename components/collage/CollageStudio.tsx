@@ -59,6 +59,7 @@ function defaultStore(): Store {
 export default function CollageStudio() {
   const [store, setStore] = useState<Store>(defaultStore);
   const [zCounter, setZCounter] = useState(1);
+  const [dragging, setDragging] = useState(false);
   const canvasRef = useRef<HTMLDivElement | null>(null);
 
   // Load saved boards once on mount.
@@ -105,6 +106,7 @@ export default function CollageStudio() {
     Math.max(0, Math.min(value, Math.max(0, max)));
 
   const handleDragStart = (e: DragStartEvent) => {
+    setDragging(true);
     const data = e.active.data.current;
     if (data?.type === "placed") {
       // bring the grabbed image to the front
@@ -119,6 +121,7 @@ export default function CollageStudio() {
   };
 
   const handleDragEnd = (e: DragEndEvent) => {
+    setDragging(false);
     const { active: act, over, delta } = e;
     const data = act.data.current;
     const rect = canvasRef.current?.getBoundingClientRect();
@@ -193,10 +196,15 @@ export default function CollageStudio() {
       sensors={sensors}
       onDragStart={handleDragStart}
       onDragEnd={handleDragEnd}
+      onDragCancel={() => setDragging(false)}
     >
       <div className="grid gap-6 lg:grid-cols-[180px_1fr]">
         {/* Tray */}
-        <aside className="lg:sticky lg:top-24 lg:self-start">
+        <aside
+          className={`relative lg:sticky lg:top-24 lg:self-start ${
+            dragging ? "z-30" : ""
+          }`}
+        >
           <p className="mb-3 font-mono text-xs uppercase tracking-widest text-muted">
             Drag onto a board
           </p>
