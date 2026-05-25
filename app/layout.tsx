@@ -28,18 +28,18 @@ const DESCRIPTION =
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
-  title: "Adam Klockars — Engineering Leader",
+  title: "Adam Oscar Klockars — Engineering Leader",
   description: DESCRIPTION,
   openGraph: {
-    title: "Adam Klockars — Engineering Leader",
+    title: "Adam Oscar Klockars — Engineering Leader",
     description: DESCRIPTION,
     url: SITE_URL,
-    siteName: "Adam Klockars",
+    siteName: "Adam Oscar Klockars",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Adam Klockars — Engineering Leader",
+    title: "Adam Oscar Klockars — Engineering Leader",
     description: DESCRIPTION,
   },
 };

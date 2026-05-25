@@ -13,6 +13,10 @@ const sections = [
   { id: "about", label: "About" },
 ];
 
+// Sections inherit their project's accent; everything else uses the base color.
+const themeFor = (id: string) =>
+  projects.find((p) => p.id === id)?.accent ?? "#7c6cff";
+
 export default function ScrollChrome() {
   const [active, setActive] = useState("top");
   const { scrollYProgress } = useScroll();
@@ -39,12 +43,17 @@ export default function ScrollChrome() {
     return () => observer.disconnect();
   }, []);
 
+  // Sweep the whole page's accent as the active section changes.
+  useEffect(() => {
+    document.documentElement.style.setProperty("--theme", themeFor(active));
+  }, [active]);
+
   return (
     <>
       {/* top progress bar */}
       <motion.div
-        style={{ scaleX: progress }}
-        className="fixed inset-x-0 top-0 z-50 h-[3px] origin-left bg-accent"
+        style={{ scaleX: progress, background: "var(--theme)" }}
+        className="fixed inset-x-0 top-0 z-50 h-[3px] origin-left"
       />
 
       {/* side dot nav (desktop only) */}
@@ -72,9 +81,10 @@ export default function ScrollChrome() {
                 {label}
               </span>
               <span
+                style={isActive ? { background: "var(--theme)" } : undefined}
                 className={`block rounded-full transition-all duration-300 ${
                   isActive
-                    ? "h-2.5 w-2.5 bg-accent"
+                    ? "h-2.5 w-2.5"
                     : "h-1.5 w-1.5 bg-faint group-hover:bg-foreground"
                 }`}
               />

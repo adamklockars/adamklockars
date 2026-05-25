@@ -26,7 +26,7 @@ export default function About() {
             />
             <Image
               src="/profile.jpg"
-              alt="Adam Klockars"
+              alt="Adam Oscar Klockars"
               width={240}
               height={240}
               className="size-44 rounded-3xl border border-border object-cover sm:size-56"

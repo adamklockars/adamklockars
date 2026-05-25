@@ -44,7 +44,7 @@ export default function Footer() {
       <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-6 sm:flex-row">
         <div>
           <p className="font-display text-lg font-bold tracking-tight">
-            Adam Klockars<span className="text-accent">.</span>
+            Adam Oscar Klockars<span style={{ color: "var(--theme)" }}>.</span>
           </p>
           <p className="mt-1 text-sm text-muted">
             Built with Next.js &amp; Tailwind. Hosted statically.
@@ -68,7 +68,7 @@ export default function Footer() {
       </div>
 
       <p className="mx-auto mt-8 max-w-6xl text-center text-xs text-faint sm:text-left">
-        © {new Date().getFullYear()} Adam Klockars
+        © {new Date().getFullYear()} Adam Oscar Klockars
       </p>
     </footer>
   );

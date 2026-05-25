@@ -23,10 +23,20 @@
 /* ------------------------------------------------------------------ */
 /* Base                                                                */
 /* ------------------------------------------------------------------ */
+/* Section-accent color the scroll nav drives. Registered so it can be
+   smoothly transitioned (animating a CSS variable needs @property). */
+@property --theme {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #7c6cff;
+}
+
 html {
   color-scheme: dark;
   /* Lenis drives scrolling in JS; let it own the smoothing. */
   scroll-behavior: auto;
+  --theme: #7c6cff;
+  transition: --theme 700ms ease;
 }
 
 body {
@@ -38,7 +48,7 @@ body {
   overflow-x: hidden;
 }
 
-/* Subtle grain / vignette so the dark canvas isn't flat. */
+/* Full-page wash tied to the active section's color — shifts as you scroll. */
 body::before {
   content: "";
   position: fixed;
@@ -46,8 +56,9 @@ body::before {
   z-index: -1;
   pointer-events: none;
   background:
-    radial-gradient(60% 50% at 50% 0%, color-mix(in oklab, var(--color-accent) 10%, transparent), transparent 70%),
-    radial-gradient(50% 40% at 100% 100%, color-mix(in oklab, var(--color-accent) 6%, transparent), transparent 70%);
+    radial-gradient(75% 60% at 50% -5%, color-mix(in oklab, var(--theme) 32%, transparent), transparent 72%),
+    radial-gradient(65% 55% at 100% 108%, color-mix(in oklab, var(--theme) 22%, transparent), transparent 72%),
+    radial-gradient(55% 50% at 0% 60%, color-mix(in oklab, var(--theme) 12%, transparent), transparent 70%);
 }
 
 ::selection {

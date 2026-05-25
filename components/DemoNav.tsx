@@ -13,7 +13,7 @@ export default function DemoNav() {
         >
           <ArrowLeft className="size-4 transition-transform group-hover:-translate-x-0.5" />
           <span className="font-display font-bold tracking-tight text-foreground">
-            Adam Klockars
+            Adam Oscar Klockars
           </span>
         </Link>
       </div>

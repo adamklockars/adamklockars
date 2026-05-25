@@ -23,7 +23,7 @@ export default function Hero() {
         </motion.p>
 
         <h1 className="font-display text-[clamp(2.75rem,9vw,7.5rem)] font-bold leading-[0.95] tracking-tight">
-          {["Adam", "Klockars"].map((word, i) => (
+          {["Adam Oscar", "Klockars"].map((word, i) => (
             <motion.span
               key={word}
               initial={{ opacity: 0, y: 40 }}

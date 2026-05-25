@@ -36,7 +36,7 @@ export default function Header() {
           className="font-display text-lg font-bold tracking-tight"
           aria-label="Back to top"
         >
-          AK<span className="text-accent">.</span>
+          AOK<span style={{ color: "var(--theme)" }}>.</span>
         </button>
 
         <div className="flex items-center gap-2">
