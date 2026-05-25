@@ -1,0 +1,87 @@
+@import "tailwindcss";
+
+/* ------------------------------------------------------------------ */
+/* Design tokens                                                       */
+/* ------------------------------------------------------------------ */
+@theme {
+  --color-background: #07070b;
+  --color-foreground: #ededf2;
+  --color-muted: #8b8b96;
+  --color-faint: #5b5b66;
+  --color-surface: #0f0f17;
+  --color-surface-2: #16161f;
+  --color-border: #23232e;
+  --color-accent: #7c6cff;
+
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-space-grotesk), var(--font-inter), sans-serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, monospace;
+
+  --shadow-glow: 0 0 80px -20px var(--tw-shadow-color);
+}
+
+/* ------------------------------------------------------------------ */
+/* Base                                                                */
+/* ------------------------------------------------------------------ */
+html {
+  color-scheme: dark;
+  /* Lenis drives scrolling in JS; let it own the smoothing. */
+  scroll-behavior: auto;
+}
+
+body {
+  background: var(--color-background);
+  color: var(--color-foreground);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+
+/* Subtle grain / vignette so the dark canvas isn't flat. */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(60% 50% at 50% 0%, color-mix(in oklab, var(--color-accent) 10%, transparent), transparent 70%),
+    radial-gradient(50% 40% at 100% 100%, color-mix(in oklab, var(--color-accent) 6%, transparent), transparent 70%);
+}
+
+::selection {
+  background: color-mix(in oklab, var(--color-accent) 35%, transparent);
+  color: #fff;
+}
+
+/* Thin, on-brand scrollbar */
+::-webkit-scrollbar { width: 9px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: 999px;
+}
+::-webkit-scrollbar-thumb:hover { background: var(--color-faint); }
+
+/* ------------------------------------------------------------------ */
+/* Reusable bits                                                       */
+/* ------------------------------------------------------------------ */
+.text-gradient {
+  background: linear-gradient(180deg, var(--color-foreground), color-mix(in oklab, var(--color-foreground) 55%, transparent));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Respect users who don't want motion: kill transitions/animations. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
