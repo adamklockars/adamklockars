@@ -1,0 +1,98 @@
+@import "tailwindcss";
+
+/* ------------------------------------------------------------------ */
+/* Design tokens                                                       */
+/* ------------------------------------------------------------------ */
+@theme {
+  --color-background: #07070b;
+  --color-foreground: #ededf2;
+  --color-muted: #8b8b96;
+  --color-faint: #5b5b66;
+  --color-surface: #0f0f17;
+  --color-surface-2: #16161f;
+  --color-border: #23232e;
+  --color-accent: #7c6cff;
+
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-space-grotesk), var(--font-inter), sans-serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, monospace;
+
+  --shadow-glow: 0 0 80px -20px var(--tw-shadow-color);
+}
+
+/* ------------------------------------------------------------------ */
+/* Base                                                                */
+/* ------------------------------------------------------------------ */
+/* Section-accent color the scroll nav drives. Registered so it can be
+   smoothly transitioned (animating a CSS variable needs @property). */
+@property --theme {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #7c6cff;
+}
+
+html {
+  color-scheme: dark;
+  /* Lenis drives scrolling in JS; let it own the smoothing. */
+  scroll-behavior: auto;
+  --theme: #7c6cff;
+  transition: --theme 700ms ease;
+}
+
+body {
+  background: var(--color-background);
+  color: var(--color-foreground);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+
+/* Full-page wash tied to the active section's color — shifts as you scroll. */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(75% 60% at 50% -5%, color-mix(in oklab, var(--theme) 32%, transparent), transparent 72%),
+    radial-gradient(65% 55% at 100% 108%, color-mix(in oklab, var(--theme) 22%, transparent), transparent 72%),
+    radial-gradient(55% 50% at 0% 60%, color-mix(in oklab, var(--theme) 12%, transparent), transparent 70%);
+}
+
+::selection {
+  background: color-mix(in oklab, var(--color-accent) 35%, transparent);
+  color: #fff;
+}
+
+/* Thin, on-brand scrollbar */
+::-webkit-scrollbar { width: 9px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: 999px;
+}
+::-webkit-scrollbar-thumb:hover { background: var(--color-faint); }
+
+/* ------------------------------------------------------------------ */
+/* Reusable bits                                                       */
+/* ------------------------------------------------------------------ */
+.text-gradient {
+  background: linear-gradient(180deg, var(--color-foreground), color-mix(in oklab, var(--color-foreground) 55%, transparent));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Respect users who don't want motion: kill transitions/animations. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}

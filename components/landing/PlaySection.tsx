@@ -1,0 +1,75 @@
+import Link from "next/link";
+import { ArrowUpRight, Grid3x3, Images } from "lucide-react";
+import { Reveal } from "@/components/ui/Reveal";
+
+const experiments = [
+  {
+    href: "/tic-tac-toe",
+    title: "Tic-Tac-Toe",
+    blurb:
+      "Two players or you against a (cheerfully naive) computer. Rebuilt from the original server-rendered version — now instant, no page reloads.",
+    icon: Grid3x3,
+    accent: "#7c6cff",
+  },
+  {
+    href: "/collage",
+    title: "Collage Studio",
+    blurb:
+      "Drag photos onto a canvas, arrange them across multiple boards, and export the result as an image. The old Pinprint tool, reborn with modern drag-and-drop.",
+    icon: Images,
+    accent: "#f59e0b",
+  },
+];
+
+export default function PlaySection() {
+  return (
+    <section id="play" className="scroll-mt-20 px-6 py-28">
+      <div className="mx-auto max-w-6xl">
+        <Reveal>
+          <p className="font-mono text-xs uppercase tracking-[0.3em] text-accent">
+            Play
+          </p>
+          <h2 className="mt-4 max-w-2xl font-display text-4xl font-bold tracking-tight sm:text-5xl">
+            A couple of things I rebuilt from the original site
+          </h2>
+          <p className="mt-4 max-w-xl text-muted">
+            The first version of this site (circa 2012) ran these on a Django
+            backend. They now live entirely in your browser.
+          </p>
+        </Reveal>
+
+        <div className="mt-12 grid gap-6 sm:grid-cols-2">
+          {experiments.map((exp, i) => {
+            const Icon = exp.icon;
+            return (
+              <Reveal key={exp.href} delay={i * 0.08}>
+                <Link
+                  href={exp.href}
+                  prefetch={false}
+                  style={{ ["--color-accent" as string]: exp.accent }}
+                  className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-surface p-8 transition-all duration-300 hover:-translate-y-1 hover:border-accent/50"
+                >
+                  <div
+                    aria-hidden
+                    className="absolute -right-16 -top-16 size-40 rounded-full opacity-0 blur-3xl transition-opacity duration-300 group-hover:opacity-40"
+                    style={{ background: "var(--color-accent)" }}
+                  />
+                  <div className="flex size-12 items-center justify-center rounded-xl border border-border bg-background text-accent">
+                    <Icon className="size-6" />
+                  </div>
+                  <h3 className="mt-6 flex items-center gap-2 font-display text-2xl font-semibold">
+                    {exp.title}
+                    <ArrowUpRight className="size-5 text-muted transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-accent" />
+                  </h3>
+                  <p className="mt-3 text-sm leading-relaxed text-muted">
+                    {exp.blurb}
+                  </p>
+                </Link>
+              </Reveal>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  );
+}
