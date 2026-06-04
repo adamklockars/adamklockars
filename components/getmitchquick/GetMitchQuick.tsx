@@ -5,10 +5,10 @@ import {
   GOODS,
   LOCATIONS,
   MAX_DAYS,
-  CAPACITY,
   GUN_PRICE,
   ARMOR_PRICE,
   START_HP,
+  CAP_STEP,
   type Game,
   newGame,
   buy,
@@ -16,6 +16,8 @@ import {
   buyGun,
   buyArmor,
   buyHeal,
+  buyCapacity,
+  capacityPrice,
   payShark,
   travel,
   resolveCombat,
@@ -104,7 +106,7 @@ export default function GetMitchQuick() {
           <Stat label="Debt" value={`$${g.debt.toLocaleString()}`} danger={g.debt > 0} />
           <Stat label="HP" value={`${g.hp}`} danger={g.hp <= 30} />
           <Stat label="Spot" value={LOCATIONS[g.location]} />
-          <Stat label="Duffel" value={`${usedSpace(g)}/${CAPACITY}`} />
+          <Stat label="Duffel" value={`${usedSpace(g)}/${g.capacity}`} />
           <Stat label="Firepower" value={`${g.guns}`} />
           <Stat label="Padding" value={`${g.armor}`} />
         </div>
@@ -248,9 +250,9 @@ function Market({ g, apply }: { g: Game; apply: (fn: (g: Game) => Game) => void 
             <span className="ml-auto flex gap-1">
               <ActBtn onClick={() => apply((s) => buy(s, i, 1))} disabled={price == null}>+1</ActBtn>
               <ActBtn onClick={() => apply((s) => buy(s, i, 10))} disabled={price == null}>+10</ActBtn>
-              <ActBtn onClick={() => apply((s) => buy(s, i, CAPACITY))} disabled={price == null}>Max</ActBtn>
+              <ActBtn onClick={() => apply((s) => buy(s, i, g.capacity))} disabled={price == null}>Max</ActBtn>
               <ActBtn onClick={() => apply((s) => sell(s, i, 1))} disabled={owned === 0}>−1</ActBtn>
-              <ActBtn onClick={() => apply((s) => sell(s, i, CAPACITY))} disabled={owned === 0}>Sell</ActBtn>
+              <ActBtn onClick={() => apply((s) => sell(s, i, g.capacity))} disabled={owned === 0}>Sell</ActBtn>
             </span>
           </div>
         );
@@ -310,6 +312,12 @@ function Shop({ g, apply }: { g: Game; apply: (fn: (g: Game) => Game) => void })
           onClick={() => apply((s) => buyHeal(s, h.hp, h.price, h.name))}
         />
       ))}
+      <ShopRow
+        label={`Hockey bag (+${CAP_STEP} supply) — carry more`}
+        price={capacityPrice(g)}
+        disabled={availableFunds(g) < capacityPrice(g)}
+        onClick={() => apply(buyCapacity)}
+      />
       <ShopRow
         label={`Piece (+1 firepower) — fight off busts`}
         price={GUN_PRICE}

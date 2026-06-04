@@ -69,6 +69,7 @@ export type Game = {
   hp: number;
   guns: number;
   armor: number;
+  capacity: number; // duffel size — upgradable
   coat: number[]; // qty owned per good index
   location: number;
   market: (number | null)[]; // today's price per good (null = unavailable)
@@ -93,7 +94,11 @@ const pick = <T>(g: Game, arr: T[]): T => arr[Math.floor(rnd(g) * arr.length)];
 
 // --- helpers --------------------------------------------------------------
 export const usedSpace = (g: Game) => g.coat.reduce((a, b) => a + b, 0);
-export const spaceLeft = (g: Game) => CAPACITY - usedSpace(g);
+export const spaceLeft = (g: Game) => g.capacity - usedSpace(g);
+/** Cost of the next duffel upgrade — climbs as it gets bigger. */
+export const capacityPrice = (g: Game) =>
+  300 + Math.round((g.capacity - CAPACITY) * 10);
+export const CAP_STEP = 40; // supply gained per upgrade
 /** Spendable money, including the overdraft buffer. */
 export const availableFunds = (g: Game) => g.cash + OVERDRAFT_LIMIT;
 
@@ -144,6 +149,7 @@ export function newGame(seed = (Math.random() * 1e9) | 0): Game {
     hp: START_HP,
     guns: 0,
     armor: 0,
+    capacity: CAPACITY,
     coat: GOODS.map(() => 0),
     location: 0,
     market: [],
@@ -211,6 +217,17 @@ export function buyArmor(state: Game): Game {
   log(g, `Picked up a Kevlar hoodie. Padding is now ${g.armor}.`);
   return g;
 }
+/** Buy a bigger duffel — more supply you can carry at once. */
+export function buyCapacity(state: Game): Game {
+  const g = clone(state);
+  const price = capacityPrice(g);
+  if (g.over || availableFunds(g) < price) return g;
+  g.cash -= price;
+  g.capacity += CAP_STEP;
+  log(g, `Scored a bigger hockey bag. You can now carry ${g.capacity}.`);
+  return g;
+}
+
 /** Buy a healing item: restore `hpGain` HP for `price`. */
 export function buyHeal(
   state: Game,
