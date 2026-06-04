@@ -46,11 +46,13 @@ export default function PlaySection() {
             Play
           </p>
           <h2 className="mt-4 max-w-2xl font-display text-4xl font-bold tracking-tight sm:text-5xl">
-            A couple of things I rebuilt from the original site
+            A few things I built for fun
           </h2>
           <p className="mt-4 max-w-xl text-muted">
-            The first version of this site (circa 2012) ran these on a Django
-            backend. They now live entirely in your browser.
+            Tic-Tac-Toe and the collage tool are rebuilt from the original 2012
+            Django version of this site. The two games are newer — built from
+            scratch, inspired by projects and games from past experiences. They
+            all run entirely in your browser.
           </p>
         </Reveal>
 
