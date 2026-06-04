@@ -6,6 +6,7 @@ import {
   Rocket,
   PiggyBank,
   Dumbbell,
+  Terminal,
 } from "lucide-react";
 import { Reveal } from "@/components/ui/Reveal";
 
@@ -43,6 +44,14 @@ const experiments = [
     accent: "#f472b6",
   },
   {
+    href: "/bootleg-baron",
+    title: "Bootleg Baron",
+    blurb:
+      "A parody of the old DOS text trader Drug Lord / Drug Wars: buy low and sell high on absurd contraband, dodge escalating busts, pay off the loan shark, and try to get rich before it gets you.",
+    icon: Terminal,
+    accent: "#ffb000",
+  },
+  {
     href: "/collage",
     title: "Collage Studio",
     blurb:
@@ -61,7 +70,7 @@ export default function PlaySection() {
             Play
           </p>
           <h2 className="mt-4 max-w-2xl font-display text-4xl font-bold tracking-tight sm:text-5xl">
-            A few things I built for fun
+            Things I build for fun
           </h2>
           <p className="mt-4 max-w-xl text-muted">
             Tic-Tac-Toe and the collage tool are rebuilt from the original 2012
