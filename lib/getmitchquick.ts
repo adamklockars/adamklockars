@@ -44,12 +44,13 @@ export const GOODS: GoodDef[] = [
 ];
 
 export const LOCATIONS = [
-  "The Cul-de-Sac",
-  "Food Court",
-  "Flea Market",
-  "Strip Mall",
-  "The Marina",
-  "The Docks",
+  "Nuden",
+  "Barefax",
+  "Cuba",
+  "Mexico",
+  "Charlotte",
+  "Vanier",
+  "Casino",
 ];
 
 export type Pending =
