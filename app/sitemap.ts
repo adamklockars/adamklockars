@@ -12,6 +12,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/side-scroller",
     "/flying-pig",
     "/swole-mate",
+    "/bootleg-baron",
   ];
   return routes.map((path) => ({
     url: `${BASE}${path}`,
