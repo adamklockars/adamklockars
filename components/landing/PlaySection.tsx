@@ -44,10 +44,10 @@ const experiments = [
     accent: "#f472b6",
   },
   {
-    href: "/bootleg-baron",
-    title: "Bootleg Baron",
+    href: "/get-mitch-quick",
+    title: "Get Mitch Quick",
     blurb:
-      "A parody of the old DOS text trader Drug Lord / Drug Wars: buy low and sell high on absurd contraband, dodge escalating busts, pay off the loan shark, and try to get rich before it gets you.",
+      "A parody of the old DOS text trader Drug Lord / Drug Wars: buy low and sell high on absurd contraband, dodge escalating busts, pay off the loan shark, and get Mitch quick before it gets you.",
     icon: Terminal,
     accent: "#ffb000",
   },
