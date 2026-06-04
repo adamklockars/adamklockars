@@ -2,8 +2,9 @@
 // Drug Lord / Drug Wars. Same loop: travel between spots, buy low and sell high
 // on wildly swinging prices, dodge (or fight) escalating cop busts, stock up on
 // defensive gear that never quite saves you, and try to pay off the loan shark
-// and get rich before the clock runs out. Only here the contraband is absurd:
-// Beanie Babies, bootleg DVDs, gas-station sushi.
+// and get rich before the clock runs out. The market mixes the genre staples
+// (cocaine, MDMA, magic mushrooms) with absurd contraband (Beanie Babies,
+// bootleg DVDs, gas-station sushi) — the pricey stuff swings hardest.
 //
 // Pure logic: every transition takes a Game and returns a new Game (with a
 // running log of the "funny scenarios in simple text"). The component just
@@ -23,14 +24,18 @@ export const PATCH_PRICE = 200;
 
 export type GoodDef = { name: string; min: number; max: number; rare: number };
 
-// Six goods with different price ranges; `rare` = chance it's missing today.
+// Goods with different price ranges; `rare` = chance it's missing today. The
+// high-value items (the drugs) swing hardest and are the riskiest to carry.
 export const GOODS: GoodDef[] = [
+  { name: "Cocaine", min: 250, max: 1500, rare: 0.3 },
+  { name: "MDMA", min: 90, max: 650, rare: 0.25 },
+  { name: "Magic Mushrooms", min: 40, max: 340, rare: 0.2 },
+  { name: "Knockoff Kicks", min: 25, max: 280, rare: 0.2 },
+  { name: "Fake Cologne", min: 40, max: 560, rare: 0.3 },
+  { name: "Energy Drinks", min: 12, max: 140, rare: 0.15 },
   { name: "Beanie Babies", min: 10, max: 90, rare: 0.15 },
   { name: "Bootleg DVDs", min: 5, max: 45, rare: 0.1 },
-  { name: "Knockoff Kicks", min: 25, max: 280, rare: 0.2 },
   { name: "Gas-Station Sushi", min: 3, max: 30, rare: 0.1 },
-  { name: "Energy Drinks", min: 12, max: 140, rare: 0.15 },
-  { name: "Fake Cologne", min: 40, max: 560, rare: 0.3 },
 ];
 
 export const LOCATIONS = [
@@ -241,10 +246,12 @@ export function travel(state: Game, loc: number): Game {
 function rollEvent(g: Game): Game {
   const roll = rnd(g);
   const heat = g.day / MAX_DAYS; // 0..1, rises over time
+  // The richer Mitch gets, the more heat he draws — big-time dealers get busted.
+  const rep = Math.min(0.24, Math.max(0, netWorth(g)) / 85000);
 
   // Cops get more frequent and meaner as the days (and your rep) climb.
-  if (roll < 0.22 + heat * 0.33) {
-    const foes = 1 + Math.floor(rnd(g) * (1 + Math.floor(heat * 4)));
+  if (roll < 0.22 + heat * 0.3 + rep) {
+    const foes = 1 + Math.floor(rnd(g) * (1 + Math.floor(heat * 4 + rep * 7)));
     const foe = pick(g, THUGS);
     g.pending = { kind: "cops", foes, foe };
     log(g, `🚨 ${foe} ${foes > 1 ? "and friends" : ""} jumped you! (${foes} of them)`);
@@ -301,9 +308,11 @@ function rollEvent(g: Game): Game {
 
 // --- combat resolution ----------------------------------------------------
 function takeDamage(g: Game, foes: number) {
+  // Late-game busts hit harder — by the end, no amount of Kevlar is enough.
+  const perFoeMax = 14 + Math.floor(g.day / 2);
   let dmg = 0;
-  for (let f = 0; f < foes; f++) dmg += ri(g, 4, 14);
-  dmg = Math.max(0, dmg - g.armor * 4); // padding soaks some
+  for (let f = 0; f < foes; f++) dmg += ri(g, 5, perFoeMax);
+  dmg = Math.max(0, dmg - g.armor * 3); // padding soaks some, but never all
   g.hp -= dmg;
   if (dmg > 0) log(g, `You took ${dmg} damage. HP: ${Math.max(0, g.hp)}.`);
   if (g.hp <= 0) {
