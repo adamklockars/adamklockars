@@ -186,16 +186,16 @@ export default function FlyingPig() {
         )}
 
         {phase !== "playing" && (
-          <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/55 backdrop-blur-sm">
+          <div className="absolute inset-0 flex flex-col items-center justify-center px-4 text-center bg-black/55 backdrop-blur-sm">
             {phase === "menu" ? (
               <>
-                <p className="font-mono text-xs uppercase tracking-[0.3em] text-accent">
+                <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-accent sm:text-xs">
                   Endless runner
                 </p>
-                <h2 className="mt-2 font-display text-3xl font-bold sm:text-4xl">
+                <h2 className="mt-1 font-display text-2xl font-bold sm:mt-2 sm:text-4xl">
                   Robo Pig Attack
                 </h2>
-                <p className="mt-3 max-w-sm text-center text-sm text-muted">
+                <p className="mt-2 max-w-sm text-xs leading-snug text-muted sm:text-sm">
                   A winged robo-pig runs forever. Jump the gaps, flap to
                   double-jump, and dash to smash the crystals. How far can you
                   fly?
@@ -203,16 +203,16 @@ export default function FlyingPig() {
               </>
             ) : (
               <>
-                <p className="font-mono text-xs uppercase tracking-[0.3em] text-accent">
+                <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-accent sm:text-xs">
                   The dream ends
                 </p>
-                <h2 className="mt-2 font-display text-3xl font-bold sm:text-4xl">
+                <h2 className="mt-1 font-display text-2xl font-bold sm:mt-2 sm:text-4xl">
                   {score} <span className="text-muted">m</span>
                 </h2>
                 {score >= best && score > 0 ? (
                   <p className="mt-1 text-sm text-accent">New best! 🐷✨</p>
                 ) : (
-                  <p className="mt-2 max-w-xs text-center text-sm italic text-muted">
+                  <p className="mt-2 max-w-xs text-xs italic leading-snug text-muted sm:text-sm">
                     “{deathLine}”
                   </p>
                 )}
@@ -220,7 +220,7 @@ export default function FlyingPig() {
             )}
             <button
               onClick={start}
-              className="mt-6 inline-flex items-center gap-2 rounded-full bg-accent px-7 py-3 font-medium text-background transition-transform hover:scale-[1.03] active:scale-95"
+              className="mt-4 inline-flex items-center gap-2 rounded-full bg-accent px-6 py-2.5 font-medium text-background transition-transform hover:scale-[1.03] active:scale-95 sm:mt-6 sm:px-7 sm:py-3"
             >
               {phase === "menu" ? (
                 <Play className="size-4" />

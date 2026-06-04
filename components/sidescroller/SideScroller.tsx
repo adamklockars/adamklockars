@@ -198,26 +198,29 @@ export default function SideScroller() {
         <canvas ref={canvasRef} className="block h-full w-full" />
 
         {phase !== "playing" && (
-          <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/65 backdrop-blur-sm">
+          <div className="absolute inset-0 flex flex-col items-center justify-center px-4 text-center bg-black/65 backdrop-blur-sm">
             {phase === "menu" ? (
               <>
                 <p
-                  className="font-mono text-xs uppercase tracking-[0.3em]"
+                  className="font-mono text-[10px] uppercase tracking-[0.3em] sm:text-xs"
                   style={{ color: GREEN }}
                 >
                   Retro · Turing
                 </p>
                 <h2
-                  className="mt-2 font-display text-3xl font-bold sm:text-4xl"
+                  className="mt-1 font-display text-2xl font-bold sm:mt-2 sm:text-4xl"
                   style={{ color: GREEN }}
                 >
                   If Then Explosion
                 </h2>
-                <p className="mt-3 max-w-xs text-center text-sm text-muted">
-                  Fly the triangle through the cave. The walls close toward the
-                  centre and aliens squeeze the gap — but there&apos;s always a
-                  way through. Up / Down arrows (or W / S); on touch, hold the
-                  top or bottom.
+                <p className="mt-2 max-w-xs text-xs leading-snug text-muted sm:text-sm">
+                  Fly the triangle through the cave — walls pinch toward the
+                  centre and aliens squeeze the gap, but there&apos;s always a
+                  way through.{" "}
+                  <span className="hidden sm:inline">
+                    Up / Down arrows (or W / S); on touch, hold the top or
+                    bottom.
+                  </span>
                 </p>
               </>
             ) : (
@@ -229,7 +232,7 @@ export default function SideScroller() {
                   Boom
                 </p>
                 <h2
-                  className="mt-2 font-display text-3xl font-bold sm:text-4xl"
+                  className="mt-1 font-display text-2xl font-bold sm:mt-2 sm:text-4xl"
                   style={{ color: GREEN }}
                 >
                   {score} <span className="text-muted">pts</span>
@@ -243,7 +246,7 @@ export default function SideScroller() {
             )}
             <button
               onClick={start}
-              className="mt-6 inline-flex items-center gap-2 rounded-full px-7 py-3 font-medium text-black transition-transform hover:scale-[1.03] active:scale-95"
+              className="mt-4 inline-flex items-center gap-2 rounded-full px-6 py-2.5 font-medium text-black transition-transform hover:scale-[1.03] active:scale-95 sm:mt-6 sm:px-7 sm:py-3"
               style={{ background: GREEN }}
             >
               {phase === "menu" ? (
