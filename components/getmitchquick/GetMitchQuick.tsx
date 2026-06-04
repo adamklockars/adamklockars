@@ -25,6 +25,7 @@ import {
   usedSpace,
   spaceLeft,
   netWorth,
+  availableFunds,
 } from "@/lib/getmitchquick";
 
 type Panel = "market" | "travel" | "shop" | "shark";
@@ -93,7 +94,15 @@ export default function GetMitchQuick() {
         {/* Status */}
         <div className="grid grid-cols-2 gap-x-4 gap-y-1 border-b pb-3 text-xs sm:grid-cols-4" style={{ borderColor: "#3a2c10" }}>
           <Stat label="Day" value={`${g.day}/${MAX_DAYS}`} />
-          <Stat label="Cash" value={`$${g.cash.toLocaleString()}`} />
+          <Stat
+            label="Cash"
+            value={
+              g.cash < 0
+                ? `-$${Math.abs(g.cash).toLocaleString()}`
+                : `$${g.cash.toLocaleString()}`
+            }
+            danger={g.cash < 0}
+          />
           <Stat label="Debt" value={`$${g.debt.toLocaleString()}`} danger={g.debt > 0} />
           <Stat label="HP" value={`${g.hp}`} danger={g.hp <= 30} />
           <Stat label="Spot" value={LOCATIONS[g.location]} />
@@ -288,19 +297,19 @@ function Shop({ g, apply }: { g: Game; apply: (fn: (g: Game) => Game) => void })
       <ShopRow
         label={`Piece (+1 firepower) — fight off busts`}
         price={GUN_PRICE}
-        disabled={g.cash < GUN_PRICE}
+        disabled={availableFunds(g) < GUN_PRICE}
         onClick={() => apply(buyGun)}
       />
       <ShopRow
         label={`Kevlar hoodie (+1 padding) — soak damage`}
         price={ARMOR_PRICE}
-        disabled={g.cash < ARMOR_PRICE}
+        disabled={availableFunds(g) < ARMOR_PRICE}
         onClick={() => apply(buyArmor)}
       />
       <ShopRow
         label={`Patch up (+${PATCH_HP} HP)`}
         price={PATCH_PRICE}
-        disabled={g.cash < PATCH_PRICE || g.hp >= START_HP}
+        disabled={availableFunds(g) < PATCH_PRICE || g.hp >= START_HP}
         onClick={() => apply(patchUp)}
       />
       <p className="pt-1 text-[11px]" style={{ color: AMBER_DIM }}>
@@ -365,7 +374,7 @@ function Encounter({ g, apply }: { g: Game; apply: (fn: (g: Game) => Game) => vo
         ${p.price} for +1 {p.item === "armor" ? "padding" : "firepower"}
       </p>
       <div className="mt-4 flex gap-3">
-        <ActBtn onClick={() => apply((s) => resolveOffer(s, true))} disabled={g.cash < p.price}>Buy</ActBtn>
+        <ActBtn onClick={() => apply((s) => resolveOffer(s, true))} disabled={availableFunds(g) < p.price}>Buy</ActBtn>
         <ActBtn onClick={() => apply((s) => resolveOffer(s, false))}>Pass</ActBtn>
       </div>
     </div>

@@ -22,6 +22,11 @@ export const ARMOR_PRICE = 280; // +1 padding (soaks damage)
 export const PATCH_HP = 25;
 export const PATCH_PRICE = 200;
 
+// You can spend this far into the red. Handy — but the bank can call the
+// overdraft at any time and seize your stash to settle it.
+export const OVERDRAFT_LIMIT = 2000;
+const OVERDRAFT_CALL_CHANCE = 0.16; // per travel, while you're overdrawn
+
 export type GoodDef = { name: string; min: number; max: number; rare: number };
 
 // Goods with different price ranges; `rare` = chance it's missing today. The
@@ -83,6 +88,8 @@ const pick = <T>(g: Game, arr: T[]): T => arr[Math.floor(rnd(g) * arr.length)];
 // --- helpers --------------------------------------------------------------
 export const usedSpace = (g: Game) => g.coat.reduce((a, b) => a + b, 0);
 export const spaceLeft = (g: Game) => CAPACITY - usedSpace(g);
+/** Spendable money, including the overdraft buffer. */
+export const availableFunds = (g: Game) => g.cash + OVERDRAFT_LIMIT;
 
 /** Value of the duffel at today's prices (avg mid-price when unavailable). */
 export function stashValue(g: Game): number {
@@ -143,6 +150,11 @@ export function newGame(seed = (Math.random() * 1e9) | 0): Game {
   };
   log(g, `Day 1 — you start in ${LOCATIONS[0]} with $${START_CASH} cash and a`);
   log(g, `$${START_DEBT} debt to a loan shark. 30 days. Get rich. Good luck.`);
+  log(
+    g,
+    `Your account has a $${OVERDRAFT_LIMIT} overdraft — spend into the red, but`,
+  );
+  log(g, "the bank can call it and seize your stash at any time.");
   rollMarket(g);
   return g;
 }
@@ -152,7 +164,7 @@ export function buy(state: Game, i: number, qty: number): Game {
   const g = clone(state);
   const price = g.market[i];
   if (g.over || price == null || qty <= 0) return g;
-  const affordable = Math.floor(g.cash / price);
+  const affordable = Math.floor(availableFunds(g) / price);
   const n = Math.min(qty, affordable, spaceLeft(g));
   if (n <= 0) {
     log(g, n === 0 && affordable === 0 ? "You can't afford any." : "No room left in the duffel.");
@@ -179,7 +191,7 @@ export function sell(state: Game, i: number, qty: number): Game {
 // --- shop / shark ---------------------------------------------------------
 export function buyGun(state: Game): Game {
   const g = clone(state);
-  if (g.over || g.cash < GUN_PRICE) return g;
+  if (g.over || availableFunds(g) < GUN_PRICE) return g;
   g.cash -= GUN_PRICE;
   g.guns += 1;
   log(g, `Bought a piece. Firepower is now ${g.guns}.`);
@@ -187,7 +199,7 @@ export function buyGun(state: Game): Game {
 }
 export function buyArmor(state: Game): Game {
   const g = clone(state);
-  if (g.over || g.cash < ARMOR_PRICE) return g;
+  if (g.over || availableFunds(g) < ARMOR_PRICE) return g;
   g.cash -= ARMOR_PRICE;
   g.armor += 1;
   log(g, `Picked up a Kevlar hoodie. Padding is now ${g.armor}.`);
@@ -195,7 +207,7 @@ export function buyArmor(state: Game): Game {
 }
 export function patchUp(state: Game): Game {
   const g = clone(state);
-  if (g.over || g.cash < PATCH_PRICE || g.hp >= START_HP) return g;
+  if (g.over || availableFunds(g) < PATCH_PRICE || g.hp >= START_HP) return g;
   g.cash -= PATCH_PRICE;
   g.hp = Math.min(START_HP, g.hp + PATCH_HP);
   log(g, `Patched up at the clinic. HP is now ${g.hp}.`);
@@ -244,6 +256,21 @@ export function travel(state: Game, loc: number): Game {
 }
 
 function rollEvent(g: Game): Game {
+  // The bank can call your overdraft whenever you're in the red — they seize
+  // the stash to settle up. You could lose it at any time.
+  if (g.cash < 0 && rnd(g) < OVERDRAFT_CALL_CHANCE) {
+    const seized = stashValue(g);
+    g.coat = g.coat.map(() => 0);
+    g.cash += seized; // liquidate the stash against the overdraft
+    log(
+      g,
+      seized > 0
+        ? `🏦 The bank CALLED your overdraft! They seized your whole stash (~$${seized}) to settle up.`
+        : "🏦 The bank CALLED your overdraft! Nothing to seize — they just froze you in the red.",
+    );
+    return g;
+  }
+
   const roll = rnd(g);
   const heat = g.day / MAX_DAYS; // 0..1, rises over time
   // The richer Mitch gets, the more heat he draws — big-time dealers get busted.
@@ -334,7 +361,7 @@ export function resolveOffer(state: Game, accept: boolean): Game {
     g.pending = null;
     return g;
   }
-  if (g.cash < p.price) {
+  if (availableFunds(g) < p.price) {
     log(g, "You're short on cash. They scoff and leave.");
     g.pending = null;
     return g;
