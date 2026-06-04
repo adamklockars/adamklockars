@@ -1,5 +1,12 @@
 import Link from "next/link";
-import { ArrowUpRight, Grid3x3, Images, Rocket, PiggyBank } from "lucide-react";
+import {
+  ArrowUpRight,
+  Grid3x3,
+  Images,
+  Rocket,
+  PiggyBank,
+  Dumbbell,
+} from "lucide-react";
 import { Reveal } from "@/components/ui/Reveal";
 
 const experiments = [
@@ -28,6 +35,14 @@ const experiments = [
     accent: "#ff5db1",
   },
   {
+    href: "/swole-mate",
+    title: "Swole Mate",
+    blurb:
+      "A Tamagotchi-style handheld: keep a little guy fed and rested while grinding out reps for GAINS. Click a lot, watch the number climb, and don’t let him starve or collapse from over-training.",
+    icon: Dumbbell,
+    accent: "#f472b6",
+  },
+  {
     href: "/collage",
     title: "Collage Studio",
     blurb:
@@ -50,7 +65,7 @@ export default function PlaySection() {
           </h2>
           <p className="mt-4 max-w-xl text-muted">
             Tic-Tac-Toe and the collage tool are rebuilt from the original 2012
-            Django version of this site. The two games are newer — built from
+            Django version of this site. The games are newer — built from
             scratch, inspired by projects and games from past experiences. They
             all run entirely in your browser.
           </p>
