@@ -1,4 +1,4 @@
-// Game logic for "Bootleg Baron" — a parody remake of the old DOS text trader
+// Game logic for "Get Mitch Quick" — a parody remake of the old DOS text trader
 // Drug Lord / Drug Wars. Same loop: travel between spots, buy low and sell high
 // on wildly swinging prices, dodge (or fight) escalating cop busts, stock up on
 // defensive gear that never quite saves you, and try to pay off the loan shark

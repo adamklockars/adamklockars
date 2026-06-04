@@ -25,14 +25,14 @@ import {
   usedSpace,
   spaceLeft,
   netWorth,
-} from "@/lib/bootlegbaron";
+} from "@/lib/getmitchquick";
 
 type Panel = "market" | "travel" | "shop" | "shark";
-const BEST_KEY = "bootlegbaron-best";
+const BEST_KEY = "getmitchquick-best";
 const AMBER = "#ffb000";
 const AMBER_DIM = "#a8741a";
 
-export default function BootlegBaron() {
+export default function GetMitchQuick() {
   const [game, setGame] = useState<Game | null>(null);
   const [panel, setPanel] = useState<Panel>("market");
   const [best, setBest] = useState<number | null>(null);

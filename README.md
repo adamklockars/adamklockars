@@ -44,7 +44,7 @@ npx serve out      # preview the production build locally
 | `/side-scroller` | **If Then Explosion** — retro side-scroller (the old Turing spaceship game): fly through scrolling gaps, dodge dropping aliens |
 | `/flying-pig`    | **Robo Pig Attack** — a Robot Unicorn Attack-style endless runner with a winged robo-pig (jump / flap / dash) |
 | `/swole-mate`    | **Swole Mate** — a Tamagotchi-style handheld: feed/rest a little guy and grind reps for GAINS without killing him |
-| `/bootleg-baron` | **Bootleg Baron** — a parody of the Drug Lord / Drug Wars text trader (buy low / sell high / dodge busts / pay the shark) |
+| `/get-mitch-quick` | **Get Mitch Quick** — a parody of the Drug Lord / Drug Wars text trader (buy low / sell high / dodge busts / pay the shark) |
 | `/collage`       | Drag-and-drop collage tool (the old Pinprint), with PNG export   |
 
 ## Hosting (the slim path — $0)
