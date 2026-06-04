@@ -47,13 +47,14 @@ export default function About() {
           </Reveal>
           <Reveal delay={0.1}>
             <p className="mt-5 max-w-2xl leading-relaxed text-muted">
-              I&apos;m an engineering leader with 10+ years building and scaling
-              enterprise SaaS platforms, APIs and developer ecosystems — lately
-              with a focus on AI-powered, data-driven product capabilities. Most
-              recently I led US engineering for Zoom&apos;s App Marketplace;
-              before that, I spent years at SurveyMonkey growing its developer
-              platform and integrations. The projects above are what I build on
-              my own time.
+              I&apos;m an engineering leader with close to 15 years building and
+              scaling enterprise SaaS platforms, APIs and developer ecosystems —
+              lately with a focus on AI-powered, data-driven product
+              capabilities. Most recently I led US engineering for Zoom&apos;s
+              App Marketplace; before that, I spent years at SurveyMonkey growing
+              its developer platform and integrations and leading the initial
+              build-out of its Market Research Solutions. The projects above are
+              what I build on my own time.
             </p>
           </Reveal>
           <Reveal delay={0.15}>

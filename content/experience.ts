@@ -18,7 +18,7 @@ export const experience: Role[] = [
     title: "Senior Engineering Manager — Use Cases",
     period: "2017 – 2021",
     blurb:
-      "Led cross-functional teams building data-intensive, insight-driven capabilities, expanding the platform into advanced market-research use cases.",
+      "Led the initial build-out of Market Research Solutions, and the cross-functional teams behind it — shipping data-intensive, insight-driven capabilities that expanded the platform into advanced market-research use cases.",
   },
   {
     company: "SurveyMonkey",

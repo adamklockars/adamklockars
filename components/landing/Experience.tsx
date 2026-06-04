@@ -11,10 +11,10 @@ export default function Experience() {
             Experience
           </p>
           <h2 className="mt-4 max-w-2xl font-display text-4xl font-bold tracking-tight sm:text-5xl">
-            A decade of platforms, APIs &amp; developer ecosystems
+            Close to 15 years of platforms, APIs &amp; developer ecosystems
           </h2>
           <p className="mt-4 max-w-2xl text-muted">
-            10+ years building and scaling enterprise SaaS platforms and
+            Close to 15 years building and scaling enterprise SaaS platforms and
             developer ecosystems — leading cross-functional teams to ship
             platform intelligence, automation, and developer-productivity gains.
           </p>

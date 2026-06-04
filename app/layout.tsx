@@ -24,7 +24,7 @@ const jetbrainsMono = JetBrains_Mono({
 const SITE_URL = "https://adamklockars.com";
 
 const DESCRIPTION =
-  "Engineering leader with 10+ years building and scaling platforms, APIs and developer ecosystems — most recently Zoom's App Marketplace. A scroll through my projects (PredictVS, Curve Appeal, Beyond the Metric) plus a couple of playable experiments.";
+  "Engineering leader with close to 15 years building and scaling platforms, APIs and developer ecosystems — most recently Zoom's App Marketplace, and earlier the initial build-out of SurveyMonkey's Market Research Solutions. A scroll through my projects (PredictVS, Curve Appeal, Beyond the Metric) plus a couple of playable experiments.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
