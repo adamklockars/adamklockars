@@ -15,7 +15,7 @@ const experiments = [
     href: "/side-scroller",
     title: "If Then Explosion",
     blurb:
-      "A retro side-scroller rebuilt from the spaceship game I first wrote in Turing. Fly through the scrolling gaps and dodge dropping aliens — the level always leaves a safe path.",
+      "A retro green cave-flyer rebuilt from the spaceship game I first wrote in Turing. Thread the triangle ship through walls that pinch toward the centre while aliens squeeze the gap — there's always a way through.",
     icon: Rocket,
     accent: "#48e0a0",
   },

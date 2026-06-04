@@ -5,8 +5,6 @@ import { ChevronUp, ChevronDown, RotateCcw, Play } from "lucide-react";
 import {
   VIRT,
   SHIP,
-  WALL_W,
-  GAP,
   ALIEN_R,
   type World,
   type Input,
@@ -14,14 +12,21 @@ import {
   updateWorld,
   scoreOf,
   alienY,
+  caveBounds,
 } from "@/lib/sidescroller";
 
 type Phase = "menu" | "playing" | "dead";
 
 const BEST_KEY = "sidescroller-best";
-const ACCENT = "#7c6cff";
 
-type Star = { x: number; y: number; z: number };
+// Retro green CRT palette.
+const GREEN = "#39ff6a"; // bright phosphor green
+const GREEN_DIM = "#1f9c47";
+const WALL_FILL = "#0c3a1d";
+const WALL_EDGE = "#36e063";
+const PX = 8; // chunky pixel grid for the cave walls
+
+type Fleck = { x: number; y: number; z: number };
 
 export default function SideScroller() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -29,11 +34,10 @@ export default function SideScroller() {
   const [score, setScore] = useState(0);
   const [best, setBest] = useState(0);
 
-  // Mutable game refs (kept out of React state so the rAF loop is allocation-free).
   const worldRef = useRef<World | null>(null);
   const inputRef = useRef<Input>({ up: false, down: false });
   const phaseRef = useRef<Phase>("menu");
-  const starsRef = useRef<Star[]>([]);
+  const flecksRef = useRef<Fleck[]>([]);
   const rafRef = useRef<number>(0);
   const lastRef = useRef<number>(0);
 
@@ -84,7 +88,7 @@ export default function SideScroller() {
     };
   }, [start]);
 
-  // Render + simulation loop.
+  // Simulation + render loop.
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -96,29 +100,28 @@ export default function SideScroller() {
     canvas.height = VIRT.H * dpr;
     ctx.scale(dpr, dpr);
 
-    // Build the parallax starfield once.
-    if (starsRef.current.length === 0) {
-      const stars: Star[] = [];
-      for (let i = 0; i < 90; i++) {
-        stars.push({
+    // Faint drifting flecks for depth (very subtle, green).
+    if (flecksRef.current.length === 0) {
+      const flecks: Fleck[] = [];
+      for (let i = 0; i < 50; i++) {
+        flecks.push({
           x: Math.random() * VIRT.W,
           y: Math.random() * VIRT.H,
-          z: 0.3 + Math.random() * 0.7, // depth → speed & size
+          z: 0.3 + Math.random() * 0.7,
         });
       }
-      starsRef.current = stars;
+      flecksRef.current = flecks;
     }
 
     const loop = (ts: number) => {
       rafRef.current = requestAnimationFrame(loop);
       const last = lastRef.current || ts;
-      const dt = Math.min(0.05, (ts - last) / 1000); // clamp big gaps (tab switches)
+      const dt = Math.min(0.05, (ts - last) / 1000);
       lastRef.current = ts;
 
       const playing = phaseRef.current === "playing";
       const world = worldRef.current;
 
-      // --- update ---
       if (playing && world) {
         updateWorld(world, dt, inputRef.current);
         if (world.dead) {
@@ -131,30 +134,27 @@ export default function SideScroller() {
           });
           setPhase("dead");
         } else if (Math.random() < 0.2) {
-          // throttle React updates: refresh the HUD score occasionally
           setScore(scoreOf(world));
         }
       }
 
-      // starfield always drifts (even on menus) for ambiance
-      const starSpeed = world && playing ? world.speed : 120;
-      const stars = starsRef.current;
-      for (const st of stars) {
-        st.x -= starSpeed * st.z * dt;
-        if (st.x < 0) {
-          st.x = VIRT.W;
-          st.y = Math.random() * VIRT.H;
+      const driftSpeed = world && playing ? world.speed : 90;
+      const flecks = flecksRef.current;
+      for (const f of flecks) {
+        f.x -= driftSpeed * f.z * dt;
+        if (f.x < 0) {
+          f.x = VIRT.W;
+          f.y = Math.random() * VIRT.H;
         }
       }
 
-      draw(ctx, world, stars, playing || phaseRef.current === "dead");
+      draw(ctx, world, flecks, playing || phaseRef.current === "dead");
     };
 
     rafRef.current = requestAnimationFrame(loop);
     return () => cancelAnimationFrame(rafRef.current);
   }, []);
 
-  // Pointer controls — hold the upper/lower half of the board, or the buttons.
   const setDir = (dir: "up" | "down" | null) => {
     inputRef.current.up = dir === "up";
     inputRef.current.down = dir === "down";
@@ -171,19 +171,25 @@ export default function SideScroller() {
       <div className="mb-4 flex items-center justify-between font-mono text-sm">
         <span className="text-muted">
           Score{" "}
-          <span className="tabular-nums font-semibold text-foreground">
+          <span className="tabular-nums font-semibold" style={{ color: GREEN }}>
             {score}
           </span>
         </span>
         <span className="text-muted">
           Best{" "}
-          <span className="tabular-nums font-semibold text-accent">{best}</span>
+          <span className="tabular-nums font-semibold" style={{ color: GREEN }}>
+            {best}
+          </span>
         </span>
       </div>
 
       <div
-        className="relative overflow-hidden rounded-2xl border border-border bg-black shadow-[0_0_80px_-30px_var(--color-accent)]"
-        style={{ aspectRatio: `${VIRT.W} / ${VIRT.H}`, touchAction: "none" }}
+        className="relative overflow-hidden rounded-2xl border border-border bg-black"
+        style={{
+          aspectRatio: `${VIRT.W} / ${VIRT.H}`,
+          touchAction: "none",
+          boxShadow: `0 0 80px -30px ${GREEN}`,
+        }}
         onPointerDown={onPointer}
         onPointerMove={(e) => e.buttons && onPointer(e)}
         onPointerUp={() => setDir(null)}
@@ -192,37 +198,53 @@ export default function SideScroller() {
         <canvas ref={canvasRef} className="block h-full w-full" />
 
         {phase !== "playing" && (
-          <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/55 backdrop-blur-sm">
+          <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/65 backdrop-blur-sm">
             {phase === "menu" ? (
               <>
-                <p className="font-mono text-xs uppercase tracking-[0.3em] text-accent">
-                  Retro
+                <p
+                  className="font-mono text-xs uppercase tracking-[0.3em]"
+                  style={{ color: GREEN }}
+                >
+                  Retro · Turing
                 </p>
-                <h2 className="mt-2 font-display text-3xl font-bold sm:text-4xl">
+                <h2
+                  className="mt-2 font-display text-3xl font-bold sm:text-4xl"
+                  style={{ color: GREEN }}
+                >
                   If Then Explosion
                 </h2>
                 <p className="mt-3 max-w-xs text-center text-sm text-muted">
-                  Fly the ship through the gaps and dodge the aliens. Up / Down
-                  arrows (or W / S) — on touch, hold the top or bottom of the
-                  screen.
+                  Fly the triangle through the cave. The walls close toward the
+                  centre and aliens squeeze the gap — but there&apos;s always a
+                  way through. Up / Down arrows (or W / S); on touch, hold the
+                  top or bottom.
                 </p>
               </>
             ) : (
               <>
-                <p className="font-mono text-xs uppercase tracking-[0.3em] text-accent">
-                  Game over
+                <p
+                  className="font-mono text-xs uppercase tracking-[0.3em]"
+                  style={{ color: "#ff5d5d" }}
+                >
+                  Boom
                 </p>
-                <h2 className="mt-2 font-display text-3xl font-bold sm:text-4xl">
+                <h2
+                  className="mt-2 font-display text-3xl font-bold sm:text-4xl"
+                  style={{ color: GREEN }}
+                >
                   {score} <span className="text-muted">pts</span>
                 </h2>
                 {score >= best && score > 0 && (
-                  <p className="mt-1 text-sm text-accent">New best! 🎉</p>
+                  <p className="mt-1 text-sm" style={{ color: GREEN }}>
+                    New best! 🟢
+                  </p>
                 )}
               </>
             )}
             <button
               onClick={start}
-              className="mt-6 inline-flex items-center gap-2 rounded-full bg-accent px-7 py-3 font-medium text-background transition-transform hover:scale-[1.03] active:scale-95"
+              className="mt-6 inline-flex items-center gap-2 rounded-full px-7 py-3 font-medium text-black transition-transform hover:scale-[1.03] active:scale-95"
+              style={{ background: GREEN }}
             >
               {phase === "menu" ? (
                 <Play className="size-4" />
@@ -246,7 +268,7 @@ export default function SideScroller() {
       </div>
 
       <p className="mt-4 hidden text-center font-mono text-xs text-faint sm:block">
-        ↑ / ↓ or W / S to steer · the gaps and aliens are generated so a safe
+        ↑ / ↓ or W / S to steer · the cave and aliens are generated so a safe
         path always exists
       </p>
     </div>
@@ -281,69 +303,52 @@ function HoldButton({
 }
 
 // --------------------------------------------------------------------------
-// Canvas drawing
+// Canvas drawing — retro green CRT
 // --------------------------------------------------------------------------
 function draw(
   ctx: CanvasRenderingContext2D,
   world: World | null,
-  stars: Star[],
+  flecks: Fleck[],
   showWorld: boolean,
 ) {
-  // Background: deep space gradient.
-  const g = ctx.createLinearGradient(0, 0, 0, VIRT.H);
-  g.addColorStop(0, "#05050c");
-  g.addColorStop(1, "#0b0716");
-  ctx.fillStyle = g;
+  // Dark green-black background.
+  ctx.fillStyle = "#02140a";
   ctx.fillRect(0, 0, VIRT.W, VIRT.H);
 
-  // Stars.
-  for (const st of stars) {
-    ctx.globalAlpha = 0.25 + st.z * 0.6;
-    ctx.fillStyle = st.z > 0.75 ? "#c9c4ff" : "#6b6b80";
-    const s = st.z * 2.2;
-    ctx.fillRect(st.x, st.y, s, s);
+  // Faint drifting flecks.
+  for (const f of flecks) {
+    ctx.globalAlpha = 0.06 + f.z * 0.12;
+    ctx.fillStyle = GREEN_DIM;
+    ctx.fillRect(Math.floor(f.x), Math.floor(f.y), 2, 2);
   }
   ctx.globalAlpha = 1;
 
-  if (!world || !showWorld) return;
-
-  // Walls — neon barriers with a glowing edge around the gap.
-  for (const wall of world.walls) {
-    const gapTop = wall.center - GAP / 2;
-    const gapBot = wall.center + GAP / 2;
-    drawWallSlab(ctx, wall.x, 0, gapTop);
-    drawWallSlab(ctx, wall.x, gapBot, VIRT.H - gapBot);
+  if (world && showWorld) {
+    drawCave(ctx, world);
+    for (const a of world.aliens) drawAlien(ctx, a.x, alienY(world, a), a.entry);
+    drawShip(ctx, world);
   }
 
-  // Aliens.
-  for (const a of world.aliens) {
-    drawAlien(ctx, a.x, alienY(world, a), a.entry);
-  }
-
-  // Ship.
-  drawShip(ctx, SHIP.X, world.shipY, world.dead);
+  drawScanlines(ctx);
 }
 
-function drawWallSlab(
-  ctx: CanvasRenderingContext2D,
-  x: number,
-  y: number,
-  h: number,
-) {
-  if (h <= 0) return;
-  const grad = ctx.createLinearGradient(x, 0, x + WALL_W, 0);
-  grad.addColorStop(0, "#2a2150");
-  grad.addColorStop(0.5, "#4a3aa0");
-  grad.addColorStop(1, "#2a2150");
-  ctx.fillStyle = grad;
-  ctx.fillRect(x, y, WALL_W, h);
-  // Glowing inner edge facing the gap.
-  ctx.fillStyle = ACCENT;
-  ctx.shadowColor = ACCENT;
-  ctx.shadowBlur = 16;
-  const edgeY = y === 0 ? y + h - 4 : y;
-  ctx.fillRect(x, edgeY, WALL_W, 4);
-  ctx.shadowBlur = 0;
+// The continuous cave: chunky pixel columns from each edge to the wall surface.
+function drawCave(ctx: CanvasRenderingContext2D, world: World) {
+  for (let x = 0; x < VIRT.W; x += PX) {
+    const { top, bottom } = caveBounds(world, world.distance + x + PX / 2);
+    const topQ = Math.max(0, Math.round(top / PX) * PX);
+    const botQ = Math.min(VIRT.H, Math.round(bottom / PX) * PX);
+
+    // Wall bodies.
+    ctx.fillStyle = WALL_FILL;
+    if (topQ > 0) ctx.fillRect(x, 0, PX, topQ);
+    if (botQ < VIRT.H) ctx.fillRect(x, botQ, PX, VIRT.H - botQ);
+
+    // Bright phosphor edge along the passage.
+    ctx.fillStyle = WALL_EDGE;
+    if (topQ > 0) ctx.fillRect(x, topQ - PX, PX, PX);
+    if (botQ < VIRT.H) ctx.fillRect(x, botQ, PX, PX);
+  }
 }
 
 function drawAlien(
@@ -354,69 +359,66 @@ function drawAlien(
 ) {
   ctx.save();
   ctx.translate(x, y);
-  ctx.globalAlpha = 0.3 + 0.7 * Math.min(1, entry);
-  // Classic invader silhouette as a chunky pixel blob.
-  ctx.fillStyle = "#48e0a0";
-  ctx.shadowColor = "#48e0a0";
-  ctx.shadowBlur = 12;
-  const p = ALIEN_R / 4; // pixel unit
-  // body
+  const s = 0.4 + 0.6 * Math.min(1, entry);
+  ctx.scale(s, s);
+  ctx.globalAlpha = Math.min(1, entry + 0.3);
+
+  // Chunky invader, a touch lighter than the walls so it reads as a hazard.
+  ctx.fillStyle = "#9dff66";
+  ctx.shadowColor = "#9dff66";
+  ctx.shadowBlur = 8;
+  const p = ALIEN_R / 4;
   ctx.fillRect(-3 * p, -2 * p, 6 * p, 4 * p);
-  // head bump
   ctx.fillRect(-2 * p, -3 * p, 4 * p, p);
-  // legs
   ctx.fillRect(-3 * p, 2 * p, p, 1.5 * p);
   ctx.fillRect(2 * p, 2 * p, p, 1.5 * p);
   ctx.shadowBlur = 0;
-  // eyes
-  ctx.fillStyle = "#05050c";
+  // Dark eyes.
+  ctx.fillStyle = "#02140a";
   ctx.fillRect(-1.6 * p, -1.2 * p, p, p);
   ctx.fillRect(0.6 * p, -1.2 * p, p, p);
   ctx.restore();
 }
 
-function drawShip(
-  ctx: CanvasRenderingContext2D,
-  x: number,
-  y: number,
-  dead: boolean,
-) {
+function drawShip(ctx: CanvasRenderingContext2D, world: World) {
+  const x = SHIP.X;
+  const y = world.shipY;
   ctx.save();
   ctx.translate(x, y);
 
-  // Thruster flame (flickers).
-  if (!dead) {
-    const flame = 10 + Math.random() * 8;
-    const fg = ctx.createLinearGradient(-SHIP.W / 2 - flame, 0, -SHIP.W / 2, 0);
-    fg.addColorStop(0, "rgba(255,160,40,0)");
-    fg.addColorStop(1, "#ffb030");
-    ctx.fillStyle = fg;
+  // Thruster flicker.
+  if (!world.dead) {
+    const flame = 8 + Math.random() * 7;
+    ctx.fillStyle = "rgba(57,255,106,0.5)";
     ctx.beginPath();
-    ctx.moveTo(-SHIP.W / 2, -5);
-    ctx.lineTo(-SHIP.W / 2 - flame, 0);
-    ctx.lineTo(-SHIP.W / 2, 5);
+    ctx.moveTo(-SHIP.TAIL, -4);
+    ctx.lineTo(-SHIP.TAIL - flame, 0);
+    ctx.lineTo(-SHIP.TAIL, 4);
     ctx.closePath();
     ctx.fill();
   }
 
-  // Hull — sleek arrow.
-  ctx.fillStyle = dead ? "#7a2740" : "#d6d3ff";
-  ctx.shadowColor = dead ? "#ff4d6d" : ACCENT;
-  ctx.shadowBlur = 18;
+  // The ship — a simple triangle, just like the Turing original.
+  ctx.lineJoin = "round";
   ctx.beginPath();
-  ctx.moveTo(SHIP.W / 2, 0);
-  ctx.lineTo(-SHIP.W / 2, -SHIP.H / 2);
-  ctx.lineTo(-SHIP.W / 3, 0);
-  ctx.lineTo(-SHIP.W / 2, SHIP.H / 2);
+  ctx.moveTo(SHIP.NOSE, 0);
+  ctx.lineTo(-SHIP.TAIL, -SHIP.HALF_H);
+  ctx.lineTo(-SHIP.TAIL, SHIP.HALF_H);
   ctx.closePath();
+  ctx.fillStyle = world.dead ? "#7a2740" : "rgba(57,255,106,0.18)";
   ctx.fill();
+  ctx.strokeStyle = world.dead ? "#ff5d6d" : GREEN;
+  ctx.shadowColor = world.dead ? "#ff5d6d" : GREEN;
+  ctx.shadowBlur = 10;
+  ctx.lineWidth = 2;
+  ctx.stroke();
   ctx.shadowBlur = 0;
 
-  // Cockpit.
-  ctx.fillStyle = ACCENT;
-  ctx.beginPath();
-  ctx.arc(SHIP.W / 8, 0, 4, 0, Math.PI * 2);
-  ctx.fill();
-
   ctx.restore();
+}
+
+// CRT scanlines overlay.
+function drawScanlines(ctx: CanvasRenderingContext2D) {
+  ctx.fillStyle = "rgba(0,0,0,0.16)";
+  for (let y = 0; y < VIRT.H; y += 3) ctx.fillRect(0, y, VIRT.W, 1);
 }
