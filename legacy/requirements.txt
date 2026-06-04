@@ -1,4 +1,4 @@
-Django==1.4
+Django==4.2.30
 amqplib==1.0.2
 anyjson==0.3.1
 celery==2.5.2
