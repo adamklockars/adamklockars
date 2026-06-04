@@ -43,6 +43,7 @@ npx serve out      # preview the production build locally
 | `/tic-tac-toe`   | Browser rebuild of the old game (vs computer or 2-player)        |
 | `/side-scroller` | **If Then Explosion** — retro side-scroller (the old Turing spaceship game): fly through scrolling gaps, dodge dropping aliens |
 | `/flying-pig`    | **Robo Pig Attack** — a Robot Unicorn Attack-style endless runner with a winged robo-pig (jump / flap / dash) |
+| `/swole-mate`    | **Swole Mate** — a Tamagotchi-style handheld: feed/rest a little guy and grind reps for GAINS without killing him |
 | `/collage`       | Drag-and-drop collage tool (the old Pinprint), with PNG export   |
 
 ## Hosting (the slim path — $0)
