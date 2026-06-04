@@ -19,8 +19,6 @@ export const DEBT_INTEREST = 0.1; // per day
 
 export const GUN_PRICE = 350; // +1 firepower
 export const ARMOR_PRICE = 280; // +1 padding (soaks damage)
-export const PATCH_HP = 25;
-export const PATCH_PRICE = 200;
 
 // You can spend this far into the red. Handy — but the bank can call the
 // overdraft at any time and seize your stash to settle it.
@@ -50,7 +48,14 @@ export const LOCATIONS = [
   "Mexico",
   "Charlotte",
   "Vanier",
-  "Casino",
+  "Barbarellas",
+  "Honest Lawyer",
+  "Minglewoods",
+  "Pier 21",
+  "Hooleys",
+  "Le Bop",
+  "Club 426",
+  "Lac Leamy Casino",
 ];
 
 export type Pending =
@@ -206,12 +211,18 @@ export function buyArmor(state: Game): Game {
   log(g, `Picked up a Kevlar hoodie. Padding is now ${g.armor}.`);
   return g;
 }
-export function patchUp(state: Game): Game {
+/** Buy a healing item: restore `hpGain` HP for `price`. */
+export function buyHeal(
+  state: Game,
+  hpGain: number,
+  price: number,
+  name: string,
+): Game {
   const g = clone(state);
-  if (g.over || availableFunds(g) < PATCH_PRICE || g.hp >= START_HP) return g;
-  g.cash -= PATCH_PRICE;
-  g.hp = Math.min(START_HP, g.hp + PATCH_HP);
-  log(g, `Patched up at the clinic. HP is now ${g.hp}.`);
+  if (g.over || availableFunds(g) < price || g.hp >= START_HP) return g;
+  g.cash -= price;
+  g.hp = Math.min(START_HP, g.hp + hpGain);
+  log(g, `${name} hit the spot. HP is now ${g.hp}.`);
   return g;
 }
 export function payShark(state: Game, amount: number): Game {

@@ -8,8 +8,6 @@ import {
   CAPACITY,
   GUN_PRICE,
   ARMOR_PRICE,
-  PATCH_PRICE,
-  PATCH_HP,
   START_HP,
   type Game,
   newGame,
@@ -17,7 +15,7 @@ import {
   sell,
   buyGun,
   buyArmor,
-  patchUp,
+  buyHeal,
   payShark,
   travel,
   resolveCombat,
@@ -270,7 +268,7 @@ function Travel({ g, apply, done }: { g: Game; apply: (fn: (g: Game) => Game) =>
       <p className="mb-2 text-xs" style={{ color: AMBER_DIM }}>
         Travelling burns a day (and the shark&apos;s interest). Pick a spot:
       </p>
-      <div className="grid grid-cols-2 gap-2">
+      <div className="grid max-h-[180px] grid-cols-2 gap-2 overflow-y-auto pr-1">
         {LOCATIONS.map((loc, i) => (
           <button
             key={loc}
@@ -291,9 +289,27 @@ function Travel({ g, apply, done }: { g: Game; apply: (fn: (g: Game) => Game) =>
   );
 }
 
+// Ottawa-stocked shop. Heals are local late-night cures; gear is for busts.
+const HEALS: { name: string; hp: number; price: number }[] = [
+  { name: "Shawarma", hp: 24, price: 45 },
+  { name: "BeaverTail", hp: 12, price: 18 },
+  { name: "Poutine", hp: 18, price: 32 },
+  { name: "Civic ER visit", hp: START_HP, price: 220 },
+];
+
 function Shop({ g, apply }: { g: Game; apply: (fn: (g: Game) => Game) => void }) {
+  const full = g.hp >= START_HP;
   return (
     <div className="space-y-2 text-xs">
+      {HEALS.map((h) => (
+        <ShopRow
+          key={h.name}
+          label={`${h.name} — ${h.hp >= START_HP ? "full heal" : `+${h.hp} HP`}`}
+          price={h.price}
+          disabled={availableFunds(g) < h.price || full}
+          onClick={() => apply((s) => buyHeal(s, h.hp, h.price, h.name))}
+        />
+      ))}
       <ShopRow
         label={`Piece (+1 firepower) — fight off busts`}
         price={GUN_PRICE}
@@ -301,19 +317,14 @@ function Shop({ g, apply }: { g: Game; apply: (fn: (g: Game) => Game) => void })
         onClick={() => apply(buyGun)}
       />
       <ShopRow
-        label={`Kevlar hoodie (+1 padding) — soak damage`}
+        label={`Puffer jacket (+1 padding) — soak damage`}
         price={ARMOR_PRICE}
         disabled={availableFunds(g) < ARMOR_PRICE}
         onClick={() => apply(buyArmor)}
       />
-      <ShopRow
-        label={`Patch up (+${PATCH_HP} HP)`}
-        price={PATCH_PRICE}
-        disabled={availableFunds(g) < PATCH_PRICE || g.hp >= START_HP}
-        onClick={() => apply(patchUp)}
-      />
       <p className="pt-1 text-[11px]" style={{ color: AMBER_DIM }}>
-        Stack all the gear you want. It still won&apos;t be enough.
+        {full ? "You're patched up. " : ""}Stack all the gear you want. It still
+        won&apos;t be enough.
       </p>
     </div>
   );
