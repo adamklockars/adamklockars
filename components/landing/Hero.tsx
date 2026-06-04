@@ -42,10 +42,11 @@ export default function Hero() {
           transition={{ duration: 0.8, delay: 0.4, ease }}
           className="mt-8 max-w-2xl text-lg leading-relaxed text-muted text-balance"
         >
-          Engineering leader with 10+ years building and scaling enterprise SaaS
-          platforms, APIs and developer ecosystems — most recently leading App
-          Marketplace engineering at Zoom. Below: a few things I&apos;ve been
-          building on the side, plus a couple of playable experiments.
+          Engineering leader with close to 15 years building and scaling
+          enterprise SaaS platforms, APIs and developer ecosystems — most
+          recently leading App Marketplace engineering at Zoom. Below: a few
+          things I&apos;ve been building on the side, plus a couple of playable
+          experiments.
         </motion.p>
 
         <motion.div

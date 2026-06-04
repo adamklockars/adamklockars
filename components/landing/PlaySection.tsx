@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowUpRight, Grid3x3, Images } from "lucide-react";
+import { ArrowUpRight, Grid3x3, Images, Rocket, PiggyBank } from "lucide-react";
 import { Reveal } from "@/components/ui/Reveal";
 
 const experiments = [
@@ -10,6 +10,22 @@ const experiments = [
       "Two players or you against a (cheerfully naive) computer. Rebuilt from the original server-rendered version — now instant, no page reloads.",
     icon: Grid3x3,
     accent: "#7c6cff",
+  },
+  {
+    href: "/side-scroller",
+    title: "If Then Explosion",
+    blurb:
+      "A retro side-scroller rebuilt from the spaceship game I first wrote in Turing. Fly through the scrolling gaps and dodge dropping aliens — the level always leaves a safe path.",
+    icon: Rocket,
+    accent: "#48e0a0",
+  },
+  {
+    href: "/flying-pig",
+    title: "Robo Pig Attack",
+    blurb:
+      "An endless runner in the spirit of Robot Unicorn Attack — only the galloping unicorn is a winged robo-pig. Jump, flap, and dash through crystals as far as you can.",
+    icon: PiggyBank,
+    accent: "#ff5db1",
   },
   {
     href: "/collage",
