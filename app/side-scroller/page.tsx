@@ -5,7 +5,7 @@ import SideScroller from "@/components/sidescroller/SideScroller";
 export const metadata: Metadata = {
   title: "If Then Explosion — Adam Klockars",
   description:
-    "A retro side-scroller rebuilt from the original Turing spaceship game. Steer through scrolling walls and dodge dropping aliens — the level always has a safe path.",
+    "A retro green cave-flyer rebuilt from the original Turing spaceship game. Thread a triangle ship through walls that pinch toward the centre while aliens squeeze the gap — the level always leaves a safe path.",
 };
 
 export default function SideScrollerPage() {
@@ -20,8 +20,8 @@ export default function SideScrollerPage() {
           If Then Explosion
         </h1>
         <p className="mt-3 max-w-md text-center text-muted">
-          A retro side-scroller, rebuilt from the spaceship game I first wrote in
-          Turing. Thread the scrolling gaps, dodge the aliens.
+          A retro green cave-flyer, rebuilt from the triangle-ship game I first
+          wrote in Turing. Thread the pinching cave, dodge the aliens.
         </p>
 
         <div className="mt-12 w-full">
