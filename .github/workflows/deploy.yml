@@ -1,0 +1,37 @@
+name: Deploy master to production
+
+# Always deploy the latest master commit to Vercel production
+# (adamklockars.com). This runs independently of Vercel's own Git
+# integration, so it is not affected by deployment deduplication or
+# missed webhooks — every push to master triggers a fresh production build.
+
+on:
+  push:
+    branches: [master]
+  workflow_dispatch: {} # allow manual redeploys from the Actions tab
+
+# Only one production deploy at a time; newest push wins.
+concurrency:
+  group: vercel-production
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Vercel production deploy
+        env:
+          DEPLOY_HOOK_URL: ${{ secrets.VERCEL_DEPLOY_HOOK_URL }}
+        run: |
+          if [ -z "$DEPLOY_HOOK_URL" ]; then
+            echo "::error::VERCEL_DEPLOY_HOOK_URL secret is not set."
+            echo "Create a Vercel Deploy Hook for the 'master' branch"
+            echo "(Project → Settings → Git → Deploy Hooks) and add its URL"
+            echo "as a repository secret named VERCEL_DEPLOY_HOOK_URL."
+            exit 1
+          fi
+          # Deploy Hooks always build, and since master is the production
+          # branch the resulting deployment is promoted to production.
+          curl -fsS --retry 3 -X POST "$DEPLOY_HOOK_URL" -o response.json
+          echo "Triggered Vercel production deployment for master:"
+          cat response.json
