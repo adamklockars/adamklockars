@@ -255,7 +255,16 @@ export function payShark(state: Game, amount: number): Game {
 }
 
 // --- travel + events ------------------------------------------------------
-const THUGS = ["a Karen", "two mall cops", "the HOA president", "a rent-a-cop", "the Sushi Inspector"];
+const THUGS = [
+  "an OPS cruiser",
+  "an OC Transpo fare inspector",
+  "a ByWard Market bouncer",
+  "an NCC ranger",
+  "a bylaw officer",
+  "a Rideau Centre security guard",
+  "a Gatineau cop",
+  "a parking enforcer",
+];
 
 export function travel(state: Game, loc: number): Game {
   let g = clone(state);
@@ -343,8 +352,8 @@ function rollEvent(g: Game): Game {
       item: armor ? "armor" : "gun",
       price,
       label: armor
-        ? "A guy by the fountain offers a slightly-used Kevlar hoodie"
-        : "A trenchcoat guy flashes a piece for sale",
+        ? "A guy outside the Rideau Centre offers a slightly-used Kevlar hoodie"
+        : "A guy in the ByWard Market flashes a piece for sale",
     };
     log(g, `🤝 ${g.pending.label} for $${price}.`);
     return g;
@@ -353,10 +362,13 @@ function rollEvent(g: Game): Game {
   log(
     g,
     pick(g, [
-      "A quiet day. Somewhere, a mall fountain trickles.",
-      "Nothing happened. You ate a pretzel.",
-      "You overhear a tip about Fake Cologne. Probably nothing.",
-      "The food court smells of destiny and Sbarro.",
+      "A quiet day. You wait 45 minutes for an OC Transpo bus.",
+      "Nothing happened. You ate a shawarma by the Canal.",
+      "You overhear a tip in the ByWard Market. Probably nothing.",
+      "The 417 is a parking lot. You walk instead.",
+      "A Sens game lets out and the streets fill up.",
+      "It's −30 with the windchill. Everyone's inside.",
+      "You skate home on the Rideau Canal. Very Ottawa.",
     ]),
   );
   return g;
