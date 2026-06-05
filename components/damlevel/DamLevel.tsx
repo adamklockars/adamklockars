@@ -5,8 +5,9 @@ import { Play, RotateCcw } from "lucide-react";
 import {
   WORLD,
   PLATY,
-  WALLS,
-  SEAWEEDS,
+  TILE,
+  COLS,
+  ROWS,
   PLATYPUS_START,
   type Game,
   type Input,
@@ -15,6 +16,7 @@ import {
   seaweedState,
   bombsLeft,
   endMessage,
+  solidAt,
 } from "@/lib/damlevel";
 
 type Phase = "menu" | "playing" | "win" | "lose";
@@ -312,19 +314,36 @@ function draw(ctx: CanvasRenderingContext2D, g: Game | null, bubbles: Bubble[]) 
   ctx.save();
   ctx.translate(-camX, -camY);
 
-  for (const w of WALLS) {
-    ctx.fillStyle = "#5b6675";
-    ctx.fillRect(w.x, w.y, w.w, w.h);
-    ctx.fillStyle = "#454e5b";
-    ctx.fillRect(w.x, w.y, 3, w.h);
-    ctx.fillStyle = "#7a8694";
-    for (let ry = w.y + 8; ry < w.y + w.h - 4; ry += 18) {
-      ctx.fillRect(w.x + w.w / 2 - 1, ry, 2, 2);
+  // Solid rock tiles (only the visible ones).
+  if (g) {
+    const c0 = Math.max(0, Math.floor(camX / TILE));
+    const c1 = Math.min(COLS - 1, Math.floor((camX + VIEW.W) / TILE));
+    const r0 = Math.max(0, Math.floor(camY / TILE));
+    const r1 = Math.min(ROWS - 1, Math.floor((camY + VIEW.H) / TILE));
+    for (let r = r0; r <= r1; r++) {
+      for (let c = c0; c <= c1; c++) {
+        if (!solidAt(g, c, r)) continue;
+        const x = c * TILE, y = r * TILE;
+        ctx.fillStyle = "#3a4654";
+        ctx.fillRect(x, y, TILE, TILE);
+        // lighter top edge where a tunnel is above (depth)
+        if (!solidAt(g, c, r - 1)) {
+          ctx.fillStyle = "#566275";
+          ctx.fillRect(x, y, TILE, 3);
+        }
+        ctx.fillStyle = "#2c3642";
+        ctx.fillRect(x, y, TILE, 1);
+        ctx.fillRect(x, y, 1, TILE);
+        // a couple of rivets
+        ctx.fillStyle = "#4a5666";
+        ctx.fillRect(x + 10, y + 12, 2, 2);
+        ctx.fillRect(x + TILE - 14, y + TILE - 16, 2, 2);
+      }
     }
   }
 
   if (g) {
-    for (const sw of SEAWEEDS) {
+    for (const sw of g.seaweeds) {
       const st = seaweedState(g.gameTime, sw);
       let col = "#2f9e44";
       if (st === 2) col = Math.floor(g.gameTime * 30) % 2 ? "#ffffff" : "#ffe04d";
