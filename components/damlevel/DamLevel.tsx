@@ -348,16 +348,21 @@ function draw(ctx: CanvasRenderingContext2D, g: Game | null, bubbles: Bubble[]) 
       let col = "#2f9e44";
       if (st === 2) col = Math.floor(g.gameTime * 30) % 2 ? "#ffffff" : "#ffe04d";
       else if (st === 1) col = Math.floor(g.gameTime * 18) % 2 ? "#a7e34d" : "#2f9e44";
-      for (let yy = 0; yy < sw.h; yy += 6) {
-        const wob = Math.sin(g.gameTime * 3 + (sw.y + yy) * 0.15) * 2;
-        ctx.fillStyle = col;
-        ctx.fillRect(Math.round(sw.x + wob), sw.y + yy, sw.w, 6);
+      // A few wavy fronds across the clump's width.
+      const fronds = Math.max(2, Math.round(sw.w / 9));
+      for (let i = 0; i < fronds; i++) {
+        const fx = sw.x + 2 + (i * (sw.w - 4)) / Math.max(1, fronds - 1);
+        for (let yy = 0; yy < sw.h; yy += 5) {
+          const sway = Math.sin(g.gameTime * 4 + i * 1.3 + (sw.y + yy) * 0.2) * (1.5 + (yy / sw.h) * 2.5);
+          ctx.fillStyle = col;
+          ctx.fillRect(Math.round(fx + sway), sw.y + yy, 3, 4);
+        }
       }
       if (st === 2) {
         ctx.fillStyle = "#bfefff";
-        for (let s = 0; s < 4; s++) {
+        for (let s = 0; s < 5; s++) {
           ctx.fillRect(
-            sw.x - 3 + Math.floor(Math.random() * (sw.w + 6)),
+            sw.x - 2 + Math.floor(Math.random() * (sw.w + 4)),
             sw.y + Math.floor(Math.random() * sw.h),
             2,
             2,
