@@ -33,12 +33,12 @@ export const GOODS: GoodDef[] = [
   { name: "Cocaine", min: 250, max: 1500, rare: 0.3 },
   { name: "MDMA", min: 90, max: 650, rare: 0.25 },
   { name: "Magic Mushrooms", min: 40, max: 340, rare: 0.2 },
-  { name: "Knockoff Kicks", min: 25, max: 280, rare: 0.2 },
-  { name: "Fake Cologne", min: 40, max: 560, rare: 0.3 },
-  { name: "Energy Drinks", min: 12, max: 140, rare: 0.15 },
-  { name: "Beanie Babies", min: 10, max: 90, rare: 0.15 },
-  { name: "Bootleg DVDs", min: 5, max: 45, rare: 0.1 },
-  { name: "Gas-Station Sushi", min: 3, max: 30, rare: 0.1 },
+  { name: "Sens Playoff Tickets", min: 40, max: 560, rare: 0.3 },
+  { name: "Counterfeit Sens Jerseys", min: 25, max: 280, rare: 0.2 },
+  { name: "Bootleg Bluesfest Passes", min: 12, max: 140, rare: 0.15 },
+  { name: "Tulip Bulbs", min: 10, max: 90, rare: 0.15 },
+  { name: "Maple Taffy", min: 5, max: 45, rare: 0.1 },
+  { name: "Mac's Hot Dogs", min: 3, max: 30, rare: 0.1 },
 ];
 
 export const LOCATIONS = [
@@ -122,6 +122,40 @@ function log(g: Game, line: string) {
 }
 
 // --- setup ----------------------------------------------------------------
+// Ottawa "city events" that pump or dump specific goods market-wide.
+// Indices match GOODS: 0 Cocaine, 1 MDMA, 3 Sens Tickets, 4 Sens Jerseys,
+// 5 Bluesfest Passes, 6 Tulip Bulbs, 7 Maple Taffy, 8 Mac's Hot Dogs.
+const CITY_EVENTS: { line: string; effects: { i: number; up: boolean }[] }[] = [
+  {
+    line: "📈 The Sens are on a playoff run — tickets and jerseys are GOLD!",
+    effects: [{ i: 3, up: true }, { i: 4, up: true }],
+  },
+  {
+    line: "📉 The Sens blew a 3–1 lead. Jerseys dumped for cheap.",
+    effects: [{ i: 4, up: false }],
+  },
+  {
+    line: "📈 Bluesfest weekend — bootleg passes are flying.",
+    effects: [{ i: 5, up: true }],
+  },
+  {
+    line: "📈 Winterlude packs downtown — maple taffy sells out.",
+    effects: [{ i: 7, up: true }],
+  },
+  {
+    line: "📈 Tulip Festival is on — bulb prices are blooming.",
+    effects: [{ i: 6, up: true }],
+  },
+  {
+    line: "📈 A festival's in town — party supplies are in demand.",
+    effects: [{ i: 0, up: true }, { i: 1, up: true }],
+  },
+  {
+    line: "📉 A snowstorm shuts the city — nobody's buying. Prices tank.",
+    effects: [{ i: 7, up: false }, { i: 8, up: false }],
+  },
+];
+
 function rollMarket(g: Game) {
   const flavor: string[] = [];
   g.market = GOODS.map((good) => {
@@ -139,6 +173,18 @@ function rollMarket(g: Game) {
     return price;
   });
   flavor.forEach((f) => log(g, f));
+
+  // Occasionally a city-wide Ottawa event swings specific goods.
+  if (rnd(g) < 0.16) {
+    const ev = pick(g, CITY_EVENTS);
+    for (const eff of ev.effects) {
+      const good = GOODS[eff.i];
+      g.market[eff.i] = eff.up
+        ? Math.round(good.max * (1.3 + rnd(g) * 0.7))
+        : Math.max(1, Math.round(good.min * 0.5));
+    }
+    log(g, ev.line);
+  }
 }
 
 export function newGame(seed = (Math.random() * 1e9) | 0): Game {
