@@ -53,10 +53,10 @@ const experiments = [
     accent: "#ffb000",
   },
   {
-    href: "/dam-level",
-    title: "The Dam Level",
+    href: "/damn-level",
+    title: "The Damn Level",
     blurb:
-      "A homage to the underwater dam stage that ended so many TMNT runs. Swim the floaty current, defuse every bomb before the timer, and dodge the electric seaweed — you only get four turtles, and the seaweed wants them all.",
+      "A homage to the underwater dam stage that ended so many TMNT runs — but with platypuses. Swim a scrolling dam maze, defuse every bomb before the timer, and dodge the electric seaweed — you only get four platypuses, and the seaweed wants them all.",
     icon: Bomb,
     accent: "#2dd4bf",
   },

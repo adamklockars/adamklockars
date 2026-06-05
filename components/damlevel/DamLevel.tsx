@@ -3,11 +3,11 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Play, RotateCcw } from "lucide-react";
 import {
-  VIRT,
-  TURTLE,
+  WORLD,
+  PLATY,
   WALLS,
   SEAWEEDS,
-  TURTLES_START,
+  PLATYPUS_START,
   type Game,
   type Input,
   createGame,
@@ -21,7 +21,8 @@ type Phase = "menu" | "playing" | "win" | "lose";
 
 const BEST_KEY = "damlevel-best";
 const HUD_H = 30;
-// Bandana colours for the four turtles.
+const VIEW = { W: 480, H: 360 }; // scrolling window into the world
+// Marker colours for the four platypuses.
 const COLORS = ["#2f6bff", "#ff7a1a", "#a64dff", "#ff3b3b"];
 
 type Bubble = { x: number; y: number; r: number; sp: number };
@@ -89,14 +90,14 @@ export default function DamLevel() {
     if (!canvas) return;
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
-    canvas.width = VIRT.W;
-    canvas.height = VIRT.H + HUD_H;
+    canvas.width = VIEW.W;
+    canvas.height = VIEW.H + HUD_H;
     ctx.imageSmoothingEnabled = false;
 
     if (bubblesRef.current.length === 0) {
-      bubblesRef.current = Array.from({ length: 40 }, () => ({
-        x: Math.random() * VIRT.W,
-        y: Math.random() * VIRT.H,
+      bubblesRef.current = Array.from({ length: 36 }, () => ({
+        x: Math.random() * VIEW.W,
+        y: Math.random() * VIEW.H,
         r: 1 + Math.random() * 2,
         sp: 12 + Math.random() * 26,
       }));
@@ -113,10 +114,10 @@ export default function DamLevel() {
         updateGame(g, dt, inputRef.current);
         if (g.status !== "playing") {
           setEndMsg(endMessage(g));
-          setSurvivors(g.turtles);
+          setSurvivors(g.platypuses);
           if (g.status === "win") {
             setBest((prev) => {
-              const nb = Math.max(prev, g.turtles);
+              const nb = Math.max(prev, g.platypuses);
               localStorage.setItem(BEST_KEY, String(nb));
               return nb;
             });
@@ -128,8 +129,8 @@ export default function DamLevel() {
       for (const b of bubblesRef.current) {
         b.y -= b.sp * dt;
         if (b.y < -4) {
-          b.y = VIRT.H + 4;
-          b.x = Math.random() * VIRT.W;
+          b.y = VIEW.H + 4;
+          b.x = Math.random() * VIEW.W;
         }
       }
 
@@ -148,14 +149,14 @@ export default function DamLevel() {
         <span>
           Best:{" "}
           <span className="font-semibold text-accent">
-            {best > 0 ? `${best} 🐢 left` : "—"}
+            {best > 0 ? `${best} left` : "—"}
           </span>
         </span>
       </div>
 
       <div
         className="relative overflow-hidden rounded-xl border border-border bg-black"
-        style={{ aspectRatio: `${VIRT.W} / ${VIRT.H + HUD_H}`, boxShadow: "0 0 80px -34px #2f9e44" }}
+        style={{ aspectRatio: `${VIEW.W} / ${VIEW.H + HUD_H}`, boxShadow: "0 0 80px -34px #2f9e44" }}
       >
         <canvas
           ref={canvasRef}
@@ -171,12 +172,13 @@ export default function DamLevel() {
                   Underwater · 8-bit
                 </p>
                 <h2 className="mt-1 font-display text-2xl font-bold sm:text-4xl">
-                  The Dam Level
+                  The Damn Level
                 </h2>
                 <p className="mt-2 max-w-sm text-xs leading-snug text-muted sm:text-sm">
-                  Swim the dam and defuse all the bombs before the timer hits
-                  zero. The electric seaweed kills on contact — you only get four
-                  turtles. Arrows / WASD to swim.
+                  Swim the dam maze and defuse all the bombs before the timer
+                  hits zero. The electric seaweed kills on contact — you only get
+                  four platypuses. Arrows / WASD to swim; the view scrolls with
+                  you.
                 </p>
               </>
             ) : phase === "win" ? (
@@ -185,7 +187,7 @@ export default function DamLevel() {
                   Dam defused
                 </p>
                 <h2 className="mt-1 font-display text-2xl font-bold sm:text-4xl">
-                  {survivors} 🐢 left
+                  {survivors} platypus{survivors === 1 ? "" : "es"} left
                 </h2>
                 <p className="mt-2 max-w-xs text-xs italic leading-snug text-muted sm:text-sm">
                   {endMsg}
@@ -224,7 +226,8 @@ export default function DamLevel() {
       </div>
 
       <p className="mt-3 hidden text-center font-mono text-xs text-faint sm:block">
-        ↑ ↓ ← → or WASD to swim · the water current never stops pushing you
+        ↑ ↓ ← → or WASD to swim · the current never stops pushing you · the view
+        scrolls with your platypus
       </p>
     </div>
   );
@@ -259,12 +262,12 @@ function Dpad({
 }
 
 // --------------------------------------------------------------------------
-// Pixel rendering
+// Pixel rendering with a scrolling camera
 // --------------------------------------------------------------------------
 function draw(ctx: CanvasRenderingContext2D, g: Game | null, bubbles: Bubble[]) {
   // HUD bar.
   ctx.fillStyle = "#081627";
-  ctx.fillRect(0, 0, VIRT.W, HUD_H);
+  ctx.fillRect(0, 0, VIEW.W, HUD_H);
   ctx.font = "12px ui-monospace, monospace";
   ctx.textBaseline = "middle";
   if (g) {
@@ -272,30 +275,43 @@ function draw(ctx: CanvasRenderingContext2D, g: Game | null, bubbles: Bubble[]) 
     ctx.fillText(`TIME ${Math.ceil(g.time)}`, 8, HUD_H / 2);
     ctx.fillStyle = "#ffe066";
     ctx.fillText(`BOMBS ${bombsLeft(g)}`, 110, HUD_H / 2);
-    for (let i = 0; i < TURTLES_START; i++) {
-      ctx.fillStyle = i < g.turtles ? COLORS[i] : "#1c2937";
-      ctx.fillRect(VIRT.W - 104 + i * 26, 9, 18, 13);
+    for (let i = 0; i < PLATYPUS_START; i++) {
+      ctx.fillStyle = i < g.platypuses ? COLORS[i] : "#1c2937";
+      ctx.fillRect(VIEW.W - 104 + i * 26, 9, 18, 13);
       ctx.fillStyle = "#06101c";
-      ctx.fillRect(VIRT.W - 104 + i * 26 + 4, 13, 10, 4); // bandana slit
+      ctx.fillRect(VIEW.W - 104 + i * 26 + 12, 12, 6, 4); // little bill
     }
   }
 
+  // Camera follows the platypus, clamped to the world.
+  let camX = 0, camY = 0;
+  if (g) {
+    camX = Math.max(0, Math.min(WORLD.W - VIEW.W, g.x + PLATY.W / 2 - VIEW.W / 2));
+    camY = Math.max(0, Math.min(WORLD.H - VIEW.H, g.y + PLATY.H / 2 - VIEW.H / 2));
+  }
+
   ctx.save();
+  // Clip to the play viewport so the world never bleeds into the HUD.
+  ctx.beginPath();
+  ctx.rect(0, HUD_H, VIEW.W, VIEW.H);
+  ctx.clip();
   ctx.translate(0, HUD_H);
 
-  // Water.
-  const grad = ctx.createLinearGradient(0, 0, 0, VIRT.H);
+  // Water (screen space).
+  const grad = ctx.createLinearGradient(0, 0, 0, VIEW.H);
   grad.addColorStop(0, "#0b3a63");
   grad.addColorStop(1, "#06243f");
   ctx.fillStyle = grad;
-  ctx.fillRect(0, 0, VIRT.W, VIRT.H);
-
+  ctx.fillRect(0, 0, VIEW.W, VIEW.H);
   for (const b of bubbles) {
     ctx.fillStyle = "rgba(160,220,255,0.18)";
     ctx.fillRect(Math.floor(b.x), Math.floor(b.y), b.r, b.r);
   }
 
-  // Dam walls (gray with rivets).
+  // World space.
+  ctx.save();
+  ctx.translate(-camX, -camY);
+
   for (const w of WALLS) {
     ctx.fillStyle = "#5b6675";
     ctx.fillRect(w.x, w.y, w.w, w.h);
@@ -308,21 +324,17 @@ function draw(ctx: CanvasRenderingContext2D, g: Game | null, bubbles: Bubble[]) 
   }
 
   if (g) {
-    // Electric seaweed.
     for (const sw of SEAWEEDS) {
       const st = seaweedState(g.gameTime, sw);
-      const zap = st === 2;
-      const warn = st === 1;
       let col = "#2f9e44";
-      if (zap) col = (Math.floor(g.gameTime * 30) % 2 ? "#ffffff" : "#ffe04d");
-      else if (warn) col = (Math.floor(g.gameTime * 18) % 2 ? "#a7e34d" : "#2f9e44");
-      // Wavy strand.
+      if (st === 2) col = Math.floor(g.gameTime * 30) % 2 ? "#ffffff" : "#ffe04d";
+      else if (st === 1) col = Math.floor(g.gameTime * 18) % 2 ? "#a7e34d" : "#2f9e44";
       for (let yy = 0; yy < sw.h; yy += 6) {
-        const wob = Math.sin((g.gameTime * 3 + (sw.y + yy) * 0.15)) * 2;
+        const wob = Math.sin(g.gameTime * 3 + (sw.y + yy) * 0.15) * 2;
         ctx.fillStyle = col;
         ctx.fillRect(Math.round(sw.x + wob), sw.y + yy, sw.w, 6);
       }
-      if (zap) {
+      if (st === 2) {
         ctx.fillStyle = "#bfefff";
         for (let s = 0; s < 4; s++) {
           ctx.fillRect(
@@ -335,7 +347,6 @@ function draw(ctx: CanvasRenderingContext2D, g: Game | null, bubbles: Bubble[]) 
       }
     }
 
-    // Bombs.
     for (const b of g.bombs) {
       if (b.defused) {
         ctx.fillStyle = "#3a4654";
@@ -348,25 +359,25 @@ function draw(ctx: CanvasRenderingContext2D, g: Game | null, bubbles: Bubble[]) 
         ctx.fillStyle = "#15181d";
         circle(ctx, b.x, b.y, 7);
         ctx.fillStyle = "#444";
-        ctx.fillRect(b.x - 1, b.y - 9, 2, 3); // fuse cap
+        ctx.fillRect(b.x - 1, b.y - 9, 2, 3);
         const blink = Math.floor(g.gameTime * 4) % 2 === 0;
         ctx.fillStyle = blink ? "#ff3b3b" : "#7a1f1f";
-        ctx.fillRect(b.x - 2, b.y - 2, 3, 3); // light
+        ctx.fillRect(b.x - 2, b.y - 2, 3, 3);
       }
     }
 
-    // Turtle (blinks while invulnerable).
     const blink = g.invuln > 0 && Math.floor(g.gameTime * 12) % 2 === 0;
-    if (!blink) drawTurtle(ctx, g);
-
-    // Death flash.
-    if (g.flash > 0) {
-      ctx.fillStyle = `rgba(255,40,40,${(g.flash / 0.25) * 0.4})`;
-      ctx.fillRect(0, 0, VIRT.W, VIRT.H);
-    }
+    if (!blink) drawPlatypus(ctx, g);
   }
 
-  ctx.restore();
+  ctx.restore(); // world
+
+  if (g && g.flash > 0) {
+    ctx.fillStyle = `rgba(255,40,40,${(g.flash / 0.25) * 0.4})`;
+    ctx.fillRect(0, 0, VIEW.W, VIEW.H);
+  }
+
+  ctx.restore(); // clip + HUD translate
 }
 
 function circle(ctx: CanvasRenderingContext2D, x: number, y: number, r: number) {
@@ -375,35 +386,36 @@ function circle(ctx: CanvasRenderingContext2D, x: number, y: number, r: number) 
   ctx.fill();
 }
 
-function drawTurtle(ctx: CanvasRenderingContext2D, g: Game) {
+function drawPlatypus(ctx: CanvasRenderingContext2D, g: Game) {
   const x = g.x;
   const y = g.y;
-  const w = TURTLE.W;
-  const h = TURTLE.H;
-  const color = COLORS[TURTLES_START - g.turtles] ?? COLORS[3];
+  const w = PLATY.W;
+  const h = PLATY.H;
+  const f = g.facing; // 1 = right, -1 = left
+  const color = COLORS[PLATYPUS_START - g.platypuses] ?? COLORS[3];
 
-  // Shell.
-  ctx.fillStyle = "#1f7a2e";
-  ctx.fillRect(x + 2, y + 2, w - 4, h - 3);
-  ctx.fillStyle = "#2fae45";
-  ctx.fillRect(x + 4, y + 4, w - 8, h - 7);
-  // shell segments
-  ctx.fillStyle = "#1a5c25";
-  ctx.fillRect(x + w / 2 - 1, y + 3, 2, h - 5);
+  // Body.
+  ctx.fillStyle = "#8a5a2b";
+  ctx.fillRect(x + 3, y + 2, w - 6, h - 3);
+  ctx.fillStyle = "#a06d34";
+  ctx.fillRect(x + 5, y + 3, w - 10, h - 6);
 
-  // Head (faces heading).
-  const hx = g.facing > 0 ? x + w - 3 : x - 3;
-  ctx.fillStyle = "#36c24f";
-  ctx.fillRect(hx, y + 4, 5, 6);
-  // bandana
+  // Flat tail (behind, opposite facing).
+  ctx.fillStyle = "#6b4521";
+  const tailX = f > 0 ? x : x + w - 4;
+  ctx.fillRect(tailX, y + 4, 4, h - 6);
+
+  // Duck bill (front, in facing direction).
+  ctx.fillStyle = "#3a2a18";
+  const billX = f > 0 ? x + w - 5 : x;
+  ctx.fillRect(billX, y + 5, 5, 4);
+
+  // Head bump + colour marker (homage headband).
+  const headX = f > 0 ? x + w - 9 : x + 4;
   ctx.fillStyle = color;
-  ctx.fillRect(hx - (g.facing > 0 ? 0 : 0), y + 4, 5, 2);
-  // eye
-  ctx.fillStyle = "#fff";
-  ctx.fillRect(hx + (g.facing > 0 ? 2 : 1), y + 6, 2, 2);
+  ctx.fillRect(headX, y + 1, 5, 2);
 
-  // Limbs.
-  ctx.fillStyle = "#36c24f";
-  ctx.fillRect(x, y + h - 4, 3, 3);
-  ctx.fillRect(x + w - 3, y + h - 4, 3, 3);
+  // Eye.
+  ctx.fillStyle = "#fff";
+  ctx.fillRect(f > 0 ? x + w - 8 : x + 5, y + 4, 2, 2);
 }
