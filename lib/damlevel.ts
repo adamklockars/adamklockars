@@ -6,24 +6,23 @@
 // seaweed that gates the corridors. You get four platypuses; the seaweed will
 // take most of them — and each death drops you back at the entrance.
 
-export const TILE = 44;
-export const COLS = 21; // odd → maze grid
-export const ROWS = 15;
-export const WORLD = { W: COLS * TILE, H: ROWS * TILE } as const; // 924 x 660
+export const TILE = 40;
+export const COLS = 24;
+export const ROWS = 18;
+export const WORLD = { W: COLS * TILE, H: ROWS * TILE } as const; // 960 x 720
 
 export const PLATY = { W: 18, H: 14 } as const;
 export const PLATYPUS_START = 4;
 export const TIME_START = 100; // seconds on the bomb timer
 
 const BOMB_COUNT = 12;
-const SEAWEED_COUNT = 14;
 
-// Floaty water movement — controllable enough for tunnels, never still.
+// Floaty water movement.
 const ACCEL = 640;
-const DRAG = 4.2;
-const MAX_SPEED = 158;
-const CURRENT_X = 26;
-const CURRENT_Y = 16;
+const DRAG = 4.0;
+const MAX_SPEED = 160;
+const CURRENT_X = 30;
+const CURRENT_Y = 18;
 
 const RESPAWN_INVULN = 1.5;
 
@@ -79,66 +78,56 @@ function mulberry32(seed: number): () => number {
 export const solidAt = (g: Game, col: number, row: number): boolean =>
   col < 0 || col >= COLS || row < 0 || row >= ROWS || g.grid[row * COLS + col] === 1;
 
-const DIRS = [
-  [-1, 0],
-  [1, 0],
-  [0, -1],
-  [0, 1],
-];
-
-// Carve a braided maze of tunnels and place bombs + seaweed.
+// Carve organic, winding caverns with random-walk "miners", then line the
+// cavern walls with electric weeds of varying length hanging from the ceilings
+// and rising from the floors — so the safe path snakes up and down between
+// them. Connectivity is guaranteed (all caverns are carved from one source).
 function buildLevel(rand: () => number) {
   const grid = new Uint8Array(ROWS * COLS).fill(1);
   const at = (r: number, c: number) => r * COLS + c;
-  const CR = (ROWS - 1) / 2; // 7 cell rows
-  const CC = (COLS - 1) / 2; // 10 cell cols
-  const vis = Array.from({ length: CR }, () => new Array(CC).fill(false));
-  const tr = (cr: number) => 2 * cr + 1;
-  const tc = (cc: number) => 2 * cc + 1;
 
-  // Recursive backtracker (iterative).
-  const stack: [number, number][] = [[0, 0]];
-  vis[0][0] = true;
-  grid[at(tr(0), tc(0))] = 0;
-  while (stack.length) {
-    const [cr, cc] = stack[stack.length - 1];
-    const opts: [number, number, number, number][] = [];
-    for (const [dr, dc] of DIRS) {
-      const nr = cr + dr, nc = cc + dc;
-      if (nr >= 0 && nr < CR && nc >= 0 && nc < CC && !vis[nr][nc]) opts.push([nr, nc, dr, dc]);
-    }
-    if (!opts.length) {
-      stack.pop();
-      continue;
-    }
-    const [nr, nc, dr, dc] = opts[Math.floor(rand() * opts.length)];
-    vis[nr][nc] = true;
-    grid[at(tr(nr), tc(nc))] = 0;
-    grid[at(tr(cr) + dr, tc(cc) + dc)] = 0; // knock down the wall between
-    stack.push([nr, nc]);
-  }
+  // 3-wide brush → roomy tunnels.
+  const carve = (c: number, r: number) => {
+    for (let dr = -1; dr <= 1; dr++)
+      for (let dc = -1; dc <= 1; dc++) {
+        const rr = r + dr, cc = c + dc;
+        if (cc >= 1 && cc < COLS - 1 && rr >= 1 && rr < ROWS - 1) grid[at(rr, cc)] = 0;
+      }
+  };
 
-  // Braid: open ~35% of dead-ends to create loops → an interconnected tunnel
-  // system rather than a tedious perfect maze.
-  for (let cr = 0; cr < CR; cr++) {
-    for (let cc = 0; cc < CC; cc++) {
-      const r = tr(cr), c = tc(cc);
-      let open = 0;
-      const walls: [number, number, number, number][] = [];
-      for (const [dr, dc] of DIRS) {
-        if (grid[at(r + dr, c + dc)] === 0) open++;
-        else walls.push([r + dr, c + dc, dr, dc]);
+  const startC = 2, startR = Math.floor(ROWS / 2);
+  const card = [[1, 0], [-1, 0], [0, 1], [0, -1]];
+  type Miner = { c: number; r: number; dc: number; dr: number };
+  const miners: Miner[] = [{ c: startC, r: startR, dc: 1, dr: 0 }];
+  carve(startC, startR);
+
+  const target = Math.floor((COLS - 2) * (ROWS - 2) * 0.42);
+  const openCountAll = () => {
+    let n = 0;
+    for (let i = 0; i < grid.length; i++) if (grid[i] === 0) n++;
+    return n;
+  };
+
+  let safety = 0;
+  while (openCountAll() < target && safety++ < 4000) {
+    for (const m of miners) {
+      if (rand() < 0.2) {
+        const d = card[Math.floor(rand() * 4)];
+        m.dc = d[0];
+        m.dr = d[1];
       }
-      if (open === 1 && rand() < 0.35) {
-        const valid = walls.filter(([, , dr, dc]) => {
-          const ncr = cr + dr, ncc = cc + dc;
-          return ncr >= 0 && ncr < CR && ncc >= 0 && ncc < CC;
-        });
-        if (valid.length) {
-          const [wr, wc] = valid[Math.floor(rand() * valid.length)];
-          grid[at(wr, wc)] = 0;
-        }
-      }
+      m.c += m.dc;
+      m.r += m.dr;
+      if (m.c < 2) { m.c = 2; m.dc = 1; }
+      if (m.c > COLS - 3) { m.c = COLS - 3; m.dc = -1; }
+      if (m.r < 2) { m.r = 2; m.dr = 1; }
+      if (m.r > ROWS - 3) { m.r = ROWS - 3; m.dr = -1; }
+      carve(m.c, m.r);
+    }
+    if (rand() < 0.05 && miners.length < 4) {
+      const src = miners[Math.floor(rand() * miners.length)];
+      const d = card[Math.floor(rand() * 4)];
+      miners.push({ c: src.c, r: src.r, dc: d[0], dr: d[1] });
     }
   }
 
@@ -150,37 +139,58 @@ function buildLevel(rand: () => number) {
     return a;
   };
 
-  const startR = tr(0), startC = tc(0);
-
-  // Bombs — prefer dead-end cells (a tunnel you have to go down), then others.
-  const cells: [number, number][] = [];
-  for (let cr = 0; cr < CR; cr++) for (let cc = 0; cc < CC; cc++) cells.push([tr(cr), tc(cc)]);
-  const openCount = (r: number, c: number) =>
-    DIRS.reduce((n, [dr, dc]) => n + (grid[at(r + dr, c + dc)] === 0 ? 1 : 0), 0);
-  const deadEnds = cells.filter(([r, c]) => openCount(r, c) === 1 && !(r === startR && c === startC));
-  const others = cells.filter(([r, c]) => !(openCount(r, c) === 1) && !(r === startR && c === startC));
-  const order = shuffle(deadEnds).concat(shuffle(others));
-  const bombs: Bomb[] = [];
-  for (const [r, c] of order) {
-    if (bombs.length >= BOMB_COUNT) break;
-    bombs.push({ x: c * TILE + TILE / 2, y: r * TILE + TILE / 2, defused: false });
-  }
-
-  // Seaweed — gate corridors (open tiles between two cells), away from the start.
-  const connectors: { r: number; c: number; vertical: boolean }[] = [];
-  for (let r = 0; r < ROWS; r++) {
-    for (let c = 0; c < COLS; c++) {
-      if (grid[at(r, c)] !== 0) continue;
-      if (r % 2 === 1 && c % 2 === 1) continue; // skip cell centers
-      const vertical = grid[at(r - 1, c)] === 0 || grid[at(r + 1, c)] === 0;
-      if (Math.abs(r - startR) + Math.abs(c - startC) > 2) connectors.push({ r, c, vertical });
+  // Weeds line the cavern walls: for each vertical open span in a column, a
+  // weed hangs from the ceiling and one rises from the floor, with lengths that
+  // sum to leave a guaranteed gap. Because the gap's position varies per column,
+  // the safe channel snakes up and down — the tunnels are never straight.
+  const seaweeds: Seaweed[] = [];
+  for (let c = 1; c < COLS - 1; c++) {
+    let r = 1;
+    while (r < ROWS - 1) {
+      if (grid[at(r, c)] !== 0) { r++; continue; }
+      let r1 = r;
+      while (r1 + 1 < ROWS - 1 && grid[at(r1 + 1, c)] === 0) r1++;
+      const spanPx = (r1 - r + 1) * TILE;
+      const top = r * TILE;
+      const nearStart = Math.abs(c - startC) <= 2 && Math.abs((r + r1) / 2 - startR) <= 2;
+      if (!nearStart && spanPx >= TILE && rand() < 0.85) {
+        const x = c * TILE + 5, w = TILE - 10;
+        const minGap = Math.max(28, Math.min(60, spanPx * 0.42));
+        const available = spanPx - minGap;
+        if (available >= 24) {
+          const lc = Math.round(available * (0.15 + rand() * 0.7));
+          const lf = Math.round(available) - lc;
+          if (lc >= 12) seaweeds.push({ x, y: top, w, h: lc, phase: rand() * 2 });
+          if (lf >= 12) seaweeds.push({ x, y: top + spanPx - lf, w, h: lf, phase: rand() * 2 });
+        } else {
+          // narrow span — a single short weed
+          const fromTop = rand() < 0.5;
+          seaweeds.push({ x, y: fromTop ? top : top + spanPx - 16, w, h: 16, phase: rand() * 2 });
+        }
+      }
+      r = r1 + 2;
     }
   }
-  const seaweeds: Seaweed[] = [];
-  for (const k of shuffle(connectors).slice(0, SEAWEED_COUNT)) {
-    const tx = k.c * TILE, ty = k.r * TILE;
-    if (k.vertical) seaweeds.push({ x: tx + 4, y: ty + TILE / 2 - 5, w: TILE - 8, h: 10, phase: rand() * 2 });
-    else seaweeds.push({ x: tx + TILE / 2 - 5, y: ty + 4, w: 10, h: TILE - 8, phase: rand() * 2 });
+
+  // Bombs — spread across open tiles, away from each other and the start.
+  const openTiles: [number, number][] = [];
+  for (let r = 1; r < ROWS - 1; r++)
+    for (let c = 1; c < COLS - 1; c++) if (grid[at(r, c)] === 0) openTiles.push([r, c]);
+  const sh = shuffle([...openTiles]);
+  const bombs: Bomb[] = [];
+  const spaced = (r: number, c: number, minStart: number) =>
+    Math.max(Math.abs(r - startR), Math.abs(c - startC)) >= minStart &&
+    bombs.every((b) => Math.max(Math.abs(b.y / TILE - 0.5 - r), Math.abs(b.x / TILE - 0.5 - c)) >= 3);
+  for (let minStart = 5; bombs.length < BOMB_COUNT && minStart >= 0; minStart--) {
+    for (const [r, c] of sh) {
+      if (bombs.length >= BOMB_COUNT) break;
+      if (spaced(r, c, minStart)) bombs.push({ x: c * TILE + TILE / 2, y: r * TILE + TILE / 2, defused: false });
+    }
+  }
+  for (const [r, c] of sh) {
+    if (bombs.length >= BOMB_COUNT) break;
+    const bx = c * TILE + TILE / 2, by = r * TILE + TILE / 2;
+    if (!bombs.some((b) => b.x === bx && b.y === by)) bombs.push({ x: bx, y: by, defused: false });
   }
 
   return {
