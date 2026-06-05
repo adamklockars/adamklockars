@@ -13,7 +13,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/flying-pig",
     "/swole-mate",
     "/get-mitch-quick",
-    "/dam-level",
+    "/damn-level",
   ];
   return routes.map((path) => ({
     url: `${BASE}${path}`,
