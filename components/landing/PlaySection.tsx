@@ -7,6 +7,7 @@ import {
   PiggyBank,
   Dumbbell,
   DollarSign,
+  Bomb,
 } from "lucide-react";
 import { Reveal } from "@/components/ui/Reveal";
 
@@ -50,6 +51,14 @@ const experiments = [
       "A parody of the old DOS text trader Drug Lord / Drug Wars: buy low and sell high, dodge escalating busts, ride the overdraft, pay off the loan shark, and get Mitch quick before it gets you.",
     icon: DollarSign,
     accent: "#ffb000",
+  },
+  {
+    href: "/dam-level",
+    title: "The Dam Level",
+    blurb:
+      "A homage to the underwater dam stage that ended so many TMNT runs. Swim the floaty current, defuse every bomb before the timer, and dodge the electric seaweed — you only get four turtles, and the seaweed wants them all.",
+    icon: Bomb,
+    accent: "#2dd4bf",
   },
   {
     href: "/collage",
