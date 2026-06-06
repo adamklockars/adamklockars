@@ -46,6 +46,7 @@ npx serve out      # preview the production build locally
 | `/swole-mate`    | **Swole Mate** — a Tamagotchi-style handheld: feed/rest a little guy and grind reps for GAINS without killing him |
 | `/get-mitch-quick` | **Get Mitch Quick** — a parody of the Drug Lord / Drug Wars text trader (buy low / sell high / dodge busts / pay the shark) |
 | `/damn-level`    | **The Damn Level** — a homage to the TMNT NES underwater dam, with platypuses (scrolling maze, defuse bombs, dodge electric seaweed) |
+| `/puzzle`        | **Picture Puzzle** — a drag-and-drop jigsaw (reuses the collage's dnd engine) |
 | `/collage`       | Drag-and-drop collage tool (the old Pinprint), with PNG export   |
 
 ## Hosting (the slim path — $0)

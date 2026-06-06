@@ -8,6 +8,7 @@ import {
   Dumbbell,
   DollarSign,
   Bomb,
+  Puzzle,
 } from "lucide-react";
 import { Reveal } from "@/components/ui/Reveal";
 
@@ -59,6 +60,14 @@ const experiments = [
       "A homage to the underwater dam stage that ended so many TMNT runs — but with platypuses. Swim a scrolling dam maze, defuse every bomb before the timer, and dodge the electric seaweed — you only get four platypuses, and the seaweed wants them all.",
     icon: Bomb,
     accent: "#2dd4bf",
+  },
+  {
+    href: "/puzzle",
+    title: "Picture Puzzle",
+    blurb:
+      "A drag-and-drop jigsaw built on the collage tool's drag engine: slice a picture into a 3×3 to 5×5 grid, then drag the scattered pieces into their slots to complete the image.",
+    icon: Puzzle,
+    accent: "#f59e0b",
   },
   {
     href: "/collage",
