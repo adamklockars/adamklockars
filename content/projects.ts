@@ -68,4 +68,21 @@ export const projects: Project[] = [
     accent: "#38bdf8",
     image: undefined,
   },
+  {
+    id: "tilia",
+    name: "Tilia",
+    kicker: "Caregiving · Dementia support",
+    tagline: "One calm place to care for someone with dementia.",
+    description:
+      "Tilia helps families notice what's changing, remember the day-to-day, and keep everyone who helps on the same page — without juggling six different apps. A general-wellness tool, never a diagnosis.",
+    features: [
+      "One shared, accessible care record over time",
+      "Plain-language dementia support & helplines",
+      "Care circle gets a heads-up when things change",
+      "Private by design — encrypted, stored in Canada",
+    ],
+    url: "https://tilia.care",
+    accent: "#8b7ff5",
+    image: undefined,
+  },
 ];
