@@ -1,0 +1,12 @@
+version: 2
+updates:
+  # /legacy is a frozen Python 2-era Django app — never update its deps.
+  # open-pull-requests-limit: 0 disables version-update PRs; the wildcard
+  # ignore also suppresses security-update PRs for this directory.
+  - package-ecosystem: "pip"
+    directory: "/legacy"
+    schedule:
+      interval: "monthly"
+    open-pull-requests-limit: 0
+    ignore:
+      - dependency-name: "*"
